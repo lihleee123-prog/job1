@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShopAccFacebook &#8212; &#272;&#259;ng Nh&#7853;p</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-tint": "#00dbe7",
+          "surface-bright": "#3a3939",
+          "outline-variant": "#3a494b",
+          "secondary-fixed-dim": "#ebb2ff",
+          "on-tertiary-fixed-variant": "#454747",
+          "on-background": "#e5e2e1",
+          "background": "#131313",
+          "primary-fixed": "#74f5ff",
+          "secondary-container": "#b600f8",
+          "on-secondary": "#520072",
+          "on-secondary-fixed-variant": "#74009f",
+          "on-error-container": "#ffdad6",
+          "on-error": "#690005",
+          "on-surface-variant": "#b9cacb",
+          "outline": "#849495",
+          "surface": "#131313",
+          "on-primary": "#00363a",
+          "primary": "#e1fdff",
+          "surface-container-highest": "#353534",
+          "tertiary-fixed-dim": "#c6c6c7",
+          "inverse-primary": "#00696f",
+          "on-primary-container": "#006a71",
+          "surface-container-lowest": "#0e0e0e",
+          "inverse-surface": "#e5e2e1",
+          "error-container": "#93000a",
+          "on-surface": "#e5e2e1",
+          "on-tertiary-fixed": "#1a1c1c",
+          "secondary-fixed": "#f8d8ff",
+          "on-primary-fixed": "#002022",
+          "primary-container": "#00f2ff",
+          "error": "#ffb4ab",
+          "secondary": "#ebb2ff",
+          "surface-container-low": "#1c1b1b",
+          "on-secondary-container": "#fff6fc",
+          "inverse-on-surface": "#313030",
+          "on-secondary-fixed": "#320047",
+          "tertiary": "#f7f8f8",
+          "primary-fixed-dim": "#00dbe7",
+          "surface-container": "#201f1f",
+          "surface-dim": "#131313",
+          "on-tertiary-container": "#5e6060",
+          "tertiary-container": "#dbdbdb",
+          "on-tertiary": "#2f3131",
+          "tertiary-fixed": "#e2e2e2",
+          "on-primary-fixed-variant": "#004f54",
+          "surface-container-high": "#2a2a2a",
+          "surface-variant": "#353534"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "margin-mobile": "16px",
+          "container-max": "1280px",
+          "gutter": "24px",
+          "unit": "4px",
+          "margin-desktop": "64px"
+        },
+        "fontFamily": {
+          "body-lg": ["Inter"],
+          "label-caps": ["JetBrains Mono"],
+          "headline-lg-mobile": ["Sora"],
+          "headline-xl": ["Sora"],
+          "body-md": ["Inter"],
+          "headline-lg": ["Sora"],
+          "price-display": ["Sora"],
+          "headline-md": ["Sora"]
+        },
+        "fontSize": {
+          "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+          "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500"}],
+          "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+          "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+          "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+          "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+          "price-display": ["24px", {"lineHeight": "1.0", "fontWeight": "800"}],
+          "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+        }
+      },
+    },
+  }
+</script>
+<style>
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #131313; }
+  ::-webkit-scrollbar-thumb { background: #3a494b; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #00f2ff; }
+  @keyframes subtle-pulse {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.15; transform: scale(1.05); }
+  }
+  .bg-glow { animation: subtle-pulse 8s ease-in-out infinite; }
+  .toast { position: fixed; top: 24px; right: 24px; z-index: 9999; min-width: 300px; padding: 16px 20px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-family: 'Inter', sans-serif; font-size: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+  .toast-error { background: rgba(147,0,10,0.9); border: 1px solid #ffb4ab; color: #ffdad6; backdrop-filter: blur(12px); }
+  .toast-success { background: rgba(0,105,111,0.9); border: 1px solid #00f2ff; color: #e1fdff; backdrop-filter: blur(12px); }
+  .toast-hide { opacity: 0; transform: translateX(100%); }
+</style>
+</head>
+<body class="bg-background text-on-background min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex">
+
+<!-- Toast Notification -->
+<div class="toast toast-hide" id="toast">
+  <span class="material-symbols-outlined" id="toast-icon">info</span>
+  <span id="toast-msg"></span>
+</div>
+
+<!-- Split Screen Container -->
+<main class="flex w-full min-h-screen">
+
+<!-- Left Pane -->
+<section class="hidden lg:flex lg:w-1/2 relative bg-surface-container-lowest overflow-hidden items-end p-margin-desktop">
+  <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary-container rounded-full blur-[120px] bg-glow pointer-events-none mix-blend-screen"></div>
+  <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-secondary-container rounded-full blur-[150px] bg-glow pointer-events-none opacity-50 mix-blend-screen" style="animation-delay: -4s;"></div>
+  <div class="absolute inset-0 z-0 pointer-events-none">
+    <div class="bg-cover bg-center w-full h-full opacity-60" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyQAdUO4j66uXRoAKpgr_s_D6LA_s1qr0-spzL5fgMW8SbgFw4Kv_sYAzocw_Q-VvYGFZLzJxOuhdugc37xW75rNrppJF-W3u1vTs96D_CQwe461HPHjcvyjWQWt1YSG0hw5VTsu3wVmVjHinEQXFdj-IXbVJCVfbiHXRCfm8XsLJrpb4LOOXvt2s6Y3FKKg2D0cz0EH1KKcsAdNFHRz4_OECF2Q1IrIxTKsO_cKaFusBxdh5lhU1W')"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+  </div>
+  <div class="relative z-10 w-full max-w-xl">
+    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary-container/30 bg-surface/40 backdrop-blur-md mb-8 shadow-[0_0_15px_rgba(0,242,255,0.1)]">
+      <span class="material-symbols-outlined text-[16px] text-primary-container" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+      <span class="font-label-caps text-label-caps text-primary-fixed">100% B&#7843;o M&#7853;t Giao D&#7883;ch</span>
+    </div>
+    <h1 class="font-headline-xl text-headline-xl text-on-surface mb-6 drop-shadow-lg">
+      N&#7873;n T&#7843;ng<br/>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container to-secondary-container">Mua B&#225;n T&#224;i Kho&#7843;n</span><br/>
+      H&#224;ng &#272;&#7847;u.
+    </h1>
+    <div class="mt-12 p-6 rounded-xl border border-white/10 bg-surface-container/30 backdrop-blur-xl relative overflow-hidden group">
+      <div class="absolute inset-0 border border-primary-container/0 group-hover:border-primary-container/30 rounded-xl transition-colors duration-500 pointer-events-none"></div>
+      <div class="flex items-start gap-4">
+        <div class="flex flex-col gap-1 mt-1">
+          <div class="flex text-primary-container">
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+          </div>
+        </div>
+        <div>
+          <p class="font-body-lg text-body-lg text-on-surface-variant italic mb-3">&#8220;Giao d&#7883;ch nhanh nh&#7845;t m&#236;nh t&#7915;ng th&#7845;y! H&#7879; th&#7889;ng b&#7843;o m&#7853;t &#273;a l&#7899;p cho m&#236;nh ho&#224;n to&#224;n y&#234;n t&#226;m.&#8221;</p>
+          <p class="font-label-caps text-label-caps text-on-surface">@VerifiedTrader99</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Right Pane -->
+<section class="w-full lg:w-1/2 flex items-center justify-center p-margin-mobile md:p-margin-desktop relative z-10 bg-background">
+  <div class="w-full max-w-[440px]">
+    <!-- Mobile Logo -->
+    <div class="lg:hidden mb-12 flex items-center gap-3">
+      <a href="landingpage.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded border border-primary-container flex items-center justify-center bg-surface-container-high shadow-[0_0_10px_rgba(0,242,255,0.2)]">
+          <span class="material-symbols-outlined text-primary-container">swap_horiz</span>
+        </div>
+        <span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface group-hover:text-primary transition-colors">ShopAccFacebook</span>
+      </a>
+    </div>
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">&#272;&#259;ng Nh&#7853;p</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Nh&#7853;p th&#244;ng tin &#273;&#7875; truy c&#7853;p t&#224;i kho&#7843;n c&#7911;a b&#7841;n.</p>
+    </div>
+
+    <!-- Form -->
+    <form class="space-y-6" id="signin-form" onsubmit="event.preventDefault(); if(window.handleSignIn) window.handleSignIn(event); else alert('Hệ thống đang tải hoặc bị lỗi kết nối mạng. Vui lòng nhấn Ctrl + F5 để tải lại trang!');">
+      <!-- Email -->
+      <div class="space-y-2">
+        <label class="block font-label-caps text-label-caps text-on-surface-variant" for="identifier">Email</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary-container transition-colors">
+            <span class="material-symbols-outlined text-[20px]">mail</span>
+          </div>
+          <input class="w-full bg-surface-container-lowest border border-outline rounded-lg pl-12 pr-4 py-3 text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/30" id="identifier" name="identifier" placeholder="email@example.com" required type="email"/>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="space-y-2">
+        <label class="block font-label-caps text-label-caps text-on-surface-variant" for="password">M&#7853;t Kh&#7849;u</label>
+        <div class="relative group">
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary-container transition-colors">
+            <span class="material-symbols-outlined text-[20px]">key</span>
+          </div>
+          <input class="w-full bg-surface-container-lowest border border-outline rounded-lg pl-12 pr-12 py-3 text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/30" id="password" name="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" required type="password"/>
+          <button class="absolute inset-y-0 right-0 pr-4 flex items-center text-outline hover:text-on-surface transition-colors focus:outline-none" type="button" onclick="togglePassword()">
+            <span class="material-symbols-outlined text-[20px]" id="toggle-icon">visibility</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Options Row -->
+      <div class="flex items-center justify-between pt-2">
+        <label class="flex items-center gap-2 cursor-pointer group">
+          <input class="w-4 h-4 rounded border-outline bg-surface-container-lowest text-primary-container focus:ring-primary-container focus:ring-offset-background transition-colors cursor-pointer" type="checkbox" id="remember-me"/>
+          <span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors text-sm">Ghi nh&#7899; &#273;&#259;ng nh&#7853;p</span>
+        </label>
+        <a class="font-body-md text-body-md text-sm text-primary-container hover:text-primary-fixed-dim transition-colors hover:underline underline-offset-4" href="resetpass.html">Qu&#234;n m&#7853;t kh&#7849;u?</a>
+      </div>
+
+      <!-- Submit -->
+      <button class="w-full relative group overflow-hidden rounded-lg mt-8" type="submit" id="signin-btn">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-container to-secondary-container opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_25px_rgba(0,242,255,0.4)] mix-blend-screen pointer-events-none"></div>
+        <div class="relative px-6 py-4 flex items-center justify-center gap-2">
+          <span class="font-body-lg text-body-lg font-bold text-on-primary-fixed tracking-wide" id="signin-btn-text">&#272;&#259;ng Nh&#7853;p</span>
+          <span class="material-symbols-outlined text-on-primary-fixed text-[20px] group-hover:translate-x-1 transition-transform" id="signin-btn-icon">arrow_forward</span>
+        </div>
+      </button>
+    </form>
+
+    <!-- Footer Nav -->
+    <div class="mt-12 text-center">
+      <p class="font-body-md text-body-md text-on-surface-variant">
+        Ch&#432;a c&#243; t&#224;i kho&#7843;n?
+        <a class="text-primary-container hover:text-primary-fixed-dim transition-colors font-medium ml-1 hover:underline underline-offset-4" href="createaccount.html">&#272;&#259;ng K&#253; Ngay</a>
+      </p>
+      <a href="landingpage.html" class="inline-flex items-center gap-1 mt-4 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
+        <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+        V&#7873; trang ch&#7911;
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Firebase Auth Script -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, browserSessionPersistence } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { getFirestore, doc, getDoc, updateDoc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDk4ies5X6BSqd9igMv2M0xY3e7f2F8H48",
+    authDomain: "project1234-4f440.firebaseapp.com",
+    projectId: "project1234-4f440",
+    storageBucket: "project1234-4f440.firebasestorage.app",
+    messagingSenderId: "698848283898",
+    appId: "1:698848283898:web:84eca38cdc370c7f3f4d43",
+    measurementId: "G-P0KJH5C58Q"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  window.isSigningIn = false;
+  onAuthStateChanged(auth, async (user) => {
+    if (user && !window.isSigningIn) {
+      try {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        window.location.href = (snap.exists() && snap.data().role === 'admin') ? 'admindashboard.html' : 'landingpage.html';
+      } catch(e) {
+        window.location.href = 'landingpage.html';
+      }
+    }
+  });
+
+  function showToast(message, type = 'error') {
+    const toast = document.getElementById('toast');
+    const msg   = document.getElementById('toast-msg');
+    const icon  = document.getElementById('toast-icon');
+    msg.textContent = message;
+    toast.className = `toast toast-${type}`;
+    icon.textContent = type === 'error' ? 'error' : 'check_circle';
+    setTimeout(() => toast.classList.add('toast-hide'), 3500);
+  }
+
+  const tm = sessionStorage.getItem('toastMessage');
+  if (tm) {
+    showToast(tm, 'success');
+    sessionStorage.removeItem('toastMessage');
+  }
+
+  window.togglePassword = function() {
+    const input = document.getElementById('password');
+    const icon  = document.getElementById('toggle-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  };
+
+  window.handleSignIn = async (e) => {
+    e.preventDefault();
+    window.isSigningIn = true;
+    
+    const email      = document.getElementById('identifier').value.trim();
+    const password   = document.getElementById('password').value;
+    const rememberMe = document.getElementById('remember-me').checked;
+    const btn        = document.getElementById('signin-btn');
+    const btnText    = document.getElementById('signin-btn-text');
+    const btnIcon    = document.getElementById('signin-btn-icon');
+
+    btn.disabled = true;
+    btnText.textContent = '\u0110ang x\u00e1c th\u1ef1c...';
+    btnIcon.textContent = 'hourglass_empty';
+
+    try {
+      // Äáº·t persistence trÆ°á»›c khi Ä‘Äƒng nháº­p
+      await setPersistence(auth, rememberMe ? browserLocalPersistence : browserSessionPersistence);
+
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      const user = cred.user;
+
+      try {
+        await setDoc(doc(db, 'users', user.uid), { lastLogin: serverTimestamp() }, { merge: true });
+      } catch (err) {
+        console.warn("Could not update lastLogin:", err);
+      }
+
+      const userDoc  = await getDoc(doc(db, 'users', user.uid));
+      const userData = userDoc.exists() ? userDoc.data() : {};
+      const role     = userData.role || 'user';
+
+      showToast('\u0110\u0103ng nh\u1eadp th\u00e0nh c\u00f4ng! \u0110ang chuy\u1ec3n trang...', 'success');
+      btnText.textContent = 'Th\u00e0nh c\u00f4ng!';
+      btnIcon.textContent = 'check';
+
+      setTimeout(() => {
+        window.location.href = role === 'admin' ? 'admindashboard.html' : 'landingpage.html';
+      }, 1000);
+
+    } catch (err) {
+      console.error("Firebase Login Error:", err);
+      btn.disabled = false;
+      window.isSigningIn = false;
+      btnText.textContent = '\u0110\u0103ng Nh\u1eadp';
+      btnIcon.textContent = 'arrow_forward';
+
+      let errMsg = '\u0110\u0103ng nh\u1eadp th\u1ea5t b\u1ea1i. Vui l\u00f2ng th\u1eed l\u1ea1i.';
+      const code = err.code || '';
+      
+      if (code === 'auth/user-not-found' || 
+          code === 'auth/wrong-password' || 
+          code === 'auth/invalid-credential' || 
+          code === 'auth/invalid-login-credentials') {
+        errMsg = 'Email ho\u1eb7c m\u1eadt kh\u1ea9u kh\u00f4ng \u0111\u00fang.';
+      } else if (code === 'auth/too-many-requests') {
+        errMsg = 'Qu\u00e1 nhi\u1ec1u l\u1ea7n th\u1eed. Vui l\u00f2ng th\u1eed l\u1ea1i sau.';
+      } else if (code === 'auth/network-request-failed') {
+        errMsg = 'L\u1ed7i k\u1ebft n\u1ed1i. Ki\u1ec3m tra internet c\u1ee7a b\u1ea1n.';
+      } else if (code === 'auth/invalid-email') {
+        errMsg = 'Email kh\u00f4ng h\u1ee3p l\u1ec7.';
+      } else if (code) {
+        errMsg = `\u0110\u0103ng nh\u1eadp th\u1ea5t b\u1ea1i (${code}).`;
+      }
+      
+      showToast(errMsg, 'error');
+    }
+  };
+</script>
+</body></html>
+
+

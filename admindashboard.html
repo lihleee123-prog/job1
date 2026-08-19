@@ -1,0 +1,1476 @@
+﻿<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShopAccFacebook — Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-secondary-fixed":"#320047","inverse-surface":"#e5e2e1","primary-fixed-dim":"#00dbe7","on-error-container":"#ffdad6","tertiary-container":"#dbdbdb","outline":"#849495","surface-container-lowest":"#0e0e0e","on-secondary":"#520072","tertiary":"#f7f8f8","on-primary-fixed-variant":"#004f54","primary":"#e1fdff","on-primary-container":"#006a71","surface-variant":"#353534","surface-container-highest":"#353534","on-background":"#e5e2e1","surface-container":"#201f1f","on-surface":"#e5e2e1","on-primary":"#00363a","on-secondary-container":"#fff6fc","inverse-on-surface":"#313030","surface-tint":"#00dbe7","secondary":"#ebb2ff","primary-container":"#00f2ff","surface-container-low":"#1c1b1b","error-container":"#93000a","on-primary-fixed":"#002022","primary-fixed":"#74f5ff","surface-container-high":"#2a2a2a","secondary-fixed-dim":"#ebb2ff","background":"#131313","surface-dim":"#131313","outline-variant":"#3a494b","surface":"#131313","on-tertiary":"#2f3131","secondary-container":"#b600f8","on-error":"#690005","inverse-primary":"#00696f","surface-bright":"#3a3939","on-surface-variant":"#b9cacb","error":"#ffb4ab","secondary-fixed":"#f8d8ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"64px","unit":"4px","container-max":"1280px","gutter":"24px","margin-mobile":"16px"},"fontFamily":{"label-caps":["JetBrains Mono"],"headline-lg":["Sora"],"headline-md":["Sora"],"headline-xl":["Sora"],"body-md":["Inter"],"body-lg":["Inter"],"price-display":["Sora"],"headline-lg-mobile":["Sora"]},"fontSize":{"label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.1em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"1.2","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}],"body-md":["16px",{"lineHeight":"1.5","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],"price-display":["24px",{"lineHeight":"1.0","fontWeight":"800"}],"headline-lg-mobile":["28px",{"lineHeight":"1.2","fontWeight":"700"}]}}}}
+</script>
+<style>
+body{background:#050505;color:#e5e2e1;font-family:'Inter',sans-serif;}
+.glass-panel{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);}
+.neon-btn{background:#00f2ff;color:#002022;font-weight:700;transition:all 0.2s;}
+.neon-btn:hover{box-shadow:0 0 15px rgba(0,242,255,0.5);transform:translateY(-1px);}
+.ghost-btn{border:1px solid #b600f8;color:#ebb2ff;transition:all 0.2s;}
+.ghost-btn:hover{background:rgba(182,0,248,0.1);box-shadow:0 0 12px rgba(182,0,248,0.3);}
+.danger-btn{border:1px solid rgba(255,180,171,0.3);color:#ffb4ab;transition:all 0.2s;}
+.danger-btn:hover{background:rgba(255,180,171,0.1);}
+.table-input{background:#0a0a0a;border:1px solid #3a494b;color:#e5e2e1;transition:all 0.2s;}
+.table-input:focus{border-color:#00dbe7;outline:none;box-shadow:inset 0 0 6px rgba(0,219,231,0.15);}
+.active-nav{color:#00f2ff!important;border-right:2px solid #00f2ff;background:rgba(0,242,255,0.05);}
+.active-filter{background:rgba(0,242,255,0.1);color:#00f2ff;border-color:rgba(0,242,255,0.4);}
+.tab-section{display:none !important;}
+.tab-section.active{display:block !important;}
+#auth-loading{position:fixed;inset:0;background:#050505;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
+.spinner{width:48px;height:48px;border:3px solid rgba(0,242,255,0.1);border-top-color:#00f2ff;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:12px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:#0a0a0a;}
+::-webkit-scrollbar-thumb{background:#3a494b;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#00f2ff;}
+.chat-conv:hover{background:#1f1f1f;}
+.chat-conv.selected{background:#1f1f1f;border-left:2px solid #00f2ff;}
+.status-pending{background:rgba(234,179,8,0.15);color:#eab308;border:1px solid rgba(234,179,8,0.3);}
+.status-processing{background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);}
+.status-completed{background:rgba(34,197,94,0.15);color:#4ade80;border:1px solid rgba(34,197,94,0.3);}
+.status-cancelled{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3);}
+.kpi-card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:20px;transition:all 0.3s;}
+.kpi-card:hover{border-color:rgba(0,242,255,0.2);box-shadow:0 0 15px rgba(0,242,255,0.05);}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- Auth Loading -->
+<div id="auth-loading">
+  <div class="spinner"></div>
+  <p class="font-label-caps text-label-caps text-on-surface-variant">Xác thực quyền truy cập...</p>
+</div>
+
+<!-- Lấyout -->
+<div class="flex h-screen overflow-hidden" id="app-layout" style="visibility:hidden;">
+
+  <!-- Sidebar -->
+  <nav class="w-64 flex-shrink-0 h-screen border-r border-outline-variant flex flex-col py-6 px-3 z-40 overflow-y-auto" style="background:#0e0e0e;">
+    <div class="mb-8 px-3">
+      <a href="landingpage.html" class="group">
+        <div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary group-hover:text-primary-fixed-dim transition-colors">ShopAccFacebook</div>
+        <div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Admin Console</div>
+      </a>
+    </div>
+
+    <div class="flex flex-col gap-1 flex-1">
+      <button id="nav-overview" onclick="showTab('overview')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-left font-body-md text-sm active-nav">
+        <span class="material-symbols-outlined text-[20px]">dashboard</span><span>Tổng Quan</span>
+      </button>
+      <button id="nav-products" onclick="showTab('products')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-left font-body-md text-sm">
+        <span class="material-symbols-outlined text-[20px]">inventory_2</span><span>sản phẩm</span>
+      </button>
+      <button id="nav-orders" onclick="showTab('orders')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-left font-body-md text-sm">
+        <span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Đơn Hàng</span>
+        <span id="orders-badge" class="ml-auto hidden w-5 h-5 rounded-full bg-error text-on-error text-[10px] font-bold flex items-center justify-center">0</span>
+      </button>
+      <button id="nav-users" onclick="showTab('users')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-left font-body-md text-sm">
+        <span class="material-symbols-outlined text-[20px]">group</span><span>Người Dùng</span>
+      </button>
+      <button id="nav-chat" onclick="showTab('chat')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-left font-body-md text-sm">
+        <span class="material-symbols-outlined text-[20px]">forum</span><span>Hỗ Trợ Chat</span>
+        <span id="chat-badge" class="ml-auto hidden w-5 h-5 rounded-full bg-secondary text-[#320047] text-[10px] font-bold flex items-center justify-center">0</span>
+      </button>
+      <button id="nav-settings" onclick="showTab('settings')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors text-left font-body-md text-sm">
+        <span class="material-symbols-outlined text-[20px]">tune</span><span>Cài Đặt Thanh Toán</span>
+      </button>
+    </div>
+
+    <div class="border-t border-outline-variant pt-4 mt-4">
+      <div class="flex items-center gap-3 px-3 mb-4">
+        <div class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-primary-container text-[18px]">admin_panel_settings</span>
+        </div>
+        <div class="min-w-0">
+          <div class="font-body-md font-medium text-on-surface text-sm truncate" id="admin-name">Admin</div>
+          <div class="font-label-caps text-label-caps text-on-surface-variant text-[10px] truncate" id="admin-email"></div>
+        </div>
+      </div>
+      <button id="logout-btn" class="w-full flex items-center gap-3 px-3 py-2.5 rounded text-error hover:bg-error/10 transition-colors text-left font-body-md text-sm">
+        <span class="material-symbols-outlined text-[20px]">logout</span><span>Đăng Xuất</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Header -->
+    <header class="h-14 flex items-center justify-between px-6 border-b border-outline-variant flex-shrink-0" style="background:#0e0e0e;">
+      <div class="relative hidden md:block">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+        <input class="table-input pl-10 pr-4 py-2 rounded w-64 text-sm" placeholder="Tìm kiếm..." type="text" id="global-search"/>
+      </div>
+      <div class="flex items-center gap-3">
+        <button class="w-8 h-8 rounded flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-[20px]">notifications</span>
+        </button>
+        <a href="landingpage.html" class="text-xs text-on-surface-variant hover:text-primary transition-colors font-label-caps">← Trang Chủ</a>
+      </div>
+    </header>
+
+    <!-- Tab Content Area -->
+    <div class="flex-1 overflow-y-auto">
+
+      <!-- ================================================================ -->
+      <!-- TAB 1: OVERVIEW -->
+      <!-- ================================================================ -->
+      <section id="tab-overview" class="tab-section active p-6 space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface">Tổng Quan He Thong</h1>
+            <p class="text-on-surface-variant text-sm mt-1">Dữ liệu cập nhật theo thời gian thực</p>
+          </div>
+          <button onclick="initOverview()" class="flex items-center gap-2 px-4 py-2 rounded text-sm font-label-caps text-label-caps text-primary border border-primary-container/30 hover:bg-primary-container/10 transition-colors">
+            <span class="material-symbols-outlined text-[16px]">refresh</span>Làm Mới
+          </button>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="kpi-card col-span-2 lg:col-span-1" style="border-top:2px solid #00f2ff;">
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-label-caps text-label-caps text-on-surface-variant uppercase text-[10px]">Doanh Thu</span>
+              <span class="material-symbols-outlined text-secondary-container text-[20px]">payments</span>
+            </div>
+            <div class="font-price-display text-price-display text-xl text-primary-container" id="stat-revenue">$0</div>
+            <div class="text-[10px] text-on-surface-variant mt-2 font-label-caps">Đơn đã hoàn thành</div>
+          </div>
+          <div class="kpi-card">
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-label-caps text-label-caps text-on-surface-variant uppercase text-[10px]">Đã Bán</span>
+              <span class="material-symbols-outlined text-outline text-[20px]">shopping_bag</span>
+            </div>
+            <div class="font-headline-md text-headline-md font-bold text-on-surface" id="stat-sold">0</div>
+            <div class="text-[10px] text-on-surface-variant mt-2 font-label-caps">TÀI KHOẢN</div>
+          </div>
+          <div class="kpi-card">
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-label-caps text-label-caps text-on-surface-variant uppercase text-[10px]">Còn Hàng</span>
+              <span class="material-symbols-outlined text-outline text-[20px]">inventory</span>
+            </div>
+            <div class="font-headline-md text-headline-md font-bold text-on-surface" id="stat-instock">0</div>
+            <div class="text-[10px] text-on-surface-variant mt-2 font-label-caps">sản phẩm</div>
+          </div>
+          <div class="kpi-card" style="border-top:2px solid #ffb4ab;">
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-label-caps text-label-caps text-on-surface-variant uppercase text-[10px]">Đơn Chờ</span>
+              <span class="material-symbols-outlined text-error text-[20px]">hourglass_empty</span>
+            </div>
+            <div class="font-headline-md text-headline-md font-bold text-error" id="stat-pending">0</div>
+            <div class="text-[10px] text-error mt-2 font-label-caps">Cần xử lý</div>
+          </div>
+          <div class="kpi-card">
+            <div class="flex justify-between items-start mb-3">
+              <span class="font-label-caps text-label-caps text-on-surface-variant uppercase text-[10px]">Người Dùng</span>
+              <span class="material-symbols-outlined text-outline text-[20px]">people</span>
+            </div>
+            <div class="font-headline-md text-headline-md font-bold text-on-surface" id="stat-users">0</div>
+            <div class="text-[10px] text-on-surface-variant mt-2 font-label-caps">Đã đăng ký</div>
+          </div>
+        </div>
+
+        <!-- Recent activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="glass-panel rounded-lg p-5">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-headline-md text-headline-md text-on-surface text-base font-semibold">Đơn Hàng Gan Day</h3>
+              <button onclick="showTab('orders')" class="text-xs text-primary-fixed-dim hover:text-primary transition-colors font-label-caps">Xem tất cả →</button>
+            </div>
+            <div id="recent-orders-list" class="space-y-1 text-on-surface-variant text-sm py-4 text-center">Đang tải...</div>
+          </div>
+          <div class="glass-panel rounded-lg p-5">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="font-headline-md text-headline-md text-on-surface text-base font-semibold">Người Dùng Moi</h3>
+              <button onclick="showTab('users')" class="text-xs text-primary-fixed-dim hover:text-primary transition-colors font-label-caps">Quản lý →</button>
+            </div>
+            <div id="recent-users-list" class="space-y-1 text-on-surface-variant text-sm py-4 text-center">Đang tải...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- TAB 2: PRODUCTS -->
+      <!-- ================================================================ -->
+      <section id="tab-products" class="tab-section p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 class="font-headline-lg text-headline-lg text-on-surface">Quản lý sản phẩm</h1>
+          <div class="flex gap-3">
+            <input class="table-input px-3 py-2 rounded text-sm w-48" id="product-search" placeholder="Tim sản phẩm..." oninput="filterProducts(this.value)"/>
+            <select class="table-input px-3 py-2 rounded text-sm" id="product-platform-filter" onchange="filterProductsByPlatform(this.value)">
+              <option value="">Tất cả platform</option>
+              <option>Facebook Via</option><option>Bandai Namco</option>
+            </select>
+            <button onclick="openAddProduct()" class="neon-btn px-4 py-2 rounded text-sm font-label-caps flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px]">add</span>Thêm SP
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-panel rounded-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-outline-variant/20">
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">sản phẩm</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">GIÁ</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">Trạng thái</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">NGÀY TẠO</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">THAO TÁC</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <tr><td colspan="5" class="text-center p-8 text-on-surface-variant">Đang tải...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- TAB 3: ORDERS -->
+      <!-- ================================================================ -->
+      <section id="tab-orders" class="tab-section p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 class="font-headline-lg text-headline-lg text-on-surface">Quản lý Đơn Hàng</h1>
+          <input class="table-input px-3 py-2 rounded text-sm w-48" placeholder="Tim Đơn Hàng..." oninput="searchOrders(this.value)"/>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex gap-2 flex-wrap">
+          <button id="filter-all" onclick="filterOrders('all')" class="order-filter-btn px-4 py-2 rounded text-sm font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-colors active-filter">Tất Cả</button>
+          <button id="filter-pending" onclick="filterOrders('pending')" class="order-filter-btn px-4 py-2 rounded text-sm font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-colors">Chờ Xử Lý</button>
+          <button id="filter-processing" onclick="filterOrders('processing')" class="order-filter-btn px-4 py-2 rounded text-sm font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-colors">Đang Xử Lý</button>
+          <button id="filter-completed" onclick="filterOrders('completed')" class="order-filter-btn px-4 py-2 rounded text-sm font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-colors">Hoàn Thành</button>
+          <button id="filter-cancelled" onclick="filterOrders('cancelled')" class="order-filter-btn px-4 py-2 rounded text-sm font-label-caps text-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-colors">Đã Hủy</button>
+        </div>
+
+        <div class="glass-panel rounded-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-outline-variant/20">
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">MÃ ĐƠN</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">sản phẩm</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">NGƯỜI MUA</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">SỐ TIỀN</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">THANH TOÁN</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">Trạng thái</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">THỜI GIAN</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">THAO TÁC</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody">
+                <tr><td colspan="8" class="text-center p-8 text-on-surface-variant">Đang tải...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- TAB 4: USERS -->
+      <!-- ================================================================ -->
+      <section id="tab-users" class="tab-section p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <h1 class="font-headline-lg text-headline-lg text-on-surface">Quản lý Người Dùng</h1>
+          <input class="table-input px-3 py-2 rounded text-sm w-56" placeholder="Tìm kiếm username, email..." oninput="filterUsers(this.value)"/>
+        </div>
+
+        <div class="glass-panel rounded-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-outline-variant/20">
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">Người Dùng</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">ROLE</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">SỐ DƯ</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">Trạng thái</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">NGÀY TẠO</th>
+                  <th class="text-left p-4 font-label-caps text-label-caps text-on-surface-variant text-[10px]">THAO TÁC</th>
+                </tr>
+              </thead>
+              <tbody id="users-tbody">
+                <tr><td colspan="6" class="text-center p-8 text-on-surface-variant">Đang tải...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- TAB 5: CHAT -->
+      <!-- ================================================================ -->
+      <section id="tab-chat" class="tab-section" style="height:calc(100vh - 56px);">
+        <div class="flex h-full">
+          <!-- Conversations List -->
+          <div class="w-72 flex-shrink-0 border-r border-outline-variant flex flex-col" style="background:#0e0e0e;">
+            <div class="p-4 border-b border-outline-variant">
+              <h3 class="font-headline-md text-headline-md text-on-surface text-base font-semibold">Hỗ Trợ Khách Hàng</h3>
+              <p class="text-on-surface-variant text-xs mt-1">Cuoc tro chuyen tu Người Dùng</p>
+            </div>
+            <div id="conv-list" class="flex-1 overflow-y-auto">
+              <div class="p-4 text-center text-on-surface-variant text-sm">Đang tải...</div>
+            </div>
+          </div>
+
+          <!-- Chat Window -->
+          <div class="flex-1 flex flex-col">
+            <!-- Placeholder -->
+            <div id="chat-placeholder" class="flex-1 flex flex-col items-center justify-center text-center p-8">
+              <span class="material-symbols-outlined text-6xl text-on-surface-variant opacity-20 mb-4">forum</span>
+              <p class="text-on-surface-variant font-body-md">Chọn một cuộc trò chuyện để bắt đầu</p>
+            </div>
+
+            <!-- Active Chat -->
+            <div id="chat-window" class="flex-1 flex flex-col hidden">
+              <!-- Chat Header -->
+              <div class="p-4 border-b border-outline-variant flex items-center gap-3" style="background:#0e0e0e;">
+                <div class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary-container text-[16px]">person</span>
+                </div>
+                <div>
+                  <div class="font-body-md font-medium text-on-surface" id="chat-user-name">User</div>
+                  <div class="text-xs text-on-surface-variant" id="chat-user-email"></div>
+                </div>
+                <div class="ml-auto flex gap-2">
+                  <button onclick="viewUserFromChat()" class="px-3 py-1.5 rounded text-[10px] font-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary-container/30 transition-colors">Xem Profile</button>
+                </div>
+              </div>
+              <!-- Messages Container -->
+              <div id="messages-container" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+              <!-- Quick Replies -->
+              <div class="px-4 py-2 flex gap-2 overflow-x-auto border-t border-outline-variant/10">
+                <button onclick="quickReply('Xin chao! Admin ShopAccFacebook day, mình có thể giúp gì cho bạn?')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Xin chào 👋</button>
+                <button onclick="quickReply('TÀI KHOẢN cua ban da duoc giao. Vui lòng kiểm tra email hoặc trang profile.')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Đã giao TK ✅</button>
+                <button onclick="quickReply('Đơn Hàng cua ban dang duoc xu ly. Vui lòng chờ trong ít phút.')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Đang xử lý ⏳</button>
+                <button onclick="quickReply('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ hỗ trợ bạn Trạng thái gian sớm nhất.')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Cảm ơn 🙏</button>
+              </div>
+              <!-- Input -->
+              <div class="border-t border-outline-variant" style="background:#0e0e0e;">
+                <!-- Preview file đính kèm -->
+                <div id="admin-attach-preview" class="hidden px-3 pt-2 flex items-center gap-2 flex-wrap"></div>
+                <div class="p-3 flex items-end gap-2">
+                  <!-- Nút đính kèm -->
+                  <label class="flex-shrink-0 w-9 h-9 rounded flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors cursor-pointer" title="Đính kèm ảnh/file">
+                    <span class="material-symbols-outlined text-[20px]">attach_file</span>
+                    <input type="file" id="admin-file-input" class="hidden" accept="image/*,application/pdf,.txt,.zip" multiple onchange="adminHandleFiles(this)"/>
+                  </label>
+                  <!-- Nút ảnh nhanh -->
+                  <label class="flex-shrink-0 w-9 h-9 rounded flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors cursor-pointer" title="Gửi ảnh">
+                    <span class="material-symbols-outlined text-[20px]">image</span>
+                    <input type="file" id="admin-image-input" class="hidden" accept="image/*" multiple onchange="adminHandleFiles(this)"/>
+                  </label>
+                  <textarea id="admin-msg-input" class="table-input flex-1 rounded px-3 py-2 text-sm resize-none" rows="2" placeholder="Nhắn tin..." onkeydown="adminMsgKeydown(event)"></textarea>
+                  <button id="admin-send-btn" onclick="adminSendMessage()" class="flex-shrink-0 px-4 rounded neon-btn text-sm font-label-caps self-end py-2">Gửi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- TAB 6: SETTINGS — Cài đặt Thanh Toán                             -->
+      <!-- ================================================================ -->
+      <section id="tab-settings" class="tab-section p-6 space-y-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="font-headline-lg text-headline-lg text-on-surface">Cài Đặt Phương Thức Thanh Toán</h1>
+            <p class="text-on-surface-variant text-sm mt-1">Thông tin hiển thị cho khách hàng khi đặt hàng</p>
+          </div>
+          <button onclick="savePaymentSettings()" class="neon-btn px-5 py-2.5 rounded text-sm font-label-caps flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">save</span>Lưu Cài Đặt
+          </button>
+        </div>
+
+        <!-- VietQR -->
+        <div class="glass-panel rounded-lg p-6 space-y-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 rounded flex items-center justify-center" style="background:rgba(0,242,255,0.1);border:1px solid rgba(0,242,255,0.3);">
+              <span class="material-symbols-outlined text-primary-container text-[18px]">account_balance</span>
+            </div>
+            <div>
+              <h3 class="font-headline-md text-base text-on-surface font-semibold">VietQR — Chuyển Khoản Ngân Hàng</h3>
+              <p class="text-xs text-on-surface-variant">Hiển thị QR code và thông tin chuyển khoản cho khách</p>
+            </div>
+            <label class="ml-auto flex items-center gap-2 cursor-pointer">
+              <span class="text-xs text-on-surface-variant">Bật</span>
+              <input type="checkbox" id="pm-vietqr-enabled" class="w-4 h-4 accent-[#00f2ff]" checked onchange="document.getElementById('pm-vietqr-label').textContent=this.checked?'Bật':'Tắt'; savePaymentSettings()"/>
+<span id="pm-vietqr-label" class="text-sm font-label-caps text-on-surface-variant ml-2">Bật</span>
+            </label>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">TÊN NGÂN HÀNG</label>
+              <input class="table-input w-full rounded px-3 py-2.5 text-sm" id="vietqr-bank" placeholder="Vietcombank / Techcombank / MB..."/>
+            </div>
+            <div>
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">SỐ TÀI KHOẢN</label>
+              <input class="table-input w-full rounded px-3 py-2.5 text-sm font-mono" id="vietqr-account" placeholder="1234567890"/>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">TÊN CHỦ TÀI KHOẢN</label>
+              <input class="table-input w-full rounded px-3 py-2.5 text-sm" id="vietqr-name" placeholder="NGUYEN VAN A"/>
+            </div>
+            <!-- QR Upload -->
+            <div class="sm:col-span-2">
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">ẢNH MÃ QR (tùy chọn — nếu muốn dùng QR riêng thay vì tự động tạo)</label>
+              <div class="flex items-start gap-4">
+                <div class="w-28 h-28 rounded-lg border-2 border-dashed border-outline-variant/40 flex items-center justify-center overflow-hidden flex-shrink-0 bg-surface-container-lowest" id="vietqr-preview-wrap">
+                  <img id="vietqr-qr-preview" class="w-full h-full object-cover hidden" alt="QR Preview"/>
+                  <span class="material-symbols-outlined text-on-surface-variant text-3xl opacity-30" id="vietqr-preview-icon">qr_code_2</span>
+                </div>
+                <div class="flex-1 space-y-2">
+                  <label class="flex items-center gap-2 px-4 py-2.5 rounded cursor-pointer border border-outline-variant/30 hover:border-primary-container/50 text-on-surface-variant hover:text-primary transition-colors text-sm font-label-caps w-fit">
+                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                    Chọn Ảnh QR
+                    <input type="file" id="vietqr-qr-file" accept="image/*" class="hidden" onchange="previewQR('vietqr', this)"/>
+                  </label>
+                  <p class="text-xs text-on-surface-variant">PNG / JPG, tối đa 2MB</p>
+                  <p class="text-xs text-primary-fixed-dim hidden" id="vietqr-qr-url-hint">Đã có ảnh QR</p>
+                  <button onclick="removeQR('vietqr')" class="text-xs text-error hover:underline hidden" id="vietqr-remove-btn">Xóa ảnh</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MoMo -->
+        <div class="glass-panel rounded-lg p-6 space-y-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 rounded flex items-center justify-center" style="background:rgba(182,0,248,0.1);border:1px solid rgba(182,0,248,0.3);">
+              <span class="material-symbols-outlined text-secondary text-[18px]">phone_iphone</span>
+            </div>
+            <div>
+              <h3 class="font-headline-md text-base text-on-surface font-semibold">MoMo</h3>
+              <p class="text-xs text-on-surface-variant">Ví điện tử MoMo</p>
+            </div>
+            <label class="ml-auto flex items-center gap-2 cursor-pointer">
+              <span class="text-xs text-on-surface-variant">Bật</span>
+              <input type="checkbox" id="pm-momo-enabled" class="w-4 h-4 accent-[#b600f8]" checked onchange="document.getElementById('pm-momo-label').textContent=this.checked?'Bật':'Tắt'; savePaymentSettings()"/>
+<span id="pm-momo-label" class="text-sm font-label-caps text-on-surface-variant ml-2">Bật</span>
+            </label>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">SỐ ĐIỆN THOẠI MOMO</label>
+              <input class="table-input w-full rounded px-3 py-2.5 text-sm font-mono" id="momo-phone" placeholder="0912345678"/>
+            </div>
+            <div>
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">TÊN TÀI KHOẢN MOMO</label>
+              <input class="table-input w-full rounded px-3 py-2.5 text-sm" id="momo-name" placeholder="NGUYEN VAN A"/>
+            </div>
+            <!-- QR Upload -->
+            <div class="sm:col-span-2">
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">ẢNH MÃ QR MOMO</label>
+              <div class="flex items-start gap-4">
+                <div class="w-28 h-28 rounded-lg border-2 border-dashed border-outline-variant/40 flex items-center justify-center overflow-hidden flex-shrink-0 bg-surface-container-lowest" id="momo-preview-wrap">
+                  <img id="momo-qr-preview" class="w-full h-full object-cover hidden" alt="QR Preview"/>
+                  <span class="material-symbols-outlined text-on-surface-variant text-3xl opacity-30" id="momo-preview-icon">qr_code_2</span>
+                </div>
+                <div class="flex-1 space-y-2">
+                  <label class="flex items-center gap-2 px-4 py-2.5 rounded cursor-pointer border border-outline-variant/30 hover:border-secondary/50 text-on-surface-variant hover:text-secondary transition-colors text-sm font-label-caps w-fit">
+                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                    Chọn Ảnh QR
+                    <input type="file" id="momo-qr-file" accept="image/*" class="hidden" onchange="previewQR('momo', this)"/>
+                  </label>
+                  <p class="text-xs text-on-surface-variant">PNG / JPG, tối đa 2MB</p>
+                  <p class="text-xs text-primary-fixed-dim hidden" id="momo-qr-url-hint">Đã có ảnh QR</p>
+                  <button onclick="removeQR('momo')" class="text-xs text-error hover:underline hidden" id="momo-remove-btn">Xóa ảnh</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- USDT -->
+        <div class="glass-panel rounded-lg p-6 space-y-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-8 h-8 rounded flex items-center justify-center" style="background:rgba(0,242,255,0.08);border:1px solid rgba(0,242,255,0.2);">
+              <span class="material-symbols-outlined text-primary-fixed-dim text-[18px]">currency_bitcoin</span>
+            </div>
+            <div>
+              <h3 class="font-headline-md text-base text-on-surface font-semibold">USDT (TRC20)</h3>
+              <p class="text-xs text-on-surface-variant">Thanh toán crypto</p>
+            </div>
+            <label class="ml-auto flex items-center gap-2 cursor-pointer">
+              <span class="text-xs text-on-surface-variant">Bật</span>
+              <input type="checkbox" id="pm-usdt-enabled" class="w-4 h-4 accent-[#00f2ff]" checked onchange="document.getElementById('pm-usdt-label').textContent=this.checked?'Bật':'Tắt'; savePaymentSettings()"/>
+<span id="pm-usdt-label" class="text-sm font-label-caps text-on-surface-variant ml-2">Bật</span>
+            </label>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">ĐỊA CHỈ VÍ USDT (TRC20)</label>
+              <input class="table-input w-full rounded px-3 py-2.5 text-sm font-mono" id="usdt-address" placeholder="TRxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+            </div>
+            <!-- QR Upload -->
+            <div>
+              <label class="block font-label-caps text-[10px] text-on-surface-variant mb-2">ẢNH MÃ QR VÍ USDT</label>
+              <div class="flex items-start gap-4">
+                <div class="w-28 h-28 rounded-lg border-2 border-dashed border-outline-variant/40 flex items-center justify-center overflow-hidden flex-shrink-0 bg-surface-container-lowest" id="usdt-preview-wrap">
+                  <img id="usdt-qr-preview" class="w-full h-full object-cover hidden" alt="QR Preview"/>
+                  <span class="material-symbols-outlined text-on-surface-variant text-3xl opacity-30" id="usdt-preview-icon">qr_code_2</span>
+                </div>
+                <div class="flex-1 space-y-2">
+                  <label class="flex items-center gap-2 px-4 py-2.5 rounded cursor-pointer border border-outline-variant/30 hover:border-primary-container/30 text-on-surface-variant hover:text-primary-container transition-colors text-sm font-label-caps w-fit">
+                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                    Chọn Ảnh QR
+                    <input type="file" id="usdt-qr-file" accept="image/*" class="hidden" onchange="previewQR('usdt', this)"/>
+                  </label>
+                  <p class="text-xs text-on-surface-variant">PNG / JPG, tối đa 2MB</p>
+                  <p class="text-xs text-primary-fixed-dim hidden" id="usdt-qr-url-hint">Đã có ảnh QR</p>
+                  <button onclick="removeQR('usdt')" class="text-xs text-error hover:underline hidden" id="usdt-remove-btn">Xóa ảnh</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lưu ý -->
+        <div class="p-4 rounded-lg border border-yellow-800/40 bg-yellow-900/10 text-yellow-400 text-sm flex items-start gap-3">
+          <span class="material-symbols-outlined text-[20px] flex-shrink-0 mt-0.5">info</span>
+          <span>Sau khi lưu, thông tin sẽ tự động cập nhật trên trang mua hàng của khách. Tắt phương thức nào nếu bạn không muốn nó hiển thị.</span>
+        </div>
+      </section>
+
+    </div><!-- end content area -->
+  </div><!-- end main -->
+</div><!-- end layout -->
+
+<!-- ================================================================ -->
+<!-- MODAL: Product Add/Edit -->
+<!-- ================================================================ -->
+<div id="product-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="flex items-center justify-between p-6 border-b border-outline-variant/20">
+      <h3 class="font-headline-md text-headline-md text-on-surface" id="modal-product-title">Thêm sản phẩm</h3>
+      <button onclick="closeProductModal()" class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="p-6 space-y-4">
+      <input type="hidden" id="edit-product-id"/>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2">
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">TÊN sản phẩm *</label>
+          <input class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-name" placeholder="CS:GO Prime Account - Level 5..."/>
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">PLATFORM</label>
+          <select class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-platform">
+            <option>Facebook Via</option><option>Bandai Namco</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">LOẠI TIỀN *</label>
+          <select class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-currency" onchange="updateCurrencyLabels()">
+            <option value="VND">🇻🇳 VND - Việt Nam Đồng</option>
+            <option value="USD">🇺🇸 USD - Đô La Mỹ</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]" id="label-price">GIÁ BÁN (VND) *</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-on-surface-variant text-sm font-mono" id="price-symbol">₫</span>
+            <input class="table-input w-full rounded pl-8 pr-4 py-2.5 text-sm" id="p-price" placeholder="500000" type="number" step="1"/>
+          </div>
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]" id="label-orig-price">GIÁ GỐC (để gạch ngang)</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-on-surface-variant text-sm font-mono" id="orig-price-symbol">₫</span>
+            <input class="table-input w-full rounded pl-8 pr-4 py-2.5 text-sm" id="p-original-price" placeholder="700000" type="number" step="1"/>
+          </div>
+        </div>
+        <div>
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">URL ẢNH</label>
+          <input class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-image-url" placeholder="https://..."/>
+        </div>
+        <div class="col-span-2">
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">MÔ TẢ HIỂN THỊ</label>
+          <textarea class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-desc" rows="3" placeholder="Mô tả chi tiết hiển thị cho người mua..."></textarea>
+        </div>
+        <div class="col-span-2">
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">THÔNG TIN TÀI KHOẢN (chỉ giao sau khi mua)</label>
+          <textarea class="table-input w-full rounded px-4 py-2.5 text-sm font-mono" id="p-account-info" rows="4" placeholder="Email: xxx&#10;Password: xxx&#10;Backup code: xxx"></textarea>
+        </div>
+        <div class="col-span-2">
+          <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">TAGS (cách nhau bởi dấu phẩy)</label>
+          <input class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-tags" placeholder="prime, global elite, inventory,..."/>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-3 p-6 border-t border-outline-variant/20">
+      <button onclick="closeProductModal()" class="flex-1 py-2.5 rounded border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:border-white/20 transition-colors text-sm font-label-caps">HỦY</button>
+      <button onclick="saveProduct()" id="save-product-btn" class="flex-1 py-2.5 rounded neon-btn text-sm font-label-caps">LƯU sản phẩm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODAL: Delivery (Giao Tải Khoản) -->
+<!-- ================================================================ -->
+<div id="delivery-modal" class="modal-overlay">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="flex items-center justify-between p-6 border-b border-outline-variant/20">
+      <h3 class="font-headline-md text-headline-md text-on-surface">Giao Tải Khoản</h3>
+      <button onclick="closeDeliveryModal()" class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="p-6 space-y-4">
+      <input type="hidden" id="delivery-order-id"/>
+      <div class="p-4 rounded-lg border border-yellow-800 bg-yellow-900/10">
+        <p class="text-yellow-400 text-sm font-body-md">
+          <span class="material-symbols-outlined text-[16px] align-middle mr-1">warning</span>
+          Thông tin này sẽ được gửi đến người mua. Kiểm tra kỹ trước khi xác nhận!
+        </p>
+      </div>
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">THÔNG TIN TÀI KHOẢN *</label>
+        <textarea class="table-input w-full rounded px-4 py-3 text-sm font-mono" id="delivery-account-info" rows="6" placeholder="Email: user@example.com&#10;Password: P@ssw0rd123&#10;Recovery: abc123&#10;..."></textarea>
+      </div>
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">GHI CHÚ (tùy chọn)</label>
+        <input class="table-input w-full rounded px-4 py-2.5 text-sm" id="delivery-note" placeholder="Lưu ý thêm cho người mua..."/>
+      </div>
+    </div>
+    <div class="flex gap-3 p-6 border-t border-outline-variant/20">
+      <button onclick="closeDeliveryModal()" class="flex-1 py-2.5 rounded border border-outline-variant/30 text-on-surface-variant hover:text-on-surface hover:border-white/20 transition-colors text-sm font-label-caps">HỦY</button>
+      <button onclick="confirmDelivery()" id="delivery-btn" class="flex-1 py-2.5 rounded text-sm font-label-caps font-bold" style="background:#4ade80;color:#052e16;">XÁC NHẬN GIAO</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- MODAL: User Detail -->
+<!-- ================================================================ -->
+<div id="user-detail-modal" class="modal-overlay">
+  <div class="modal-box" style="max-width:560px;">
+    <div class="flex items-center justify-between p-6 border-b border-outline-variant/20">
+      <h3 class="font-headline-md text-headline-md text-on-surface">Chi Tiết Người Dùng</h3>
+      <button onclick="closeUserDetail()" class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="p-6 space-y-5">
+      <input type="hidden" id="user-detail-uid"/>
+      <div class="flex items-center gap-4 p-4 rounded-lg" style="background:#0e0e0e;">
+        <div class="w-14 h-14 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xl" id="user-detail-avatar">A</div>
+        <div>
+          <div class="font-headline-md text-headline-md text-on-surface font-semibold" id="user-detail-name">---</div>
+          <div class="text-sm text-on-surface-variant" id="user-detail-email">---</div>
+          <div class="flex gap-2 mt-1">
+            <span class="px-2 py-0.5 rounded text-[10px] font-label-caps border border-primary-container/30 text-primary-fixed-dim" id="user-detail-role">user</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-label-caps border border-outline-variant/30 text-on-surface-variant" id="user-detail-joined">---</span>
+          </div>
+        </div>
+        <div class="ml-auto text-right">
+          <div class="text-sm text-on-surface-variant font-label-caps">SỐ DƯ</div>
+          <div class="font-price-display text-price-display text-xl text-primary" id="user-detail-balance">$0</div>
+        </div>
+      </div>
+
+      <!-- Adjust Balance -->
+<!-- Adjust balance removed -->
+
+      <!-- Order History -->
+      <div>
+        <h4 class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase mb-3">Lịch Sử Đơn Hàng</h4>
+        <div id="user-orders-list" class="space-y-2 max-h-48 overflow-y-auto">
+          <div class="text-center text-on-surface-variant text-sm py-4">Đang tải...</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-3 p-6 border-t border-outline-variant/20">
+      <button onclick="closeUserDetail()" class="flex-1 py-2.5 rounded border border-outline-variant/30 text-on-surface-variant hover:text-on-surface transition-colors text-sm font-label-caps">ĐÓNG</button>
+      <button onclick="openChatFromUser()" class="flex-1 py-2.5 rounded ghost-btn text-sm font-label-caps">NHẮN TIN</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<!-- FIREBASE SCRIPT -->
+<!-- ================================================================ -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import {
+  getFirestore, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc,
+  collection, query, orderBy, limit, where, serverTimestamp,
+  onSnapshot, increment, setDoc
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+const firebaseConfig = {
+  apiKey: "AIzaSyDk4ies5X6BSqd9igMv2M0xY3e7f2F8H48",
+  authDomain: "project1234-4f440.firebaseapp.com",
+  projectId: "project1234-4f440",
+  storageBucket: "project1234-4f440.firebasestorage.app",
+  messagingSenderId: "698848283898",
+  appId: "1:698848283898:web:84eca38cdc370c7f3f4d43",
+  measurementId: "G-P0KJH5C58Q"
+};
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+let currentUser = null, currentUserData = null;
+let chatUnsubscribe = null, messagesUnsubscribe = null;
+let allProducts = [], allOrders = [], allUsers = [];
+let selectedConvId = null, selectedConvUserId = null;
+let currentOrderFilter = 'all';
+
+// ?? Auth Guard ??
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href = 'signin.html'; return; }
+  try {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (!userDoc.exists()) { window.location.href = 'landingpage.html'; return; }
+    const ud = userDoc.data();
+    if (ud.role !== 'admin') { window.location.href = 'landingpage.html'; return; }
+    currentUser = user; currentUserData = ud;
+    document.getElementById('admin-name').textContent = ud.username || user.displayName || 'Admin';
+    document.getElementById('admin-email').textContent = user.email;
+    document.getElementById('auth-loading').style.display = 'none';
+    document.getElementById('app-layout').style.visibility = 'visible';
+    showTab('overview');
+  } catch (err) {
+    console.error('Auth guard error:', err);
+    // // Lỗi Firestore -> không cho vào, redirect về signin để thử lại
+    window.location.href = 'signin.html';
+  }
+});
+
+// ?? Tab Systim ??
+window.showTab = function(name) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-itim').forEach(l => l.classList.remove('active-nav'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active-nav');
+  if (chatUnsubscribe && name !== 'chat') { chatUnsubscribe(); chatUnsubscribe = null; }
+  if (messagesUnsubscribe && name !== 'chat') { messagesUnsubscribe(); messagesUnsubscribe = null; }
+  if (name === 'overview') initOverview();
+  else if (name === 'products') initProducts();
+  else if (name === 'orders') initOrders('all');
+  else if (name === 'users') initUsers();
+  else if (name === 'chat') initChat();
+  else if (name === 'settings') initSettings();
+};
+
+// ?? OVERVIEW ??
+async function initOverview() {
+  try {
+    const [prodSnap, orderSnap, userSnap] = await Promise.all([
+      getDocs(collection(db, 'products')),
+      getDocs(collection(db, 'orders')),
+      getDocs(collection(db, 'users'))
+    ]);
+    const orders = orderSnap.docs.map(d => ({id:d.id,...d.data()}));
+    const prods  = prodSnap.docs.map(d => ({id:d.id,...d.data()}));
+    const revenue = orders.filter(o=>o.status==='completed').reduce((s,o)=>s+(o.amount||0),0);
+    const sold    = orders.filter(o=>o.status==='completed').length;
+    const inStock = prods.filter(p=>p.status==='in_stock').length;
+    const pending = orders.filter(o=>o.status==='pending').length;
+    document.getElementById('stat-revenue').textContent = '$'+revenue.toLocaleString();
+    document.getElementById('stat-sold').textContent = sold;
+    document.getElementById('stat-instock').textContent = inStock;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-users').textContent = userSnap.size;
+    // Badge
+    const badge = document.getElementById('orders-badge');
+    badge.textContent = pending; badge.style.display = pending>0?'flex':'none';
+    // Recent lists
+    const recent5orders = orders.sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
+    const el = document.getElementById('recent-orders-list');
+    el.innerHTML = recent5orders.length ? recent5orders.map(o=>{
+      const sc={completed:'#4ade80',pending:'#eab308',processing:'#60a5fa',cancelled:'#f87171'};
+      return `<div class="flex items-center justify-between py-2 border-b border-outline-variant/10 last:border-0">
+        <div><div class="text-sm text-on-surface">${o.productName||'N/A'}</div><div class="text-xs text-on-surface-variant">${o.userEmail||o.userId?.slice(0,12)||'N/A'}</div></div>
+        <div class="text-right"><div class="text-sm text-primary font-price-display">$${o.amount||0}</div><div style="color:${sc[o.status]||'#849495'}" class="text-xs">${o.status||'---'}</div></div>
+      </div>`;
+    }).join('') : '<div class="text-center text-on-surface-variant text-sm py-4">Chưa có Đơn Hàng</div>';
+    // Recent users
+    const recentUsers = userSnap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,5);
+    const uel = document.getElementById('recent-users-list');
+    uel.innerHTML = recentUsers.length ? recentUsers.map(u=>`<div class="flex items-center justify-between py-2 border-b border-outline-variant/10 last:border-0">
+      <div><div class="text-sm text-on-surface">${u.username||'N/A'}</div><div class="text-xs text-on-surface-variant">${u.email||'N/A'}</div></div>
+      <span class="px-2 py-0.5 rounded text-[10px] font-label-caps ${u.role==='admin'?'border-secondary/30 text-secondary':'border-primary-container/30 text-primary-fixed-dim'} border">${u.role||'user'}</span>
+    </div>`).join('') : '<div class="text-center text-on-surface-variant text-sm py-4">Chưa có Người Dùng</div>';
+  } catch(err) { console.error('Overview:', err); }
+}
+
+// ?? PRODUCTS ??
+async function initProducts() {
+  document.getElementById('products-tbody').innerHTML = '<tr><td colspan="5" class="text-center p-6 text-on-surface-variant">Đang tải...</td></tr>';
+  try {
+    const snap = await getDocs(query(collection(db,'products'), orderBy('createdAt','desc')));
+    allProducts = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderProducts(allProducts);
+  } catch(err) { console.error('Products:', err); }
+}
+function renderProducts(list) {
+  const tbody = document.getElementById('products-tbody');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="5" class="text-center p-8 text-on-surface-variant">Chưa có sản phẩm nào</td></tr>'; return; }
+  tbody.innerHTML = list.map(p => {
+    const badge = p.status==='in_stock'
+      ? '<span class="px-2 py-1 rounded text-[10px] font-label-caps status-completed">Còn hàng</span>'
+      : p.status==='sold'
+      ? '<span class="px-2 py-1 rounded text-[10px] font-label-caps status-cancelled">Đã bán</span>'
+      : p.status==='reserved'
+      ? '<span class="px-2 py-1 rounded text-[10px] font-label-caps status-processing">Đang giữ chỗ</span>'
+      : '<span class="px-2 py-1 rounded text-[10px] font-label-caps" style="background:rgba(132,148,149,0.1);color:#849495;border:1px solid rgba(132,148,149,0.3);">Ẩn</span>';
+    const time = p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString('vi-VN') : '---';
+    return `<tr class="border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+      <td class="p-3">
+        <div class="flex items-center gap-3">
+          ${p.imageUrl?`<img src="${p.imageUrl}" class="w-10 h-10 rounded object-cover" onerror="this.style.display='none'"/>`:`<div class="w-10 h-10 rounded flex items-center justify-center" style="background:#1f1f1f;"><span class="material-symbols-outlined text-sm text-on-surface-variant">image</span></div>`}
+          <div><div class="font-body-md text-on-surface font-medium text-sm">${p.name||'N/A'}</div><div class="text-xs text-on-surface-variant">${p.platform||'N/A'}</div></div>
+        </div>
+      </td>
+      <td class="p-3">
+        <div class="font-price-display text-primary text-sm">${formatPrice(p.price||0, p.currency||'VND')}</div>
+        ${p.originalPrice?`<div class="text-xs text-on-surface-variant line-through">${formatPrice(p.originalPrice, p.currency||'VND')}</div>`:''}
+      </td>
+      <td class="p-3">${badge}</td>
+      <td class="p-3 text-xs text-on-surface-variant">${time}</td>
+      <td class="p-3">
+        <div class="flex gap-2">
+          <button onclick="editProduct('${p.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary-container/50 hover:text-primary transition-colors">Sửa</button>
+          ${p.status==='reserved'
+            ? `<button onclick="releaseProduct('${p.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps border border-yellow-800/50 text-yellow-400 hover:bg-yellow-900/20 transition-colors">Giải phóng</button>`
+            : `<button onclick="toggleProductStatus('${p.id}','${p.status}')" class="px-3 py-1 rounded text-[10px] font-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-secondary/50 hover:text-secondary transition-colors">${p.status==='hidden'?'Hiện':'Ẩn'}</button>`
+          }
+          <button onclick="deleteProduct('${p.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps danger-btn">Xóa</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+window.filterProducts = (val) => renderProducts(allProducts.filter(p=>(p.name||'').toLowerCase().includes(val.toLowerCase())||(p.platform||'').toLowerCase().includes(val.toLowerCase())));
+window.filterProductsByPlatform = (val) => renderProducts(val?allProducts.filter(p=>p.platform===val):allProducts);
+
+// Helper: format giá theo currency
+function formatPrice(amount, currency) {
+  if (currency === 'VND') return new Intl.NumberFormat('vi-VN').format(amount) + 'đ';
+  return '$' + Number(amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+}
+
+// Cập nhật label + symbol khi đổi loại tiền
+window.updateCurrencyLabels = function() {
+  const cur = document.getElementById('p-currency').value;
+  const isVND = cur === 'VND';
+  document.getElementById('label-price').textContent     = isVND ? 'GIÁ BÁN (VND) *' : 'GIÁ BÁN (USD) *';
+  document.getElementById('label-orig-price').textContent = isVND ? 'GIÁ GỐC (VND) (để gạch ngang)' : 'GIÁ GỐC (USD) (để gạch ngang)';
+  document.getElementById('price-symbol').textContent     = isVND ? '₫' : '$|';
+  document.getElementById('orig-price-symbol').textContent = isVND ? '₫' : '$|';
+  document.getElementById('p-price').placeholder          = isVND ? '500000' : '25';
+  document.getElementById('p-original-price').placeholder = isVND ? '700000' : '35';
+  document.getElementById('p-price').step                 = isVND ? '1000' : '0.01';
+  document.getElementById('p-original-price').step        = isVND ? '1000' : '0.01';
+};
+window.openAddProduct = () => {
+  document.getElementById('modal-product-title').textContent = 'Thêm sản phẩm Mới';
+  document.getElementById('edit-product-id').value = '';
+  ['p-name','p-price','p-original-price','p-desc','p-account-info','p-image-url','p-tags'].forEach(id=>{document.getElementById(id).value='';});
+  document.getElementById('p-platform').value = 'Facebook Via';
+  document.getElementById('p-currency').value = 'VND';
+  updateCurrencyLabels();
+  document.getElementById('product-modal').classList.add('open');
+};
+window.editProduct = (id) => {
+  const p = allProducts.find(x=>x.id===id); if(!p) return;
+  document.getElementById('modal-product-title').textContent = 'Sửa sản phẩm';
+  document.getElementById('edit-product-id').value = id;
+  document.getElementById('p-name').value = p.name||'';
+  document.getElementById('p-platform').value = p.platform||'Facebook Via';
+  document.getElementById('p-currency').value = p.currency||'VND';
+  updateCurrencyLabels();
+  document.getElementById('p-price').value = p.price||'';
+  document.getElementById('p-original-price').value = p.originalPrice||'';
+  document.getElementById('p-desc').value = p.description||'';
+  document.getElementById('p-account-info').value = p.accountInfo||'';
+  document.getElementById('p-image-url').value = p.imageUrl||'';
+  document.getElementById('p-tags').value = (p.tags||[]).join(', ');
+  document.getElementById('product-modal').classList.add('open');
+};
+window.closeProductModal = () => document.getElementById('product-modal').classList.remove('open');
+window.saveProduct = async () => {
+  const id = document.getElementById('edit-product-id').value;
+  const currency = document.getElementById('p-currency').value;
+  const data = {
+    name: document.getElementById('p-name').value.trim(),
+    platform: document.getElementById('p-platform').value,
+    currency: currency,
+    price: parseFloat(document.getElementById('p-price').value)||0,
+    originalPrice: parseFloat(document.getElementById('p-original-price').value)||null,
+    description: document.getElementById('p-desc').value.trim(),
+    accountInfo: document.getElementById('p-account-info').value.trim(),
+    imageUrl: document.getElementById('p-image-url').value.trim(),
+    tags: document.getElementById('p-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+  };
+  if (!data.name||!data.price) return alert('Vui lòng điền tên và giá sản phẩm.');
+  const btn = document.getElementById('save-product-btn');
+  btn.disabled=true; btn.textContent='Đang lưu...';
+  try {
+    if (id) { await updateDoc(doc(db,'products',id), {...data, updatedAt:serverTimestamp()}); }
+    else { await addDoc(collection(db,'products'), {...data, status:'in_stock', createdAt:serverTimestamp()}); }
+    closeProductModal(); initProducts();
+  } catch(err) { alert('Lỗi: '+err.message); }
+  finally { btn.disabled=false; btn.textContent='Lưu sản phẩm'; }
+};
+window.toggleProductStatus = async (id, cur) => {
+  const n = cur==='hidden'?'in_stock':'hidden';
+  await updateDoc(doc(db,'products',id), {status:n, updatedAt:serverTimestamp()});
+  initProducts();
+};
+window.releaseProduct = async (id) => {
+  if (!confirm('Giải phóng sản phẩm này v? "Còn hàng"? (Dùng khi hu? ??t hàng)')) return;
+  await updateDoc(doc(db,'products',id), {status:'in_stock', reservedBy:null, reservedAt:null, updatedAt:serverTimestamp()});
+  initProducts();
+};
+window.deleteProduct = async (id) => {
+  if (!confirm('Xác nhận xóa sản phẩm này?')) return;
+  await deleteDoc(doc(db,'products',id)); initProducts();
+};
+
+// ?? ORDERS ??
+async function initOrders(filter) {
+  currentOrderFilter = filter||'all';
+  document.querySelectorAll('.order-filter-btn').forEach(b=>b.classList.remove('active-filter'));
+  document.getElementById('filter-'+currentOrderFilter).classList.add('active-filter');
+  document.getElementById('orders-tbody').innerHTML = '<tr><td colspan="8" class="text-center p-6 text-on-surface-variant">Đang tải...</td></tr>';
+  try {
+    const snap = await getDocs(query(collection(db,'orders'), orderBy('createdAt','desc'), limit(100)));
+    allOrders = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const filtered = currentOrderFilter==='all' ? allOrders : allOrders.filter(o=>o.status===currentOrderFilter);
+    renderOrders(filtered);
+  } catch(err) { console.error('Orders:', err); }
+}
+function renderOrders(list) {
+  const tbody = document.getElementById('orders-tbody');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" class="text-center p-8 text-on-surface-variant">Không có Đơn Hàng nào</td></tr>'; return; }
+  tbody.innerHTML = list.map(o => {
+    const sc={pending:'status-pending',processing:'status-processing',completed:'status-completed',cancelled:'status-cancelled'};
+    const sl={pending:'Chờ xử lý',processing:'Đang xử lý',completed:'Hoàn thành',cancelled:'Đã hủy'};
+    const time = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleString('vi-VN') : '---';
+    let actions = '';
+    if (o.status==='pending') actions = `<button onclick="approveOrder('${o.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps status-processing hover:opacity-80 transition-opacity">Xác nhận</button><button onclick="cancelOrder('${o.id}')" class="px-2 py-1 rounded text-[10px] font-label-caps danger-btn ml-1">HỦY</button>`;
+    else if (o.status==='processing') actions = `<button onclick="openDelivery('${o.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps status-completed hover:opacity-80 transition-opacity">Giao TK</button><button onclick="cancelOrder('${o.id}')" class="px-2 py-1 rounded text-[10px] font-label-caps danger-btn ml-1">HỦY</button>`;
+    else if (o.deliveredAccountInfo) actions = `<button onclick="viewDeliveredInfo('${o.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-colors">Xem TK</button>`;
+    else actions = '<span class="text-xs text-on-surface-variant">---</span>';
+    const pm = o.paymentMethod ? ({'vietqr':'VietQR','momo':'MoMo','usdt':'USDT'}[o.paymentMethod]||o.paymentMethod) : '---';
+    return `<tr class="border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+      <td class="p-3 font-label-caps text-[10px] text-on-surface-variant">#${o.id.slice(0,8).toUpperCase()}</td>
+      <td class="p-3 text-sm text-on-surface max-w-[140px] truncate">${o.productName||o.productId?.slice(0,12)||'N/A'}</td>
+      <td class="p-3 text-xs text-on-surface-variant max-w-[140px] truncate">${o.userEmail||o.userId?.slice(0,10)||'N/A'}</td>
+      <td class="p-3 font-price-display text-primary text-sm">$${(o.amount||0).toLocaleString()}</td>
+      <td class="p-3 text-xs text-on-surface-variant">${pm}</td>
+      <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-label-caps ${sc[o.status]||sc.pending}">${sl[o.status]||o.status||'---'}</span></td>
+      <td class="p-3 text-xs text-on-surface-variant whitespace-nowrap">${time}</td>
+      <td class="p-3"><div class="flex gap-1 flex-wrap">${actions}</div></td>
+    </tr>`;
+  }).join('');
+}
+window.filterOrders = (f) => initOrders(f);
+window.searchOrders = (val) => {
+  const q = val.toLowerCase();
+  const filtered = allOrders.filter(o => o.productName?.toLowerCase().includes(q)||o.userEmail?.toLowerCase().includes(q)||o.id?.toLowerCase().includes(q));
+  renderOrders(currentOrderFilter==='all'?filtered:filtered.filter(o=>o.status===currentOrderFilter));
+};
+window.approveOrder = async (id) => { await updateDoc(doc(db,'orders',id),{status:'processing',updatedAt:serverTimestamp()}); initOrders(currentOrderFilter); };
+window.cancelOrder = async (id) => { if(!confirm('Hủy Đơn Hàng này?'))return; await updateDoc(doc(db,'orders',id),{status:'cancelled',updatedAt:serverTimestamp()}); initOrders(currentOrderFilter); };
+window.openDelivery = (id) => { document.getElementById('delivery-order-id').value=id; document.getElementById('delivery-account-info').value=''; document.getElementById('delivery-note').value=''; document.getElementById('delivery-modal').classList.add('open'); };
+window.closeDeliveryModal = () => document.getElementById('delivery-modal').classList.remove('open');
+window.viewDeliveredInfo = (id) => { const o=allOrders.find(x=>x.id===id); if(o)alert('Thông tin TÀI KHOẢN đã giao:\n\n'+o.deliveredAccountInfo); };
+window.confirmDelivery = async () => {
+  const id   = document.getElementById('delivery-order-id').value;
+  const info = document.getElementById('delivery-account-info').value.trim();
+  const note = document.getElementById('delivery-note').value.trim();
+  if (!info) return alert('Vui lòng nhập thông tin TÀI KHOẢN.');
+  const btn = document.getElementById('delivery-btn');
+  btn.disabled=true; btn.textContent='Dang xu ly...';
+  try {
+    // Lấy order ?? biết productId
+    const orderSnap = await getDoc(doc(db,'orders',id));
+    const orderData = orderSnap.exists() ? orderSnap.data() : {};
+
+    // Cập nhật order -> completed
+    await updateDoc(doc(db,'orders',id), {
+      status:'completed', deliveredAccountInfo:info,
+      deliveryNote:note||null, deliveredAt:serverTimestamp(), updatedAt:serverTimestamp()
+    });
+
+    // Mark sản phẩm -> sold
+    if (orderData.productId) {
+      await updateDoc(doc(db,'products',orderData.productId), {
+        status:'sold', soldAt:serverTimestamp(), soldTo:orderData.userId||null, updatedAt:serverTimestamp()
+      });
+    }
+
+    closeDeliveryModal(); initOrders(currentOrderFilter); initProducts();
+  } catch(err) { alert('Lỗi: '+err.message); }
+  finally { btn.disabled=false; btn.textContent='XÁC NHẬN GIAO'; }
+};
+
+// ?? USERS ??
+async function initUsers() {
+  document.getElementById('users-tbody').innerHTML = '<tr><td colspan="6" class="text-center p-6 text-on-surface-variant">Đang tải...</td></tr>';
+  try {
+    const snap = await getDocs(query(collection(db,'users'), orderBy('createdAt','desc'), limit(100)));
+    allUsers = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderUsers(allUsers);
+  } catch(err) { console.error('Users:', err); }
+}
+function renderUsers(list) {
+  const tbody = document.getElementById('users-tbody');
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="6" class="text-center p-8 text-on-surface-variant">Chưa có Người Dùng nao</td></tr>'; return; }
+  tbody.innerHTML = list.map(u => {
+    const rc = u.role==='admin'?'border-secondary/30 text-secondary':'border-primary-container/30 text-primary-fixed-dim';
+    const sc = u.banned ? 'status-cancelled':'status-completed';
+    const sl = u.banned ? 'Bị ban':'Hoạt động';
+    const time = u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString('vi-VN') : '---';
+    return `<tr class="border-b border-outline-variant/10 hover:bg-surface-container-low transition-colors">
+      <td class="p-3">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-primary-container flex-shrink-0 flex items-center justify-center text-on-primary-fixed font-bold text-sm">${(u.username||u.email||'?')[0].toUpperCase()}</div>
+          <div><div class="text-sm text-on-surface font-medium">${u.username||'N/A'}</div><div class="text-xs text-on-surface-variant">${u.email||'N/A'}</div></div>
+        </div>
+      </td>
+      <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-label-caps border ${rc}">${u.role||'user'}</span></td>
+      <td class="p-3 font-price-display text-primary text-sm">$${(u.balance||0).toLocaleString()}</td>
+      <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-label-caps ${sc}">${sl}</span></td>
+      <td class="p-3 text-xs text-on-surface-variant">${time}</td>
+      <td class="p-3">
+        <div class="flex gap-1.5 flex-wrap">
+          <button onclick="openUserDetail('${u.id}')" class="px-3 py-1 rounded text-[10px] font-label-caps border border-outline-variant/30 text-on-surface-variant hover:border-primary-container/50 hover:text-primary transition-colors">Chi tiết</button>
+          <button onclick="toggleRole('${u.id}','${u.role}')" class="px-3 py-1 rounded text-[10px] font-label-caps ghost-btn">${u.role==='admin'?'Hạ xuống':'Lên Admin'}</button>
+          <button onclick="toggleBan('${u.id}',${!!u.banned})" class="px-3 py-1 rounded text-[10px] font-label-caps danger-btn">${u.banned?'Gỡ ban':'Ban'}</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+window.filterUsers = (val) => { const q=val.toLowerCase(); renderUsers(allUsers.filter(u=>(u.username||'').toLowerCase().includes(q)||(u.email||'').toLowerCase().includes(q))); };
+window.toggleRole = async (uid, cur) => {
+  const n = cur==='admin'?'user':'admin';
+  if(!confirm(`Doi role thanh "${n}"?`)) return;
+  await updateDoc(doc(db,'users',uid),{role:n}); initUsers();
+};
+window.toggleBan = async (uid, banned) => {
+  if(!confirm(banned?'Gỡ ban user này?':'Ban user này?')) return;
+  await updateDoc(doc(db,'users',uid),{banned:!banned}); initUsers();
+};
+window.openUserDetail = async (uid) => {
+  const u = allUsers.find(x=>x.id===uid); if(!u) return;
+  document.getElementById('user-detail-uid').value = uid;
+  document.getElementById('user-detail-avatar').textContent = (u.username||u.email||'?')[0].toUpperCase();
+  document.getElementById('user-detail-name').textContent = u.username||'N/A';
+  document.getElementById('user-detail-email').textContent = u.email||'N/A';
+  document.getElementById('user-detail-role').textContent = u.role||'user';
+  document.getElementById('user-detail-joined').textContent = u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString('vi-VN') : '---';
+  document.getElementById('user-detail-balance').textContent = '$'+(u.balance||0).toLocaleString();
+  document.getElementById('adjust-amount').value = '';
+  document.getElementById('user-orders-list').innerHTML = '<div class="text-center text-on-surface-variant text-sm py-4">Đang tải...</div>';
+  document.getElementById('user-detail-modal').classList.add('open');
+  try {
+    const snap = await getDocs(query(collection(db,'orders'), where('userId','==',uid), orderBy('createdAt','desc'), limit(10)));
+    const orders = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const el = document.getElementById('user-orders-list');
+    el.innerHTML = orders.length ? orders.map(o=>{
+      const sc={completed:'#4ade80',pending:'#eab308',processing:'#60a5fa',cancelled:'#f87171'};
+      const time = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleDateString('vi-VN') : '---';
+      return `<div class="flex items-center justify-between p-3 rounded border border-outline-variant/20" style="background:#0e0e0e;">
+        <div><div class="text-sm text-on-surface">${o.productName||'N/A'}</div><div class="text-xs text-on-surface-variant">${time}</div></div>
+        <div class="text-right"><div class="text-sm text-primary">$${o.amount||0}</div><div style="color:${sc[o.status]||'#849495'}" class="text-xs">${o.status||'---'}</div></div>
+      </div>`;
+    }).join('') : '<div class="text-center text-on-surface-variant text-sm py-4">Chưa có Đơn Hàng</div>';
+  } catch(err) {
+    document.getElementById('user-orders-list').innerHTML = '<div class="text-center text-on-surface-variant text-sm py-4">Cần tạo index Firestore</div>';
+  }
+};
+window.closeUserDetail = () => document.getElementById('user-detail-modal').classList.remove('open');
+window.adjustBalance = async () => {
+  const uid = document.getElementById('user-detail-uid').value;
+  const amount = parseFloat(document.getElementById('adjust-amount').value);
+  if (isNaN(amount)) return alert('Nhập số hợp lệ.');
+  const u = allUsers.find(x=>x.id===uid);
+  const newBal = (u.balance||0) + amount;
+  if (newBal<0) return alert('Số dư không được âm.');
+  await updateDoc(doc(db,'users',uid),{balance:newBal});
+  document.getElementById('user-detail-balance').textContent = '$'+newBal.toLocaleString();
+  const idx = allUsers.findIndex(x=>x.id===uid);
+  if (idx>=0) allUsers[idx].balance = newBal;
+  alert(`Da ${amount>=0?'them':'tru'} $${Math.abs(amount)} ${amount>=0?'vao':'tu'} TÀI KHOẢN.`);
+};
+window.openChatFromUser = () => {
+  const uid = document.getElementById('user-detail-uid').value;
+  closeUserDetail();
+  showTab('chat');
+  setTimeout(() => selectConversation(uid), 500);
+};
+
+// ?? CHAT ??
+async function initChat() {
+  const convList = document.getElementById('conv-list');
+  convList.innerHTML = '<div class="p-4 text-center text-on-surface-variant text-sm">Đang tải...</div>';
+  if (chatUnsubscribe) chatUnsubscribe();
+  chatUnsubscribe = onSnapshot(query(collection(db,'conversations'), orderBy('lastAt','desc'), limit(50)), (snap) => {
+    const convs = snap.docs.map(d=>({id:d.id,...d.data()}));
+    // Update total unread badge
+    const total = convs.reduce((s,c)=>s+(c.unreadAdmin||0),0);
+    const badge = document.getElementById('chat-badge');
+    badge.textContent = total; badge.style.display = total>0?'flex':'none';
+    // Render list
+    if (!convs.length) { convList.innerHTML = '<div class="p-4 text-center text-on-surface-variant text-sm">Chưa có cuộc trò chuyện nào</div>'; return; }
+    convList.innerHTML = convs.map(c => {
+      const time = c.lastAt ? new Date(c.lastAt.toDate()).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}) : '';
+      const unread = c.unreadAdmin||0;
+      const isSelected = c.id===selectedConvId;
+      return `<div class="chat-conv cursor-pointer p-4 border-b border-outline-variant/20 transition-colors ${isSelected?'selected':''}" onclick="selectConversation('${c.id}')">
+        <div class="flex items-center justify-between mb-1">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-surface-container-high flex-shrink-0 flex items-center justify-center text-xs font-bold text-primary">${(c.userName||'?')[0].toUpperCase()}</div>
+            <span class="font-medium text-on-surface text-sm">${c.userName||'User'}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            ${unread>0?`<span class="w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-[10px] font-bold" style="color:#320047;">${unread}</span>`:''}
+            <span class="text-[10px] text-on-surface-variant">${time}</span>
+          </div>
+        </div>
+        <div class="text-xs text-on-surface-variant truncate pl-9">${c.lastMessage||'Chua co tin nhan'}</div>
+      </div>`;
+    }).join('');
+  });
+}
+window.selectConversation = async (convId) => {
+  selectedConvId = convId;
+  const conv = await getDoc(doc(db,'conversations',convId));
+  const convData = conv.exists() ? conv.data() : {};
+  document.getElementById('chat-window').classList.remove('hidden');
+  document.getElementById('chat-placeholder').classList.add('hidden');
+  document.getElementById('chat-user-name').textContent = convData.userName||'User';
+  document.getElementById('chat-user-email').textContent = convData.userEmail||convId;
+  selectedConvUserId = convData.userId||convId;
+  // Reset unread
+  try { await updateDoc(doc(db,'conversations',convId),{unreadAdmin:0}); } catch(e){}
+  // Messages realtime
+  if (messagesUnsubscribe) messagesUnsubscribe();
+  const mc = document.getElementById('messages-container');
+  mc.innerHTML = '<div class="text-center text-on-surface-variant text-sm py-4">Đang tải tin nhắn...</div>';
+  messagesUnsubscribe = onSnapshot(query(collection(db,'conversations',convId,'messages'), orderBy('timestamp','asc')), (snap) => {
+    mc.innerHTML = snap.docs.map(d => {
+      const m=d.data(), time=m.timestamp?new Date(m.timestamp.toDate()).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}):'';
+      return m.isAdmin
+        ? `<div class="flex justify-end"><div class="max-w-[70%]"><div class="px-4 py-2 rounded-lg rounded-tr-sm" style="background:linear-gradient(135deg,#00f2ff,#00c8d4);color:#002022;">${renderMsgContent(m)}</div><div class="text-[10px] text-on-surface-variant text-right mt-1">${time} · Admin</div></div></div>`
+        : `<div class="flex justify-start"><div class="max-w-[70%]"><div class="text-[10px] text-on-surface-variantimb-1">${m.senderName||'User'}</div><div class="px-4 py-2 rounded-lg rounded-tl-sm text-on-surface border border-outline-variant/20" style="background:#1f1f1f;">${renderMsgContent(m)}</div><div class="text-[10px] text-on-surface-variantimt-1">${time}</div></div></div>`;
+    }).join('');
+    mc.scrollTop = mc.scrollHeight;
+  });
+};
+function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Convert file thành base64 để lưu Firestore (không cần Storage)
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
+// ── File attachment helpers ──
+let adminPendingFiles = [];
+
+
+async function compressImage(file) {
+  if (!file.type.startsWith('image/') || file.type === 'image/gif') return file;
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const img = new Image();
+      img.src = e.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const MAX_SIZE = 1280;
+        if (width > height && width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+        else if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => {
+          if (!blob) { resolve(file); return; }
+          const newName = file.name.replace(/.[^/.]+$/, "") + ".webp";
+          const compressed = new File([blob], newName, { type: 'image/webp', lastModified: Date.now() });
+          resolve(compressed.size < file.size ? compressed : file);
+        }, 'image/webp', 0.8);
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
+  });
+}
+
+window.adminHandleFiles = async function(input) {
+  const files = Array.from(input.files);
+  for (const f of files) {
+    if (f.size > 10 * 1024 * 1024) { alert(`File "${f.name}" quá 10MB.`); continue; }
+    adminPendingFiles.push(await compressImage(f));
+  }
+  input.value = '';
+  renderAdminAttachPreview();
+};
+
+function renderAdminAttachPreview() {
+  const preview = document.getElementById('admin-attach-preview');
+  if (!adminPendingFiles.length) { preview.classList.add('hidden'); preview.innerHTML = ''; return; }
+  preview.classList.remove('hidden');
+  preview.innerHTML = adminPendingFiles.map((f, i) => {
+    const isImg = f.type.startsWith('image/');
+    const icon  = isImg ? 'image' : 'description';
+    return `<div class="flex items-center gap-1.5 bg-surface-container px-2 py-1 rounded border border-outline-variant/30 text-xs text-on-surface-variant max-w-[160px]">
+      <span class="material-symbols-outlined text-[14px] flex-shrink-0">${icon}</span>
+      <span class="truncate">${escHtml(f.name)}</span>
+      <button onclick="adminRemoveFile(${i})" class="flex-shrink-0 text-error hover:text-error/70 ml-1">
+        <span class="material-symbols-outlined text-[14px]">close</span>
+      </button>
+    </div>`;
+  }).join('');
+}
+
+window.adminRemoveFile = function(idx) {
+  adminPendingFiles.splice(idx, 1);
+  renderAdminAttachPreview();
+};
+
+function renderMsgContent(m) {
+    if (m.status === 'uploading') {
+      return `<div class="flex items-center gap-2 text-sm opacity-70"><span class="material-symbols-outlined animate-spin text-[16px]">sync</span> ${m.text ? escHtml(m.text) + '<br>' : ''}Đang tải file...</div>`;
+    }
+  const text  = m.text ? `<p class="text-sm whitespace-pre-wrap break-words">${escHtml(m.text)}</p>` : '';
+  const files = (m.files || []).map(f => {
+    if (f.type && f.type.startsWith('image/')) {
+      return `<a href="${f.url}" target="_blank" class="block mt-1"><img src="${f.url}" class="max-w-[220px] max-h-[180px] rounded-lg border border-white/10 object-cover cursor-zoom-in hover:opacity-90 transition-opacity" alt="${escHtml(f.name)}"/></a>`;
+    }
+    return `<a href="${f.url}" target="_blank" class="flex items-center gap-1.5 mt-1 px-3 py-1.5 rounded border border-outline-variant/30 text-xs hover:border-primary-container/50 transition-colors" style="background:#1a1a1a;">
+      <span class="material-symbols-outlined text-[14px] text-primary-fixed-dim">description</span>
+      <span class="text-on-surface truncate max-w-[180px]">${escHtml(f.name)}</span>
+      <span class="material-symbols-outlined text-[14px] text-on-surface-variantiml-auto">download</span>
+    </a>`;
+  }).join('');
+  return text + files;
+}
+
+window.quickReply = (text) => { document.getElementById('admin-msg-input').value = text; document.getElementById('admin-msg-input').focus(); };
+window.adminMsgKeydown = (e) => { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();adminSendMessage();} };
+window.adminSendMessage = async () => {
+  if (!selectedConvId) return;
+  const input = document.getElementById('admin-msg-input');
+  const text  = input.value.trim();
+  const files = [...adminPendingFiles];
+  if (!text && !files.length) return;
+
+  const btn = document.getElementById('admin-send-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '...'; }
+
+  input.value = '';
+  adminPendingFiles = [];
+  renderAdminAttachPreview();
+
+  try {
+    // Convert files sang base64 (không cần Firebase Storage)
+    const uploadedFiles = [];
+    for (const f of files) {
+      if (f.size > 5 * 1024 * 1024) { alert(`File "${f.name}" quá 5MB.`); continue; }
+      const dataUrl = await fileToBase64(f);
+      uploadedFiles.push({ name: f.name, url: dataUrl, type: f.type, size: f.size });
+    }
+
+    await addDoc(collection(db, 'conversations', selectedConvId, 'messages'), {
+      senderId:   currentUser.uid,
+      senderName: currentUserData?.username || 'Admin',
+      isAdmin:    true,
+      text:       text || '',
+      files:      uploadedFiles,
+      timestamp:  serverTimestamp(),
+      read:       false,
+      status:     'sent'
+    });
+
+    const preview = text || (uploadedFiles.length ? `[${uploadedFiles.length} file đính kèm]` : '');
+    await updateDoc(doc(db, 'conversations', selectedConvId), {
+      lastMessage: preview, lastAt: serverTimestamp(), unreadUser: increment(1)
+    });
+  } catch(err) { console.error('Send msg:', err); }
+  finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Gửi'; }
+  }
+};
+window.viewUserFromChat = () => {
+  if (selectedConvUserId) { closeUserDetail(); showTab('users'); setTimeout(()=>openUserDetail(selectedConvUserId),600); }
+};
+
+// ?? SETTINGS: Payment Methods ??
+// Lưu tim QR URLs pending upload
+const pendingQRFiles = { vietqr: null, momo: null, usdt: null };
+const removedQRs     = { vietqr: false, momo: false, usdt: false };
+
+function showQRPreview(pm, url) {
+  const img  = document.getElementById(pm + '-qr-preview');
+  const icon = document.getElementById(pm + '-preview-icon');
+  const hint = document.getElementById(pm + '-qr-url-hint');
+  const rmBtn= document.getElementById(pm + '-remove-btn');
+  if (url) {
+    img.src = url; img.classList.remove('hidden');
+    icon.classList.add('hidden');
+    hint.classList.remove('hidden');
+    rmBtn.classList.remove('hidden');
+  } else {
+    img.src = ''; img.classList.add('hidden');
+    icon.classList.remove('hidden');
+    hint.classList.add('hidden');
+    rmBtn.classList.add('hidden');
+  }
+}
+
+window.previewQR = async function(pm, input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { alert('Ảnh quá lớn. Vui lòng chọn ảnh dưới 5MB.'); input.value = ''; return; }
+    
+    // Nén ảnh siêu nhẹ trước khi đưa vào hàng đợi upload
+    const compressed = await compressImage(file);
+    pendingQRFiles[pm] = compressed;
+    
+    removedQRs[pm] = false;
+    const reader = new FileReader();
+    reader.onload = (e) => showQRPreview(pm, e.target.result);
+    reader.readAsDataURL(compressed);
+  };
+
+window.removeQR = function(pm) {
+  pendingQRFiles[pm] = null;
+  removedQRs[pm] = true;
+  showQRPreview(pm, null);
+  const input = document.getElementById(pm + '-qr-file');
+  if (input) input.value = '';
+};
+
+async function initSettings() {
+  // Reset pending state
+  ['vietqr','momo','usdt'].forEach(pm => { pendingQRFiles[pm] = null; removedQRs[pm] = false; });
+  try {
+    const snap = await getDoc(doc(db, 'config', 'paymentMethods'));
+    if (!snap.exists()) return;
+    const d = snap.data();
+    if (d.vietqr) {
+      document.getElementById('vietqr-bank').value    = d.vietqr.bank    || '';
+      document.getElementById('vietqr-account').value = d.vietqr.account || '';
+      document.getElementById('vietqr-name').value    = d.vietqr.name    || '';
+      document.getElementById('pm-vietqr-enabled').checked = d.vietqr.enabled !== false; document.getElementById('pm-vietqr-label').textContent = d.vietqr.enabled !== false ? 'Bật' : 'Tắt';
+      if (d.vietqr.qrUrl) showQRPreview('vietqr', d.vietqr.qrUrl);
+    }
+    if (d.momo) {
+      document.getElementById('momo-phone').value = d.momo.phone || '';
+      document.getElementById('momo-name').value  = d.momo.name  || '';
+      document.getElementById('pm-momo-enabled').checked = d.momo.enabled !== false; document.getElementById('pm-momo-label').textContent = d.momo.enabled !== false ? 'Bật' : 'Tắt';
+      if (d.momo.qrUrl) showQRPreview('momo', d.momo.qrUrl);
+    }
+    if (d.usdt) {
+      document.getElementById('usdt-address').value = d.usdt.address || '';
+      document.getElementById('pm-usdt-enabled').checked = d.usdt.enabled !== false; document.getElementById('pm-usdt-label').textContent = d.usdt.enabled !== false ? 'Bật' : 'Tắt';
+      if (d.usdt.qrUrl) showQRPreview('usdt', d.usdt.qrUrl);
+    }
+  } catch(err) { console.error('Load settings:', err); }
+}
+
+window.savePaymentSettings = async function() {
+  const btn = document.querySelector('[onclick="savePaymentSettings()"]');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">hourglass_empty</span>Đang lưu...'; }
+
+  try {
+    // Upload ảnh QR lên Storage nếu có file mới
+    const qrUrls = { vietqr: null, momo: null, usdt: null };
+
+    // Lấy URL c? t? Firestore tr??c
+    const oldSnap = await getDoc(doc(db, 'config', 'paymentMethods'));
+    const oldData = oldSnap.exists() ? oldSnap.data() : {};
+
+    for (const pm of ['vietqr', 'momo', 'usdt']) {
+      
+        if (pendingQRFiles[pm]) {
+          // Convert the compressed File directly to Base64
+          qrUrls[pm] = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(pendingQRFiles[pm]);
+          });
+        } else if (removedQRs[pm]) {
+
+        qrUrls[pm] = null; // Xóa ảnh
+      } else {
+        qrUrls[pm] = oldData[pm]?.qrUrl || null; // Giữ URL cũ
+      }
+    }
+
+    const data = {
+      vietqr: {
+        enabled: document.getElementById('pm-vietqr-enabled').checked,
+        bank:    document.getElementById('vietqr-bank').value.trim(),
+        account: document.getElementById('vietqr-account').value.trim(),
+        name:    document.getElementById('vietqr-name').value.trim(),
+        qrUrl:   qrUrls.vietqr,
+      },
+      momo: {
+        enabled: document.getElementById('pm-momo-enabled').checked,
+        phone:   document.getElementById('momo-phone').value.trim(),
+        name:    document.getElementById('momo-name').value.trim(),
+        qrUrl:   qrUrls.momo,
+      },
+      usdt: {
+        enabled: document.getElementById('pm-usdt-enabled').checked,
+        address: document.getElementById('usdt-address').value.trim(),
+        network: 'TRC20',
+        qrUrl:   qrUrls.usdt,
+      },
+      updatedAt: serverTimestamp()
+    };
+
+    await setDoc(doc(db, 'config', 'paymentMethods'), data);
+
+    // Reset pending files sau khi l?u thành công
+    ['vietqr','momo','usdt'].forEach(pm => { pendingQRFiles[pm] = null; removedQRs[pm] = false; });
+
+    if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check_circle</span>Đã Lưu!'; }
+    setTimeout(() => {
+      if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">save</span>Lưu Cài Đặt'; }
+    }, 2500);
+  } catch(err) {
+    alert('Lỗi lưu: ' + err.message);
+    if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">save</span>Lưu Cài Đặt'; }
+  }
+};
+
+// ?? Logout ??
+document.getElementById('logout-btn').addEventListener('click', async () => {
+  sessionStorage.clear();
+  if (messagesUnsubscribe) messagesUnsubscribe();
+  if (chatUnsubscribe) chatUnsubscribe();
+  await signOut(auth);
+  window.location.href = 'signin.html';
+});
+</script>
+</body></html>
+
+
+
+

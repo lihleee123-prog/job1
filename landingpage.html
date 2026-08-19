@@ -1,0 +1,1167 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShopAccFacebook - Account Marketplace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "inverse-surface": "#e5e2e1",
+                      "surface-container-highest": "#353534",
+                      "secondary-fixed-dim": "#ebb2ff",
+                      "on-secondary-container": "#fff6fc",
+                      "primary-container": "#00f2ff",
+                      "on-secondary-fixed-variant": "#74009f",
+                      "surface-container-lowest": "#0e0e0e",
+                      "surface-container-low": "#1c1b1b",
+                      "surface": "#131313",
+                      "outline-variant": "#3a494b",
+                      "on-error": "#690005",
+                      "on-secondary-fixed": "#320047",
+                      "primary": "#e1fdff",
+                      "on-tertiary-container": "#5e6060",
+                      "on-primary-fixed": "#002022",
+                      "secondary-fixed": "#f8d8ff",
+                      "surface-container-high": "#2a2a2a",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "surface-container": "#201f1f",
+                      "inverse-primary": "#00696f",
+                      "primary-fixed-dim": "#00dbe7",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-surface": "#e5e2e1",
+                      "surface-dim": "#131313",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "outline": "#849495",
+                      "surface-variant": "#353534",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface-bright": "#3a3939",
+                      "on-surface-variant": "#b9cacb",
+                      "secondary-container": "#b600f8",
+                      "on-tertiary": "#2f3131",
+                      "background": "#131313",
+                      "on-primary-fixed-variant": "#004f54",
+                      "primary-fixed": "#74f5ff",
+                      "surface-tint": "#00dbe7",
+                      "tertiary": "#f7f8f8",
+                      "inverse-on-surface": "#313030",
+                      "error-container": "#93000a",
+                      "on-secondary": "#520072",
+                      "on-background": "#e5e2e1",
+                      "on-primary-container": "#006a71",
+                      "tertiary-container": "#dbdbdb",
+                      "error": "#ffb4ab",
+                      "secondary": "#ebb2ff",
+                      "on-error-container": "#ffdad6",
+                      "on-primary": "#00363a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-desktop": "64px",
+                      "container-max": "1280px",
+                      "margin-mobile": "16px",
+                      "unit": "4px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Sora"
+                      ],
+                      "price-display": [
+                              "Sora"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Sora"
+                      ],
+                      "headline-xl": [
+                              "Sora"
+                      ],
+                      "headline-lg": [
+                              "Sora"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "price-display": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #050505;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism & High-Contrast Bold utilities */
+        .glass-panel {
+            background: rgba(26, 26, 26, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+        
+        .neon-glow-primary-hover:hover {
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+            border-color: rgba(0, 242, 255, 0.5);
+        }
+        
+        .neon-text-primary {
+            text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+        }
+        
+        .premium-border-gradient {
+            background: linear-gradient(#1a1a1a, #1a1a1a) padding-box,
+                        linear-gradient(45deg, #00f2ff, #b600f8) border-box;
+            border: 1px solid transparent;
+        }
+
+        /* Custom Scrollbar for Ticker */
+        .ticker-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .ticker-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        .ticker-scroll::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 255, 0.3);
+            border-radius: 4px;
+        }
+        
+        /* Ticker Animation */
+        @keyframes scroll-up {
+            0% { transform: translateY(100%); opacity: 0; }
+            10% { transform: translateY(0); opacity: 1; }
+            90% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
+        }
+        .ticker-item {
+            animation: scroll-up 5s infinite;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-[0_0_15px_rgba(0,242,255,0.1)]">
+<div class="flex items-center gap-gutter">
+<a class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-primary neon-text-primary" href="landingpage.html">ShopAccFacebook</a>
+<div class="hidden md:flex items-center gap-8 ml-8">
+<a class="text-primary border-b-2 border-primary pb-1 font-label-caps text-label-caps hover:text-primary transition-colors duration-200" href="landingpage.html">Marketplace</a>
+
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-[#0a0a0a] border border-outline-variant/30 text-on-surface font-body-md text-body-md rounded-DEFAULT py-2 pl-10 pr-4 w-64 focus:outline-none focus:border-primary-fixed-dim focus:ring-1 focus:ring-primary-fixed-dim transition-all" placeholder="Search accounts, IDs..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<!-- Guest Nav (shown when not logged in) -->
+<div class="hidden items-center gap-3" id="nav-guest">
+  <a href="signin.html" class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200 border border-outline-variant/30 px-4 py-2 rounded-DEFAULT hover:border-primary/40">Đăng Nhập</a>
+  <a href="createaccount.html" class="font-label-caps text-label-caps bg-primary-container text-on-primary-container px-4 py-2 rounded-DEFAULT hover:bg-primary-fixed-dim transition-colors duration-200 font-bold">Đăng Ký</a>
+</div>
+<!-- User Nav (shown when logged in) -->
+<div class="hidden items-center gap-4" id="nav-user">
+<a href="admindashboard.html" id="nav-admin-link" class="hidden font-label-caps text-label-caps text-secondary hover:text-secondary-fixed transition-colors px-3 py-2 border border-secondary/30 rounded-DEFAULT hover:border-secondary/60">Admin</a>
+<a href="profile.html" id="nav-profile-link" class="hidden font-label-caps text-label-caps text-primary hover:text-primary-fixed transition-colors px-3 py-2 border border-primary/30 rounded-DEFAULT hover:border-primary/60">Hồ Sơ</a>
+<button id="nav-logout-btn" class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 hover:border-error/50 transition-colors flex items-center justify-center" title="Đăng xuất">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px] hover:text-error transition-colors">logout</span>
+</button>
+</div>
+</div>
+</nav>
+
+<!-- Main Layout -->
+<main class="flex-grow pt-24 pb-16 px-margin-desktop max-w-[1600px] mx-auto w-full grid grid-cols-12 gap-gutter">
+<!-- Left Content Canvas (Col 1-9) -->
+<div class="col-span-12 lg:col-span-9 flex flex-col gap-16">
+<!-- Hero Banner -->
+<section class="w-full relative h-[400px] rounded-xl overflow-hidden glass-panel premium-border-gradient flex items-center group">
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/60 to-transparent z-0"></div>
+<div class="absolute inset-0" style="background: radial-gradient(ellipse at 70% 50%, rgba(182,0,248,0.15) 0%, transparent 60%), radial-gradient(ellipse at 30% 50%, rgba(0,242,255,0.1) 0%, transparent 60%);"></div>
+<div class="relative z-10 p-12 w-full md:w-2/3" id="hero-content">
+  <div class="inline-flex items-center gap-2 bg-secondary-container/20 border border-secondary text-secondary px-3 py-1 rounded-DEFAULT font-label-caps text-label-caps mb-4 backdrop-blur-sm">
+    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">storefront</span>
+    ShopAccFacebook
+  </div>
+  <h1 class="font-headline-xl text-headline-xl text-primary neon-text-primary mb-4 uppercase" id="hero-title">MUA BÁN TÀI KHOẢN<br/>GAMING UY TÍN</h1>
+  <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl" id="hero-desc">Nền tảng giao dịch tài khoản số hàng đầu. Bảo mật đa lớp, giao dịch tức thì, hỗ trợ 24/7.</p>
+  <div class="flex items-center gap-4">
+    <a href="createaccount.html" class="bg-primary text-[#050505] font-headline-md text-sm font-bold py-3 px-8 rounded-lg neon-glow-primary hover:bg-primary-fixed transition-all uppercase tracking-wider">ĐĂNG KÝ NGAY</a>
+    <a href="signin.html" class="border border-primary/50 text-primary font-label-caps text-label-caps py-3 px-6 rounded-lg hover:bg-primary/10 transition-all uppercase tracking-wider">ĐĂNG NHẬP</a>
+  </div>
+</div>
+</section>
+<!-- Trust Badges -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="glass-panel p-4 flex items-center gap-4 rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">flash_on</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-sm text-on-surface">Instant Delivery</div>
+<div class="font-body-md text-body-md text-xs text-on-surface-variant">System automated</div>
+</div>
+</div>
+<div class="glass-panel p-4 flex items-center gap-4 rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center border border-secondary/20">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-sm text-on-surface">24/7 Support</div>
+<div class="font-body-md text-body-md text-xs text-on-surface-variant">Live chat available</div>
+</div>
+</div>
+<div class="glass-panel p-4 flex items-center gap-4 rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-sm text-on-surface">Bảo hành 1:1</div>
+<div class="font-body-md text-body-md text-xs text-on-surface-variant">Lifetime warranty</div>
+</div>
+</div>
+<div class="glass-panel p-4 flex items-center gap-4 rounded-DEFAULT hover:bg-surface-container transition-colors">
+<div class="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center border border-tertiary/20">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">autorenew</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-sm text-on-surface">Auto Delivery</div>
+<div class="font-body-md text-body-md text-xs text-on-surface-variant">API integrated</div>
+</div>
+</div>
+</section>
+<!-- Category & Filter -->
+<div class="sticky top-20 z-40 bg-surface/90 backdrop-blur-md py-4 border-b border-outline-variant/10 flex justify-between items-center -mx-4 px-4">
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+<button id="filter-all" onclick="filterByPlatform('')" class="platform-btn bg-primary/10 text-primary border border-primary/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap">All Assets</button>
+<button id="filter-Facebook Via" onclick="filterByPlatform('Facebook Via')" class="platform-btn glass-panel text-on-surface-variant hover:text-on-surface hover:border-outline-variant/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap transition-colors">Facebook Via</button>
+<button id="filter-Bandai Namco" onclick="filterByPlatform('Bandai Namco')" class="platform-btn glass-panel text-on-surface-variant hover:text-on-surface hover:border-outline-variant/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap transition-colors">Bandai Namco</button>
+</div>
+<div class="flex items-center gap-2 glass-panel px-3 py-2 rounded-DEFAULT cursor-pointer hover:bg-surface-container">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Sort:</span>
+<span class="font-label-caps text-label-caps text-primary">Newest</span>
+<span class="material-symbols-outlined text-sm text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<!-- Product Grid — load từ Firestore -->
+<section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="product-grid">
+  <!-- Skeleton loading -->
+  <div class="glass-panel rounded-DEFAULT p-4 animate-pulse" id="product-skeleton">
+    <div class="h-32 rounded-sm bg-surface-container-high mb-4"></div>
+    <div class="h-4 bg-surface-container-high rounded mb-2 w-3/4"></div>
+    <div class="h-3 bg-surface-container-high rounded w-1/2"></div>
+  </div>
+</section>
+</div>
+<!-- Right Sidebar (Col 10-12) -->
+<aside class="col-span-12 lg:col-span-3 hidden lg:flex flex-col gap-6">
+<div class="glass-panel rounded-DEFAULT p-6 sticky top-28 border-l-2 border-l-secondary/50">
+<div class="flex items-center gap-2 mb-6 pb-4 border-b border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary animate-pulse" style="font-variation-settings: 'FILL' 1;">sensors</span>
+<h2 class="font-headline-md text-headline-md text-base text-on-surface">Live Purchases</h2>
+</div>
+<div class="h-[400px] overflow-hidden relative">
+<div class="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-surface via-transparent to-surface"></div>
+<div class="flex flex-col gap-4 overflow-y-auto ticker-scroll h-full py-4 pr-2" id="live-ticker">
+  <div class="text-center text-on-surface-variant text-sm py-8">Đang tải...</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer (JSON Injected & Customized) -->
+<footer class="w-full py-16 px-margin-desktop grid grid-cols-1 md:grid-cols-2 items-start gap-gutter bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/10">
+<div class="flex flex-col gap-6">
+<div class="font-headline-md text-headline-md text-on-surface neon-text-primary tracking-tighter">ShopAccFacebook</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">The premier secured digital asset protocol for high-tier gaming accounts and digital identities.</p>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-8">Â© 2024 ShopAccFacebook. SECURED DIGITAL ASSET PROTOCOL.</div>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<!-- Payment Methods -->
+<div>
+<h4 class="font-headline-md text-headline-md text-sm text-on-surface mb-4 uppercase">Supported Networks</h4>
+<div class="grid grid-cols-3 gap-2">
+<div class="h-10 bg-surface-container border border-outline-variant/20 rounded flex items-center justify-center text-[10px] font-label-caps text-on-surface-variant hover:border-primary transition-colors">VietQR</div>
+<div class="h-10 bg-surface-container border border-outline-variant/20 rounded flex items-center justify-center text-[10px] font-label-caps text-on-surface-variant hover:border-secondary transition-colors">MoMo</div>
+<div class="h-10 bg-surface-container border border-outline-variant/20 rounded flex items-center justify-center text-[10px] font-label-caps text-on-surface-variant hover:border-primary transition-colors">USDT</div>
+<div class="h-10 bg-surface-container border border-outline-variant/20 rounded flex items-center justify-center text-[10px] font-label-caps text-on-surface-variant hover:border-primary transition-colors">Visa</div>
+</div>
+</div>
+<!-- Links -->
+<div class="flex flex-col gap-3">
+<h4 class="font-headline-md text-headline-md text-sm text-on-surface mb-1 uppercase">Protocol Links</h4>
+<a class="font-body-md text-body-md text-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">FAQ</a>
+<a class="font-body-md text-body-md text-sm text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Support</a>
+</div>
+</div>
+</footer>
+
+<!-- Global function bridges — gọi trước khi module load xong cũng được -->
+<script>
+  function openBuyModal(pid, pname, price, currency) {
+    if (typeof window._openBuyModal === 'function') {
+      window._openBuyModal(pid, pname, price, currency);
+    } else {
+      // Module chưa load xong, đợi rồi thử lại
+      setTimeout(() => openBuyModal(pid, pname, price, currency), 100);
+    }
+  }
+  function closeBuyModal()   { if (typeof window._closeBuyModal   === 'function') window._closeBuyModal(); }
+  function buyNextStep()     { if (typeof window._buyNextStep     === 'function') window._buyNextStep(); }
+  function backToBuyStep1()  { if (typeof window._backToBuyStep1  === 'function') window._backToBuyStep1(); }
+  function confirmBuy()      { if (typeof window._confirmBuy      === 'function') window._confirmBuy(); }
+  function toggleChatWidget(){ if (typeof window._toggleChatWidget=== 'function') window._toggleChatWidget(); }
+  function widgetSend()      { if (typeof window._widgetSend      === 'function') window._widgetSend(); }
+  function widgetHandleFiles(i){ if (typeof window._widgetHandleFiles==='function') window._widgetHandleFiles(i); }
+  function widgetRemoveFile(i) { if (typeof window._widgetRemoveFile ==='function') window._widgetRemoveFile(i); }
+  function filterByPlatform(p){ if (typeof window._filterByPlatform==='function') window._filterByPlatform(p); }
+</script>
+
+<!-- Firebase Auth State Manager + Product Loader -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { getFirestore, doc, getDoc, getDocs, addDoc, updateDoc, setDoc, collection, query, orderBy, where, limit, onSnapshot, serverTimestamp, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  const firebaseConfig = {
+    apiKey: "AIzaSyDk4ies5X6BSqd9igMv2M0xY3e7f2F8H48",
+    authDomain: "project1234-4f440.firebaseapp.com",
+    projectId: "project1234-4f440",
+    storageBucket: "project1234-4f440.firebasestorage.app",
+    messagingSenderId: "698848283898",
+    appId: "1:698848283898:web:84eca38cdc370c7f3f4d43",
+    measurementId: "G-P0KJH5C58Q"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  const navGuest  = document.getElementById('nav-guest');
+  const navUser   = document.getElementById('nav-user');
+  const adminLink = document.getElementById('nav-admin-link');
+
+  // â”€â”€ Auth State â”€â”€
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      navGuest.style.display = 'none';
+      navUser.style.display  = 'flex';
+      const profileLink = document.getElementById('nav-profile-link');
+      if (profileLink) profileLink.classList.remove('hidden');
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          const ud = userDoc.data();
+          if (ud.role === 'admin') adminLink.classList.remove('hidden');
+          const balEl = navUser.querySelector('.font-price-display');
+          if (balEl) balEl.textContent = '$' + (ud.balance || 0).toLocaleString();
+        }
+      } catch (_) {}
+    } else {
+      navGuest.style.display = 'flex';
+      navUser.style.display  = 'none';
+    }
+  });
+
+  // Logout
+  const logoutBtn = document.getElementById('nav-logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+      sessionStorage.clear();
+      await signOut(auth);
+    });
+  }
+
+  // Helper format giá
+  function formatPrice(amount, currency) {
+    if (currency === 'VND') return new Intl.NumberFormat('vi-VN').format(amount) + 'đ';
+    return '$' + Number(amount).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+  }
+
+  // â”€â”€ Load Products từ Firestore â”€â”€
+  let allProducts = [];
+  let currentPlatformFilter = '';
+
+  async function loadProducts() {
+    const grid = document.getElementById('product-grid');
+    try {
+      const snap = await getDocs(query(
+        collection(db, 'products'),
+        where('status', '==', 'in_stock'),
+        limit(50)
+      ));
+      allProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      // Sáº¯p xáº¿p in-memory Ä‘á»ƒ khÃ´ng cáº§n composite index trÃªn Firestore
+      allProducts.sort((a, b) => {
+        const tA = a.createdAt?.seconds || 0;
+        const tB = b.createdAt?.seconds || 0;
+        return tB - tA;
+      });
+      renderProducts(allProducts);
+    } catch (err) {
+      console.error('Load products error:', err);
+      grid.innerHTML = `<div class="col-span-3 text-center py-16 text-on-surface-variant">
+        <span class="material-symbols-outlined text-4xl mb-4 block opacity-30">inventory_2</span>
+        <p>Không thể tải sản phẩm. Vui lòng thử lại.</p>
+      </div>`;
+    }
+  }
+
+  function renderProducts(list) {
+    const grid = document.getElementById('product-grid');
+    if (!list.length) {
+      grid.innerHTML = `<div class="col-span-3 text-center py-16 text-on-surface-variant">
+        <span class="material-symbols-outlined text-5xl mb-4 block opacity-20">storefront</span>
+        <p class="font-body-md text-body-md">Chưa có sản phẩm nào. Admin hãy thêm sản phẩm qua dashboard.</p>
+      </div>`;
+      return;
+    }
+
+    const platformColors = {
+      'Steam': '#4c9be8', 'Riot': '#ff4655', 'Facebook Via': '#1877F2',
+      'Bandai Namco': '#ff7a00', 'Epic Games': '#9d4dff', 'Blizzard': '#00b4ff',
+      'Ubisoft': '#2563eb', 'Other': '#849495'
+    };
+
+    grid.innerHTML = list.map(p => {
+      const color = platformColors[p.platform] || '#849495';
+      const imgStyle = p.imageUrl
+        ? `background-image: url('${p.imageUrl}'); background-size: cover; background-position: center;`
+        : `background: linear-gradient(135deg, #1a1a1a, #2a2a2a);`;
+      const tags = (p.tags || []).slice(0, 3).map(t =>
+        `<span class="text-[10px] font-label-caps px-2 py-1 bg-surface-container-high text-on-surface-variant rounded border border-outline-variant/20">${t}</span>`
+      ).join('');
+      const origPrice = p.originalPrice
+        ? `<div class="text-xs text-on-surface-variant line-through mb-1">${formatPrice(p.originalPrice, p.currency||'VND')}</div>`
+        : '';
+
+      return `<div class="glass-panel rounded-DEFAULT p-4 flex flex-col gap-4 neon-glow-primary-hover transition-all duration-300 group cursor-pointer">
+        <div class="relative h-32 rounded-sm overflow-hidden border border-outline-variant/20">
+          <div class="absolute inset-0 group-hover:scale-110 transition-transform duration-500" style="${imgStyle}"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+          <div class="absolute top-2 left-2 bg-black/80 backdrop-blur-sm border border-outline-variant/30 px-2 py-1 rounded text-[10px] font-label-caps text-on-surface flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full" style="background:${color};"></span> ${p.platform || 'Other'}
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-headline-md text-headline-md text-base text-on-surface mb-2 truncate group-hover:text-primary transition-colors">${p.name || 'N/A'}</h3>
+          ${p.description ? `<p class="text-xs text-on-surface-variant mb-3 line-clamp-2">${p.description}</p>` : ''}
+          <div class="flex flex-wrap gap-2">${tags}</div>
+        </div>
+        <div class="mt-auto flex items-end justify-between border-t border-outline-variant/10 pt-4">
+          <div>
+            ${origPrice}
+            <div class="font-price-display text-price-display text-xl text-primary">${formatPrice(p.price||0, p.currency||'VND')}</div>
+          </div>
+          <button 
+            data-name="${(p.name || 'N/A').replace(/"/g, '&quot;')}" 
+            data-currency="${(p.currency || 'VND').replace(/"/g, '&quot;')}"
+            onclick="openBuyModal('${p.id}', this.getAttribute('data-name'), ${p.price || 0}, this.getAttribute('data-currency'))"
+            class="bg-primary/10 border border-primary text-primary hover:bg-primary hover:text-[#050505] font-label-caps text-[10px] font-bold px-4 py-2 rounded transition-colors uppercase whitespace-nowrap">
+            Mua Ngay
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Filter theo platform
+  window.filterByPlatform = window._filterByPlatform = function(platform) {
+    currentPlatformFilter = platform;
+    document.querySelectorAll('.platform-btn').forEach(b => {
+      b.className = b.className.replace('bg-primary/10 text-primary border-primary/50', 'glass-panel text-on-surface-variant');
+    });
+    const activeBtn = document.getElementById('filter-' + (platform || 'all'));
+    if (activeBtn) activeBtn.className = activeBtn.className.replace('glass-panel text-on-surface-variant', 'bg-primary/10 text-primary border-primary/50');
+    const filtered = platform ? allProducts.filter(p => p.platform === platform) : allProducts;
+    renderProducts(filtered);
+  };
+
+  // â”€â”€ Live Ticker từ Firestore orders â”€â”€
+  function loadLiveTicker() {
+    const ticker = document.getElementById('live-ticker');
+    if (!ticker) return;
+    onSnapshot(
+      query(collection(db, 'orders'), where('status', '==', 'completed'), limit(30)),
+      (snap) => {
+        if (snap.empty) {
+          ticker.innerHTML = '<div class="text-center text-on-surface-variant text-sm py-8 opacity-50">Chưa có giao dịch nào</div>';
+          return;
+        }
+        
+        // Sort in-memory to avoid needing composite index
+        const docs = snap.docs.map(d => d.data());
+        docs.sort((a, b) => (b.deliveredAt?.seconds || 0) - (a.deliveredAt?.seconds || 0));
+        const limitedDocs = docs.slice(0, 15);
+
+        const colors = ['border-primary/30', 'border-secondary/30', 'border-primary-container/30'];
+        const textColors = ['text-primary', 'text-secondary', 'text-primary-container'];
+        ticker.innerHTML = limitedDocs.map((o, i) => {
+          const userId = o.userId || '';
+          const masked = 'User *' + (userId.slice(-3) || '???');
+          const name = o.productName || 'Tài khoản';
+          const ci = i % 3;
+          const timeStr = o.deliveredAt
+            ? (() => {
+                const diff = Math.floor((Date.now() - o.deliveredAt.toDate()) / 60000);
+                return diff < 1 ? 'vừa xong' : diff < 60 ? `${diff} phút trước` : `${Math.floor(diff/60)} giờ trước`;
+              })()
+            : '';
+          return `<div class="flex gap-3 items-start border-l-2 ${colors[ci]} pl-3 py-1">
+            <div class="w-8 h-8 rounded bg-surface-container-high flex-shrink-0 border border-outline-variant/20 flex items-center justify-center">
+              <span class="material-symbols-outlined text-xs text-on-surface-variant">person</span>
+            </div>
+            <div>
+              <p class="font-body-md text-body-md text-sm text-on-surface">
+                <span class="${textColors[ci]} font-mono">${masked}</span> đã mua ${name}
+              </p>
+              <p class="text-xs text-on-surface-variant mt-1">${timeStr}</p>
+            </div>
+          </div>`;
+        }).join('');
+      },
+      () => {
+        // Nếu chưa có index, bỏ qua ticker
+        if (document.getElementById('live-ticker')) {
+          document.getElementById('live-ticker').innerHTML = '';
+        }
+      }
+    );
+  }
+
+  // Khá»Ÿi Ä‘á»™ng
+  loadProducts();
+  loadLiveTicker();
+  loadPaymentSettings();
+
+  // â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?
+  // CHAT WIDGET + BUY FLOW (dÃ¹ng chung app/auth/db)
+  // â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?â•?
+
+  let widgetUser = null;
+  let widgetMessagesUnsub = null;
+  let chatOpen = false;
+  let buyProductData = null;
+  let widgetPendingFiles = [];
+
+  // Helper escape html
+  function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // Convert file thành base64 (không cần Firebase Storage)
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Render nội dung tin nhắn (text + file)
+  function renderWidgetMsg(m, isAdmin) {
+      if (m.status === 'uploading') {
+        return `<div class="flex items-center gap-2 text-sm opacity-70"><span class="material-symbols-outlined animate-spin text-[16px]">sync</span> ${m.text ? escHtml(m.text) + '<br>' : ''}Đang tải file...</div>`;
+      }
+    const txt   = m.text ? `<span class="text-sm whitespace-pre-wrap break-words">${escHtml(m.text)}</span>` : '';
+    const color = isAdmin ? '#002022' : '#002022';
+    const files = (m.files || []).map(f => {
+      if (f.type && f.type.startsWith('image/')) {
+        return `<a href="${f.url}" target="_blank" class="block mt-1"><img src="${f.url}" class="max-w-[180px] max-h-[140px] rounded-lg object-cover cursor-zoom-in" alt="${escHtml(f.name)}"/></a>`;
+      }
+      return `<a href="${f.url}" target="_blank" class="flex items-center gap-1 mt-1 px-2 py-1 rounded border border-white/20 text-xs hover:opacity-80">
+        <span class="material-symbols-outlined text-[13px]">description</span>
+        <span class="truncate max-w-[140px]">${escHtml(f.name)}</span>
+        <span class="material-symbols-outlined text-[13px] ml-auto">download</span>
+      </a>`;
+    }).join('');
+    return txt + files;
+  }
+
+  // Widget file handling
+  
+async function compressImage(file) {
+  if (!file.type.startsWith('image/') || file.type === 'image/gif') return file;
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (e) => {
+      const img = new Image();
+      img.src = e.target.result;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const MAX_SIZE = 1280;
+        if (width > height && width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+        else if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => {
+          if (!blob) { resolve(file); return; }
+          const newName = file.name.replace(/\\.[^/.]+/, "") + ".webp";
+          const compressed = new File([blob], newName, { type: 'image/webp', lastModified: Date.now() });
+          resolve(compressed.size < file.size ? compressed : file);
+        }, 'image/webp', 0.8);
+      };
+      img.onerror = () => resolve(file);
+    };
+    reader.onerror = () => resolve(file);
+  });
+}
+
+window.widgetHandleFiles = window._widgetHandleFiles = async function(input) {
+    const files = Array.from(input.files);
+    for (const f of files) {
+      if (f.size > 10 * 1024 * 1024) { alert(`File "${f.name}" quá 10MB.`); continue; }
+      widgetPendingFiles.push(await compressImage(f));
+    }
+    input.value = '';
+    renderWidgetAttachPreview();
+  };
+
+  function renderWidgetAttachPreview() {
+    const preview = document.getElementById('widget-attach-preview');
+    if (!preview) return;
+    if (!widgetPendingFiles.length) { preview.classList.add('hidden'); preview.innerHTML = ''; return; }
+    preview.classList.remove('hidden');
+    preview.innerHTML = widgetPendingFiles.map((f, i) => {
+      const isImg = f.type.startsWith('image/');
+      return `<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded border border-outline-variant/30 text-xs text-on-surface-variant max-w-[140px]">
+        <span class="material-symbols-outlined text-[13px]">${isImg ? 'image' : 'description'}</span>
+        <span class="truncate flex-1">${escHtml(f.name)}</span>
+        <button onclick="widgetRemoveFile(${i})" class="text-error ml-1 flex-shrink-0"><span class="material-symbols-outlined text-[13px]">close</span></button>
+      </div>`;
+    }).join('');
+  }
+
+  window.widgetRemoveFile = window._widgetRemoveFile = function(idx) {
+    widgetPendingFiles.splice(idx, 1);
+    renderWidgetAttachPreview();
+  };
+
+  // Thông tin thanh toán — load từ Firestore config/paymentMethods
+  let PAYMENT_INFO = {
+    vietqr: { enabled: true, bank: '', account: '', name: '', qrUrl: null },
+    momo:   { enabled: true, phone: '', name: '', qrUrl: null },
+    usdt:   { enabled: true, address: '', network: 'TRC20', qrUrl: null }
+  };
+
+  // Load payment settings từ Firestore
+  async function loadPaymentSettings() {
+    try {
+      const snap = await getDoc(doc(db, 'config', 'paymentMethods'));
+      if (snap.exists()) {
+        const d = snap.data();
+        if (d.vietqr) PAYMENT_INFO.vietqr = { ...PAYMENT_INFO.vietqr, ...d.vietqr };
+        if (d.momo)   PAYMENT_INFO.momo   = { ...PAYMENT_INFO.momo,   ...d.momo };
+        if (d.usdt)   PAYMENT_INFO.usdt   = { ...PAYMENT_INFO.usdt,   ...d.usdt };
+      }
+    } catch(e) { console.warn('loadPaymentSettings:', e); }
+  }
+
+  // Auth cho widget (dùng cùng auth instance)
+  onAuthStateChanged(auth, (user) => {
+    widgetUser = user;
+    const fab = document.getElementById('chat-fab');
+    if (user) {
+      if (fab) fab.style.display = 'block';
+      // Pending buy sau khi login
+      const pendingBuy = sessionStorage.getItem('pendingBuy');
+      if (pendingBuy) {
+        try {
+          const pb = JSON.parse(pendingBuy);
+          sessionStorage.removeItem('pendingBuy');
+          setTimeout(() => window.openBuyModal(pb.productId, pb.productName, pb.price, pb.currency), 400);
+        } catch(_) {}
+      }
+      // Unread badge chat
+      onSnapshot(doc(db, 'conversations', user.uid), (snap) => {
+        if (!snap.exists()) return;
+        const unread = snap.data().unreadUser || 0;
+        const badge = document.getElementById('chat-fab-badge');
+        if (badge) { badge.textContent = unread; badge.style.display = unread > 0 ? 'flex' : 'none'; }
+      });
+    } else {
+      if (fab) fab.style.display = 'none';
+    }
+  });
+
+  // â”€â”€ Chat Widget â”€â”€
+  window.toggleChatWidget = window._toggleChatWidget = function() {
+    const widget = document.getElementById('chat-widget');
+    const icon   = document.getElementById('chat-fab-icon');
+    chatOpen = !chatOpen;
+    if (chatOpen) {
+      widget.style.display = 'block'; icon.textContent = 'close'; openWidgetChat();
+    } else {
+      widget.style.display = 'none'; icon.textContent = 'chat';
+      if (widgetMessagesUnsub) { widgetMessagesUnsub(); widgetMessagesUnsub = null; }
+    }
+  };
+
+  async function openWidgetChat() {
+    if (!widgetUser) return;
+    const uid = widgetUser.uid;
+    try {
+      const convRef  = doc(db, 'conversations', uid);
+      const convSnap = await getDoc(convRef);
+      if (!convSnap.exists()) {
+        await setDoc(convRef, { userId: uid, userName: widgetUser.displayName||'User', userEmail: widgetUser.email, lastMessage:'', lastAt: serverTimestamp(), unreadAdmin:0, unreadUser:0 });
+      } else { await updateDoc(convRef, { unreadUser: 0 }); }
+    } catch(_) {}
+    const mc = document.getElementById('widget-messages');
+    if (widgetMessagesUnsub) widgetMessagesUnsub();
+    widgetMessagesUnsub = onSnapshot(
+      query(collection(db, 'conversations', uid, 'messages'), orderBy('timestamp', 'asc')),
+      (snap) => {
+        if (snap.empty) { mc.innerHTML = '<div class="text-center text-on-surface-variant text-xs py-4">Xin chào! Chúng tôi luôn sẵn sàng hỗ trợ bạn 👋</div>'; return; }
+        mc.innerHTML = snap.docs.map(d => {
+          const m = d.data();
+          const time = m.timestamp?.toDate ? new Date(m.timestamp.toDate()).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}) : '';
+          return m.isAdmin
+            ? `<div class="flex justify-start mb-2"><div class="max-w-[85%]"><div class="rounded-2xl rounded-tl-none px-3 py-2 text-on-surface border border-outline-variant/30" style="background:#2a2a2a;">${renderWidgetMsg(m, true)}</div><div class="text-[10px] text-on-surface-variant mt-1">${time}</div></div></div>`
+            : `<div class="flex justify-end mb-2"><div class="max-w-[85%]"><div class="rounded-2xl rounded-tr-none px-3 py-2 font-medium" style="background:linear-gradient(135deg,#00f2ff,#00dbe7);color:#002022;">${renderWidgetMsg(m, false)}</div><div class="text-[10px] text-on-surface-variant text-right mt-1">${time}</div></div></div>`;
+        }).join('');
+        mc.scrollTop = mc.scrollHeight;
+      }
+    );
+  }
+
+  window.widgetSend = window._widgetSend = async function() {
+    if (!widgetUser) return;
+    const input = document.getElementById('widget-input');
+    const text  = input.value.trim();
+    const files = [...widgetPendingFiles];
+    if (!text && !files.length) return;
+    const btn = document.querySelector('[onclick="widgetSend()"]');
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
+
+    input.value = '';
+    widgetPendingFiles = [];
+    renderWidgetAttachPreview();
+
+    const uid = widgetUser.uid;
+    try {
+      // Convert files sang base64 (không cần Firebase Storage)
+      const uploadedFiles = [];
+      for (const f of files) {
+        if (f.size > 5 * 1024 * 1024) { alert(`File "${f.name}" quá 5MB.`); continue; }
+        const dataUrl = await fileToBase64(f);
+        uploadedFiles.push({ name: f.name, url: dataUrl, type: f.type, size: f.size });
+      }
+
+      await addDoc(collection(db, 'conversations', uid, 'messages'), {
+        senderId:   uid,
+        senderName: widgetUser.displayName || 'User',
+        isAdmin:    false,
+        text:       text || '',
+        files:      uploadedFiles,
+        timestamp:  serverTimestamp(),
+        read:       false,
+        status:     'sent'
+      });
+      const preview = text || (uploadedFiles.length ? `[${uploadedFiles.length} file đính kèm]` : '');
+      await updateDoc(doc(db, 'conversations', uid), {
+        lastMessage: preview, lastAt: serverTimestamp(), unreadAdmin: increment(1)
+      });
+    } catch(err) { console.error('Widget send error:', err); }
+    finally {
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+    }
+  };
+
+  // â”€â”€ Buy Flow â”€â”€
+  window.openBuyModal = window._openBuyModal = async function(productId, productName, price, currency) {
+    if (!widgetUser) {
+      sessionStorage.setItem('pendingBuy', JSON.stringify({productId, productName, price, currency}));
+      window.location.href = 'signin.html';
+      return;
+    }
+    // Reload payment settings mỗi lần mở modal để luôn fresh
+    await loadPaymentSettings();
+
+    const warning = document.getElementById('buy-stock-warning');
+    const btn     = document.getElementById('confirm-buy-btn');
+    warning.classList.add('hidden');
+    btn.disabled = false; btn.style.opacity = '1';
+
+    try {
+      const snap = await getDoc(doc(db, 'products', productId));
+      if (!snap.exists() || snap.data().status !== 'in_stock') {
+        warning.classList.remove('hidden');
+        btn.disabled = true; btn.style.opacity = '0.4';
+      }
+    } catch(_) {}
+
+    buyProductData = { productId, productName, price: price||0, currency: currency||'VND' };
+    document.getElementById('buy-product-name').textContent = productName;
+    document.getElementById('buy-product-price').textContent = formatPrice(price, currency||'VND');
+
+    // Render radio buttons dựa theo settings - ẩn phương thức bị tắt hoặc chưa cấu hình
+    const pmLabels = {
+      vietqr: { label: 'VietQR — Chuyển khoản ngân hàng', sub: 'Tự động xác nhận qua QR', accent: '#00f2ff' },
+      momo:   { label: 'MoMo', sub: 'Ví điện tử MoMo', accent: '#b600f8' },
+      usdt:   { label: 'USDT (TRC20)', sub: 'Thanh toán crypto', accent: '#00f2ff' }
+    };
+    const step1Container = document.getElementById('buy-step-1');
+    const available = ['vietqr','momo','usdt'].filter(pm => PAYMENT_INFO[pm]?.enabled !== false && PAYMENT_INFO[pm]?.enabled !== 'false');
+    if (available.length === 0) {
+      step1Container.innerHTML = `<p class="font-label-caps text-label-caps text-on-surface-variant text-[10px] mb-3">CHỌN PHƯƠNG THỨC THANH TOÁN</p>
+        <div class="text-center py-6 text-on-surface-variant text-sm">
+          <span class="material-symbols-outlined text-3xl block mb-2 opacity-30">payment</span>
+          Chưa có phương thức thanh toán nào được bật.<br/>Admin vui lòng cài đặt trong Dashboard.
+        </div>`;
+      btn.disabled = true; btn.style.opacity = '0.4';
+    } else {
+      step1Container.innerHTML = `<p class="font-label-caps text-label-caps text-on-surface-variant text-[10px] mb-3">CHỌN PHƯƠNG THỨC THANH TOÁN</p>
+        <div class="space-y-2">
+          ${available.map((pm, i) => `
+          <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 cursor-pointer hover:border-[${pmLabels[pm].accent}]/50 transition-colors">
+            <input type="radio" name="payment" value="${pm}" class="accent-[${pmLabels[pm].accent}]" ${i===0?'checked':''}/>
+            <div>
+              <div class="text-on-surface font-body-md text-sm font-medium">${pmLabels[pm].label}</div>
+              <div class="text-on-surface-variant text-xs">${pmLabels[pm].sub}</div>
+            </div>
+          </label>`).join('')}
+        </div>`;
+    }
+
+    document.getElementById('buy-step-1').classList.remove('hidden');
+      document.getElementById('buy-step-2').classList.add('hidden');
+    btn.textContent = 'TIẾP THEO';
+    btn.onclick = window.buyNextStep;
+    document.getElementById('buy-modal').style.display = 'flex';
+  };
+
+  window.closeBuyModal = window._closeBuyModal = function() {
+    document.getElementById('buy-modal').style.display = 'none';
+    buyProductData = null;
+  };
+
+  
+    window.buyNextStep = window._buyNextStep = function() {
+      if (!buyProductData) return;
+      const pm    = document.querySelector('input[name="payment"]:checked')?.value || 'vietqr';
+      const info  = PAYMENT_INFO[pm];
+      const price = formatPrice(buyProductData.price, buyProductData.currency);
+      const note  = 'ShopAccFacebook ' + buyProductData.productName;
+      let html = '';
+  
+      const notConfigured = (pm === 'vietqr' && !info.qrUrl && !info.account) ||
+                            (pm === 'momo'   && !info.qrUrl && !info.phone)   ||
+                            (pm === 'usdt'   && !info.qrUrl && !info.address);
+  
+      if (notConfigured) {
+        html = `<div class="text-center py-4">
+          <span class="material-symbols-outlined text-4xl text-on-surface-variant opacity-40 block mb-3">settings</span>
+          <p class="text-on-surface-variant text-sm">Phương thức thanh toán này chưa được cấu hình.</p>
+          <p class="text-on-surface-variant text-xs mt-1 opacity-70">Admin vui lòng cài đặt trong Dashboard &rarr; Cài Đặt Thanh Toán.</p>
+        </div>`;
+      } else if (pm === 'vietqr') {
+        const qrImg = info.qrUrl
+          ? `<img src="${info.qrUrl}" class="w-44 h-44 mx-auto rounded-lg border border-outline-variant/30 object-contain bg-white p-1" alt="QR"/>`
+          : `<img src="https://img.vietqr.io/image/${info.bank}-${info.account}-compact2.png?amount=${buyProductData.price}&addInfo=${encodeURIComponent(note)}&accountName=${encodeURIComponent(info.name)}" class="w-44 h-44 mx-auto rounded-lg border border-outline-variant/30 bg-white p-1" onerror="this.style.display='none'" alt="VietQR"/>`;
+        html = `<div class="text-center mb-3">${qrImg}</div>
+          <div class="space-y-2 text-sm">
+            ${info.bank ? `<div class="flex justify-between"><span class="text-on-surface-variant">Ngân hàng</span><span class="text-on-surface font-medium">${info.bank}</span></div>` : ''}
+            ${info.account ? `<div class="flex justify-between"><span class="text-on-surface-variant">Số tài khoản</span><span class="text-primary font-mono font-bold">${info.account}</span></div>` : ''}
+            ${info.name ? `<div class="flex justify-between"><span class="text-on-surface-variant">Chủ TK</span><span class="text-on-surface font-medium">${info.name}</span></div>` : ''}
+            <div class="flex justify-between"><span class="text-on-surface-variant">Số tiền</span><span class="text-primary font-bold">${price}</span></div>
+            <div class="pt-2 border-t border-outline-variant/20"><span class="text-on-surface-variant block mb-1 text-xs">Nội dung chuyển khoản</span><span class="text-secondary font-mono text-xs">${note}</span></div>
+          </div>`;
+      } else if (pm === 'momo') {
+        const qrImg = info.qrUrl ? `<div class="text-center mb-3"><img src="${info.qrUrl}" class="w-44 h-44 mx-auto rounded-lg border border-outline-variant/30 object-contain bg-white p-1" alt="MoMo QR"/></div>` : '';
+        html = `${qrImg}<div class="space-y-2 text-sm">
+            ${info.phone ? `<div class="flex justify-between"><span class="text-on-surface-variant">Số điện thoại</span><span class="text-primary font-mono font-bold">${info.phone}</span></div>` : ''}
+            ${info.name ? `<div class="flex justify-between"><span class="text-on-surface-variant">Tên</span><span class="text-on-surface font-medium">${info.name}</span></div>` : ''}
+            <div class="flex justify-between"><span class="text-on-surface-variant">Số tiền</span><span class="text-primary font-bold">${price}</span></div>
+            <div class="pt-2 border-t border-outline-variant/20"><span class="text-on-surface-variant block mb-1 text-xs">Tin nhắn MoMo</span><span class="text-secondary font-mono text-xs">${note}</span></div>
+          </div>`;
+      } else {
+        const qrImg = info.qrUrl ? `<div class="text-center mb-3"><img src="${info.qrUrl}" class="w-44 h-44 mx-auto rounded-lg border border-outline-variant/30 object-contain bg-white p-1" alt="USDT QR"/></div>` : '';
+        html = `${qrImg}<div class="space-y-2 text-sm">
+            ${info.address ? `<div><span class="text-on-surface-variant block mb-1 text-xs">Địa chỉ ví (${info.network})</span><span class="text-primary font-mono text-xs break-all">${info.address}</span></div>` : ''}
+            <div class="flex justify-between"><span class="text-on-surface-variant">Số tiền</span><span class="text-primary font-bold">${price}</span></div>
+            <div class="pt-2 border-t border-outline-variant/20 text-on-surface-variant text-xs">Gửi đúng mạng TRC20. Sau khi gửi, bấm xác nhận bên dưới.</div>
+          </div>`;
+      }
+  
+      document.getElementById('payment-instructions').innerHTML = html;
+      document.getElementById('buy-step-1').classList.add('hidden');
+      document.getElementById('buy-step-2').classList.remove('hidden');
+      const btn = document.getElementById('confirm-buy-btn');
+      btn.textContent = notConfigured ? 'CHƯA CẤU HÌNH' : 'ĐÃ THANH TOÁN →';
+      btn.disabled = notConfigured;
+      btn.style.opacity = notConfigured ? '0.4' : '1';
+      if (!notConfigured) btn.onclick = window.confirmBuy;
+    };
+
+
+  
+    window.backToBuyStep1 = window._backToBuyStep1 = function() {
+      document.getElementById('buy-step-1').classList.remove('hidden');
+      document.getElementById('buy-step-1').classList.remove('hidden');
+      document.getElementById('buy-step-2').classList.add('hidden');
+      const btn = document.getElementById('confirm-buy-btn');
+      btn.textContent = 'TIẾP THEO';
+      btn.onclick = window.buyNextStep;
+    };
+  
+    window.confirmBuy = window._confirmBuy = async function() {
+      if (!widgetUser || !buyProductData) return;
+      const pm  = document.querySelector('input[name="payment"]:checked')?.value || 'vietqr';
+      const btn = document.getElementById('confirm-buy-btn');
+      btn.disabled = true; btn.textContent = 'ĐANG XỬ LÝ...';
+
+    try {
+      const pSnap = await getDoc(doc(db, 'products', buyProductData.productId));
+      if (!pSnap.exists() || pSnap.data().status !== 'in_stock') {
+        document.getElementById('buy-stock-warning').classList.remove('hidden');
+        btn.disabled = false; btn.textContent = 'ĐÃ THANH TOÁN';
+        return;
+      }
+      await addDoc(collection(db, 'orders'), {
+        userId:      widgetUser.uid,
+        userEmail:   widgetUser.email,
+        userName:    widgetUser.displayName || '',
+        productId:   buyProductData.productId,
+        productName: buyProductData.productName,
+        amount:      buyProductData.price,
+        currency:    buyProductData.currency || 'VND',
+        paymentMethod: pm,
+        status:      'pending',
+        createdAt:   serverTimestamp()
+      });
+      await updateDoc(doc(db, 'products', buyProductData.productId), {
+        status: 'reserved', reservedBy: widgetUser.uid, reservedAt: serverTimestamp()
+      });
+      window.closeBuyModal();
+      document.getElementById('order-success-modal').style.display = 'flex';
+    } catch (err) {
+      alert('Lỗi đặt hàng: ' + err.message);
+      btn.disabled = false; btn.textContent = 'ĐÃ THANH TOÁN';
+    }
+  };
+</script>
+
+<!-- Floating Chat Widget (shown only when logged in) -->
+<div id="chat-fab" class="hidden fixed bottom-6 right-6 z-50">
+  <button onclick="toggleChatWidget()" class="w-14 h-14 rounded-full bg-gradient-to-br from-primary-container to-secondary-container shadow-[0_0_20px_rgba(0,242,255,0.4)] flex items-center justify-center hover:scale-105 transition-transform relative">
+    <span class="material-symbols-outlined text-on-primary-fixed" id="chat-fab-icon">chat</span>
+    <span id="chat-fab-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 rounded-full bg-error text-on-error text-[10px] font-bold flex items-center justify-center">0</span>
+  </button>
+  
+  <div id="chat-widget" class="hidden absolute bottom-16 right-0 w-80 rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.8)] border border-outline-variant/30" style="background:#1a1a1a;">
+    <div class="flex items-center justify-between p-4 border-b border-outline-variant/20" style="background:linear-gradient(135deg,#00f2ff20,#b600f820);">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[16px]">support_agent</span></div>
+        <div><div class="font-body-md font-medium text-on-surface text-sm">Ho Tro ShopAccFacebook</div><div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="text-[10px] text-on-surface-variant">Online</span></div></div>
+      </div>
+      <button onclick="toggleChatWidget()" class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">close</span></button>
+    </div>
+    <div id="widget-messages" class="h-64 overflow-y-auto p-4 flex flex-col gap-2" style="scrollbar-width:thin;">
+      <div class="text-center text-on-surface-variant text-xs py-4">Xin chao! Chung toi luon san sang ho tro ban.</div>
+    </div>
+    <div class="p-3 border-t border-outline-variant/20" style="background:#1a1a1a;">
+      <!-- Preview file đính kèm -->
+      <div id="widget-attach-preview" class="hidden mb-2 flex items-center gap-2 flex-wrap"></div>
+      <div class="flex items-center gap-2">
+        <label class="flex-shrink-0 w-8 h-8 rounded flex items-center justify-center text-on-surface-variant hover:text-primary-container hover:bg-surface-container transition-colors cursor-pointer" title="Đính kèm ảnh/file">
+          <span class="material-symbols-outlined text-[18px]">attach_file</span>
+          <input type="file" id="widget-file-input" class="hidden" accept="image/*,application/pdf,.txt" multiple onchange="widgetHandleFiles(this)"/>
+        </label>
+        <input id="widget-input" class="flex-1 bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-on-surface text-sm focus:outline-none focus:border-primary-container" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter')widgetSend()"/>
+        <button onclick="widgetSend()" class="flex-shrink-0 w-9 h-9 rounded bg-primary-container text-on-primary-container flex items-center justify-center hover:bg-primary-fixed-dim transition-colors">
+          <span class="material-symbols-outlined text-[16px]">send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Buy Now Modal -->
+<div id="buy-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-background/80 backdrop-blur-md">
+  <div class="relative w-full max-w-md rounded-xl border-t-2 border-primary-container shadow-2xl overflow-hidden" style="background:#1a1a1a;">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 pt-6 pb-4 border-b border-outline-variant/20">
+      <div>
+        <h3 class="font-headline-md text-headline-md text-on-surface text-lg" id="buy-product-name">Mua Tài Khoản</h3>
+        <p class="font-price-display text-price-display text-2xl text-primary mt-1" id="buy-product-price"></p>
+      </div>
+      <button onclick="closeBuyModal()" class="text-on-surface-variant hover:text-on-surface transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="px-6 py-5 space-y-5">
+      <!-- Cáº£nh bÃ¡o cÃ²n hÃ ng -->
+      <div id="buy-stock-warning" class="hidden p-3 rounded-lg border border-error/40 bg-error/10 text-error text-sm flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">warning</span>
+        <span>Sản phẩm này hiện đã hết hàng.</span>
+      </div>
+
+      <!-- Bước 1: Chọn thanh toán -->
+      <div id="buy-step-1">
+        <p class="font-label-caps text-label-caps text-on-surface-variant text-[10px] mb-3">CHỌN PHƯƠNG THỨC THANH TOÁN</p>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 cursor-pointer hover:border-primary-container/50 transition-colors" id="pm-vietqr-label">
+            <input type="radio" name="payment" value="vietqr" class="text-primary-container accent-[#00f2ff]" checked/>
+            <div>
+              <div class="text-on-surface font-body-md text-sm font-medium">VietQR — Chuyển khoản ngân hàng</div>
+              <div class="text-on-surface-variant text-xs">Tự động xác nhận qua QR</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 cursor-pointer hover:border-secondary/50 transition-colors">
+            <input type="radio" name="payment" value="momo" class="accent-[#b600f8]"/>
+            <div>
+              <div class="text-on-surface font-body-md text-sm font-medium">MoMo</div>
+              <div class="text-on-surface-variant text-xs">Ví điện tử MoMo</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/30 cursor-pointer hover:border-primary-container/30 transition-colors">
+            <input type="radio" name="payment" value="usdt" class="accent-[#00f2ff]"/>
+            <div>
+              <div class="text-on-surface font-body-md text-sm font-medium">USDT (TRC20)</div>
+              <div class="text-on-surface-variant text-xs">Thanh toán crypto</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Bước 2: Hướng dẫn thanh toán -->
+      <div id="buy-step-2" class="hidden space-y-4">
+        <div class="flex items-center gap-2 mb-1">
+          <button onclick="backToBuyStep1()" class="text-on-surface-variant hover:text-primary transition-colors text-sm flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span> Quay lại
+          </button>
+        </div>
+        <div id="payment-instructions" class="p-4 rounded-lg border border-outline-variant/30 space-y-3" style="background:#0a0a0a;">
+          <!-- Filled by JS -->
+        </div>
+        <div class="p-3 rounded-lg border border-yellow-800/50 bg-yellow-900/10 text-yellow-400 text-xs flex items-start gap-2">
+          <span class="material-symbols-outlined text-[16px] mt-0.5 flex-shrink-0">info</span>
+          <span>Sau khi chuyển tiền, bấm <strong>Xác Nhận Đã Thanh Toán</strong>. Admin sẽ kiểm tra và giao tài khoản trong thời gian sớm nhất.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer buttons -->
+    <div class="px-6 pb-6 flex gap-3">
+      <button onclick="closeBuyModal()" class="flex-1 px-4 py-2 border border-outline-variant/30 text-on-surface-variant font-bold rounded-lg hover:bg-surface-container transition-colors font-label-caps text-xs tracking-wider">HỦY</button>
+      <button onclick="buyNextStep()" id="confirm-buy-btn" class="flex-1 py-3 rounded-lg font-label-caps text-sm font-bold transition-all" style="background:#00f2ff;color:#00363a;">TIẾP THEO</button>
+    </div>
+  </div>
+</div>
+
+<!-- Order Success Modal -->
+<div id="order-success-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-background/90 backdrop-blur-md">
+  <div class="relative w-full max-w-sm rounded-xl p-8 text-center border-t-2 border-primary-container shadow-2xl" style="background:#1a1a1a;">
+    <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4" style="background:rgba(0,242,255,0.1);box-shadow:0 0 20px rgba(0,242,255,0.3);">
+      <span class="material-symbols-outlined text-4xl text-primary-container" style="font-variation-settings:'FILL' 1;">check_circle</span>
+    </div>
+    <h3 class="font-headline-md text-headline-md text-on-surface mb-2 text-xl">Dat Hang Thanh Cong!</h3>
+    <p class="font-body-md text-body-md text-on-surface-variant mb-6 text-sm">Don hang cua ban dang duoc xu ly. Admin se giao tai khoan som nhat co the.</p>
+    <div class="flex gap-3">
+      <a href="profile.html" class="flex-1 py-3 rounded-lg font-label-caps text-center text-sm" style="background:#00f2ff;color:#00363a;font-weight:700;">XEM DON HANG</a>
+      <button onclick="document.getElementById('order-success-modal').style.display='none'" class="flex-1 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant font-label-caps text-sm">DONG</button>
+    </div>
+  </div>
+</div>
+</body></html>
+
+
+
+
+
+
+
+

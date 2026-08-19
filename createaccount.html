@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShopAccFacebook - Đăng Ký</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "surface-tint":"#00dbe7","surface-bright":"#3a3939","outline-variant":"#3a494b",
+        "secondary-fixed-dim":"#ebb2ff","on-background":"#e5e2e1","background":"#131313",
+        "primary-fixed":"#74f5ff","secondary-container":"#b600f8","on-secondary":"#520072",
+        "on-error-container":"#ffdad6","on-error":"#690005","on-surface-variant":"#b9cacb",
+        "outline":"#849495","surface":"#131313","on-primary":"#00363a","primary":"#e1fdff",
+        "surface-container-highest":"#353534","inverse-primary":"#00696f",
+        "on-primary-container":"#006a71","surface-container-lowest":"#0e0e0e",
+        "inverse-surface":"#e5e2e1","error-container":"#93000a","on-surface":"#e5e2e1",
+        "secondary-fixed":"#f8d8ff","on-primary-fixed":"#002022","primary-container":"#00f2ff",
+        "error":"#ffb4ab","secondary":"#ebb2ff","surface-container-low":"#1c1b1b",
+        "on-secondary-container":"#fff6fc","inverse-on-surface":"#313030",
+        "on-secondary-fixed":"#320047","tertiary":"#f7f8f8","primary-fixed-dim":"#00dbe7",
+        "surface-container":"#201f1f","surface-dim":"#131313","tertiary-container":"#dbdbdb",
+        "on-tertiary":"#2f3131","on-primary-fixed-variant":"#004f54","surface-container-high":"#2a2a2a",
+        "surface-variant":"#353534"
+      },
+      "borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},
+      "spacing":{"margin-mobile":"16px","container-max":"1280px","gutter":"24px","unit":"4px","margin-desktop":"64px"},
+      "fontFamily":{"body-lg":["Inter"],"label-caps":["JetBrains Mono"],"headline-lg-mobile":["Sora"],"headline-xl":["Sora"],"body-md":["Inter"],"headline-lg":["Sora"],"price-display":["Sora"],"headline-md":["Sora"]},
+      "fontSize":{
+        "body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],
+        "label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.1em","fontWeight":"500"}],
+        "headline-lg-mobile":["28px",{"lineHeight":"1.2","fontWeight":"700"}],
+        "headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}],
+        "body-md":["16px",{"lineHeight":"1.5","fontWeight":"400"}],
+        "headline-lg":["32px",{"lineHeight":"1.2","letterSpacing":"-0.01em","fontWeight":"700"}],
+        "price-display":["24px",{"lineHeight":"1.0","fontWeight":"800"}],
+        "headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}]
+      }
+    }
+  }
+}
+</script>
+<style>
+  body { background-color: #050505; color: #e5e2e1; margin: 0; overflow-x: hidden; }
+  .glass-panel { background: rgba(26,26,26,0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+  .cyber-input { background-color: #0a0a0a; border: 1px solid #3a494b; color: #e5e2e1; transition: all 0.3s ease; }
+  .cyber-input:focus { border-color: #00dbe7; box-shadow: inset 0 0 8px rgba(0,219,231,0.2); outline: none; }
+  .btn-primary { background: linear-gradient(135deg, #00f2ff, #b600f8); color: #00363a; transition: all 0.3s ease; font-weight: 700; }
+  .btn-primary:hover { box-shadow: 0 0 20px rgba(0,242,255,0.4); transform: translateY(-1px); }
+  .cyber-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(0,219,231,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,219,231,0.05) 1px, transparent 1px); animation: gridMove 20s linear infinite; }
+  @keyframes gridMove { 0% { transform: translateY(0); } 100% { transform: translateY(40px); } }
+  .cyber-checkbox { appearance: none; width: 16px; height: 16px; border: 1px solid #849495; border-radius: 2px; background-color: #0a0a0a; position: relative; cursor: pointer; }
+  .cyber-checkbox:checked { background-color: #00f2ff; border-color: #00f2ff; }
+  .cyber-checkbox:checked::after { content: ''; position: absolute; left: 4px; top: 1px; width: 5px; height: 10px; border: solid #00363a; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  .strength-bar { height: 4px; border-radius: 2px; transition: all 0.3s ease; background-color: #3a3939; flex-grow: 1; }
+  .strength-weak { background-color: #ffb4ab; box-shadow: 0 0 8px rgba(255,180,171,0.5); }
+  .strength-medium { background-color: #ebb2ff; box-shadow: 0 0 8px rgba(235,178,255,0.5); }
+  .strength-strong { background-color: #00dbe7; box-shadow: 0 0 8px rgba(0,219,231,0.5); }
+  .toast { position: fixed; top: 24px; right: 24px; z-index: 9999; min-width: 300px; padding: 16px 20px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-family: 'Inter', sans-serif; font-size: 14px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+  .toast-error { background: rgba(147,0,10,0.9); border: 1px solid #ffb4ab; color: #ffdad6; backdrop-filter: blur(12px); }
+  .toast-success { background: rgba(0,105,111,0.9); border: 1px solid #00f2ff; color: #e1fdff; backdrop-filter: blur(12px); }
+  .toast-hide { opacity: 0; transform: translateX(100%); pointer-events: none; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row antialiased">
+
+<!-- Toast Notification -->
+<div class="toast toast-hide" id="toast">
+  <span class="material-symbols-outlined" id="toast-icon">info</span>
+  <span id="toast-msg"></span>
+</div>
+
+<!-- Left Panel: Branding & Art -->
+<div class="hidden md:flex md:w-1/2 relative bg-surface overflow-hidden">
+  <div class="absolute inset-0 cyber-grid opacity-50 z-0"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-surface/80 to-surface z-10"></div>
+  <div class="absolute inset-0 z-0 opacity-40 mix-blend-screen bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDo_QwY9dzAZfZjov-RTQtMiBUoX7xly2PFRFYto6khVkS5FqCFbdNDpQFR6EYgLoCT6Lvf2ukqOa771pCIAYDfkTIF_A7Who0IikwH_FDGkgiqMSGbGlHU1V0JPuC-4nkGpNSz_hCknXJr1uKoZ1Wu7sijP2kn7T_ZsGxuIbKZFw6Xro-1Hp8imX3433eudf3M4q8sQdOgg7CJ9nGTL7sNVqOi6_ucAv1KxLha258X84VC9Dn1nbht')"></div>
+  <div class="relative z-20 flex flex-col justify-between p-margin-desktop w-full h-full">
+    <div>
+      <a href="landingpage.html" class="group">
+        <h1 class="font-headline-xl text-headline-xl text-primary tracking-tighter group-hover:text-primary-fixed-dim transition-colors">ShopAccFacebook</h1>
+        <p class="font-label-caps text-label-caps text-primary-fixed mt-unit opacity-80">SECURE DIGITAL ASSET MARKETPLACE</p>
+      </a>
+    </div>
+    <div class="glass-panel p-8 rounded-xl max-w-md mb-8">
+      <div class="flex items-center gap-4 mb-6">
+        <span class="material-symbols-outlined text-primary-container text-4xl" style="font-variation-settings: 'FILL' 1;">shield_person</span>
+        <h2 class="font-headline-md text-headline-md text-on-surface">Báº£o Máº­t & Tin Cáº­y</h2>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant mb-6">Tham gia nền tảng mua bán tài khoản gaming hàng đầu. Hệ thống mã hóa đa lớp đảm bảo thông tin của bạn luôn an toàn.</p>
+      <div class="flex gap-4">
+        <div class="flex items-center gap-2 bg-surface-container px-3 py-2 rounded border border-outline/30">
+          <span class="material-symbols-outlined text-surface-tint text-sm">lock</span>
+          <span class="font-label-caps text-[10px] text-on-surface-variant">E2E ENCRYPTION</span>
+        </div>
+        <div class="flex items-center gap-2 bg-surface-container px-3 py-2 rounded border border-outline/30">
+          <span class="material-symbols-outlined text-surface-tint text-sm">verified</span>
+          <span class="font-label-caps text-[10px] text-on-surface-variant">VERIFIED SYSTEM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Right Panel: Register Form -->
+<div class="w-full md:w-1/2 flex items-center justify-center p-margin-mobile md:p-12 bg-surface-container-lowest min-h-screen">
+  <div class="w-full max-w-md py-8">
+    <!-- Mobile Header -->
+    <div class="md:hidden mb-8 text-center">
+      <a href="landingpage.html">
+        <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tighter">ShopAccFacebook</h1>
+        <p class="font-label-caps text-label-caps text-primary-fixed mt-2 opacity-80">ĐĂNG KÝ TÀI KHOẢN</p>
+      </a>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Tạo Tài Khoản</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant">Điền thông tin để tham gia ShopAccFacebook.</p>
+    </div>
+
+    <form class="space-y-6" id="register-form" onsubmit="event.preventDefault(); if(window.handleRegister) window.handleRegister(event); else alert('Hệ thống đang tải hoặc bị lỗi kết nối mạng. Vui lòng nhấn Ctrl + F5 để tải lại trang!');">
+      <!-- Username -->
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">TÊN NGƯỜI DÙNG</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3"><span class="material-symbols-outlined text-outline text-sm">person</span></span>
+          <input class="cyber-input w-full rounded pl-10 pr-4 py-3 font-body-md text-body-md focus:ring-0" id="username" placeholder="shopacc_trader_99" required type="text"/>
+        </div>
+      </div>
+      <!-- Email -->
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">EMAIL</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3"><span class="material-symbols-outlined text-outline text-sm">mail</span></span>
+          <input class="cyber-input w-full rounded pl-10 pr-4 py-3 font-body-md text-body-md focus:ring-0" id="email" placeholder="email@example.com" required type="email"/>
+        </div>
+      </div>
+      <!-- Phone -->
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">SỐ ĐIỆN THOẠI (tùy chọn)</label>
+        <div class="flex">
+          <select class="cyber-input rounded-l border-r-0 pl-3 pr-2 py-3 font-body-md text-body-md w-24 focus:ring-0 bg-surface">
+            <option>+84</option><option>+1</option><option>+44</option><option>+81</option>
+          </select>
+          <input class="cyber-input w-full rounded-r pl-4 pr-4 py-3 font-body-md text-body-md focus:ring-0" id="phone" placeholder="0912 345 678" type="tel"/>
+        </div>
+      </div>
+      <!-- Password -->
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">MẬT KHẨU</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3"><span class="material-symbols-outlined text-outline text-sm">key</span></span>
+          <input class="cyber-input w-full rounded pl-10 pr-10 py-3 font-body-md text-body-md focus:ring-0" id="password" placeholder="••••••••" required type="password"/>
+          <button class="absolute inset-y-0 right-0 flex items-center pr-3 text-outline hover:text-primary transition-colors" type="button" onclick="togglePasswordVisibility('password','toggle-pw-icon')">
+            <span class="material-symbols-outlined text-sm" id="toggle-pw-icon">visibility_off</span>
+          </button>
+        </div>
+        <!-- Strength Meter -->
+        <div class="mt-3">
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-label-caps text-[10px] text-on-surface-variant">ĐỘ MẠNH MẬT KHẨU</span>
+            <span class="font-label-caps text-[10px] text-outline" id="strength-text">YẾU</span>
+          </div>
+          <div class="flex gap-1 w-full">
+            <div class="strength-bar strength-weak" id="bar-1"></div>
+            <div class="strength-bar" id="bar-2"></div>
+            <div class="strength-bar" id="bar-3"></div>
+            <div class="strength-bar" id="bar-4"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Confirm Password -->
+      <div>
+        <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2">XÁC NHẬN MẬT KHẨU</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3"><span class="material-symbols-outlined text-outline text-sm">verified_user</span></span>
+          <input class="cyber-input w-full rounded pl-10 pr-10 py-3 font-body-md text-body-md focus:ring-0" id="confirm-password" placeholder="••••••••" required type="password"/>
+          <button class="absolute inset-y-0 right-0 flex items-center pr-3 text-outline hover:text-primary transition-colors" type="button" onclick="togglePasswordVisibility('confirm-password','toggle-cpw-icon')">
+            <span class="material-symbols-outlined text-sm" id="toggle-cpw-icon">visibility_off</span>
+          </button>
+        </div>
+      </div>
+      <!-- Referral Code -->
+      <div class="border border-outline/20 rounded p-4 bg-surface-container">
+        <button class="flex justify-between items-center w-full focus:outline-none group" onclick="document.getElementById('referral-content').classList.toggle('hidden')" type="button">
+          <span class="font-label-caps text-label-caps text-on-surface group-hover:text-primary transition-colors">MÃ GIỚI THIỆU (tuỳ chọn)</span>
+          <span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+        </button>
+        <div class="hidden mt-4 pt-4 border-t border-outline/20" id="referral-content">
+          <input class="cyber-input w-full rounded px-4 py-2 font-label-caps text-label-caps text-center uppercase tracking-widest focus:ring-0" id="referral" placeholder="NXT-XXXX-XXXX" type="text"/>
+        </div>
+      </div>
+      <!-- Terms -->
+      <div class="flex items-start gap-3">
+        <div class="flex items-center h-5 mt-1">
+          <input class="cyber-checkbox" id="terms" required type="checkbox"/>
+        </div>
+        <label class="font-body-md text-sm text-on-surface-variant" for="terms">
+          Tôi đồng ý với <a class="text-primary hover:underline hover:text-primary-fixed-dim transition-colors" href="#">Điều khoản dịch vụ</a> &amp; <a class="text-primary hover:underline hover:text-primary-fixed-dim transition-colors" href="#">Chính sách bảo mật</a>.
+        </label>
+      </div>
+      <!-- Submit -->
+      <button class="btn-primary w-full py-4 rounded font-headline-md text-lg tracking-wider flex items-center justify-center gap-2 mt-6" type="submit" id="register-btn">
+        <span id="register-btn-text">TẠO TÀI KHOẢN</span>
+        <span class="material-symbols-outlined" id="register-btn-icon">arrow_forward</span>
+      </button>
+      <div class="text-center mt-4">
+        <p class="font-body-md text-sm text-on-surface-variant">
+          Đã có tài khoản? <a class="text-secondary hover:text-secondary-fixed-dim transition-colors font-bold" href="signin.html">Đăng Nhập</a>
+        </p>
+        <a href="landingpage.html" class="inline-flex items-center gap-1 mt-3 text-sm text-on-surface-variant hover:text-on-surface transition-colors">
+          <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+          Về trang chủ
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDk4ies5X6BSqd9igMv2M0xY3e7f2F8H48",
+    authDomain: "project1234-4f440.firebaseapp.com",
+    projectId: "project1234-4f440",
+    storageBucket: "project1234-4f440.firebasestorage.app",
+    messagingSenderId: "698848283898",
+    appId: "1:698848283898:web:84eca38cdc370c7f3f4d43",
+    measurementId: "G-P0KJH5C58Q"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  // Redirect nếu đã đăng nhập
+  window.isCreating = false;
+  onAuthStateChanged(auth, (user) => {
+    if (user && !window.isCreating) window.location.href = 'landingpage.html';
+  });
+
+  // â”€â”€ Toast â”€â”€
+  function showToast(message, type = 'error') {
+    const toast = document.getElementById('toast');
+    const msg   = document.getElementById('toast-msg');
+    const icon  = document.getElementById('toast-icon');
+    msg.textContent = message;
+    toast.className = `toast toast-${type}`;
+    icon.textContent = type === 'error' ? 'error' : 'check_circle';
+    setTimeout(() => toast.classList.add('toast-hide'), 3500);
+  }
+
+  // â”€â”€ Toggle password â”€â”€
+  window.togglePasswordVisibility = function(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon  = document.getElementById(iconId);
+    if (input.type === 'password') { input.type = 'text'; icon.textContent = 'visibility'; }
+    else { input.type = 'password'; icon.textContent = 'visibility_off'; }
+  };
+
+  // â”€â”€ Password strength â”€â”€
+  document.getElementById('password').addEventListener('input', function() {
+    const val = this.value;
+    let strength = 0;
+    if (val.length > 0) strength++;
+    if (val.length > 7) strength++;
+    if (/[A-Z]/.test(val) && /[a-z]/.test(val)) strength++;
+    if (/[0-9]/.test(val) && /[^A-Za-z0-9]/.test(val)) strength++;
+
+    ['bar-2','bar-3','bar-4'].forEach(id => document.getElementById(id).className = 'strength-bar');
+    const text = document.getElementById('strength-text');
+
+    if (strength === 0) { text.textContent = 'YẾU'; text.className = 'font-label-caps text-[10px] text-outline'; }
+    else if (strength <= 2) {
+      text.textContent = 'CHẤP NHẬN ĐƯỢC'; text.className = 'font-label-caps text-[10px] text-secondary';
+      document.getElementById('bar-2').className = strength === 2 ? 'strength-bar strength-medium' : 'strength-bar strength-weak';
+    } else if (strength === 3) {
+      text.textContent = 'Máº NH'; text.className = 'font-label-caps text-[10px] text-primary';
+      document.getElementById('bar-2').className = 'strength-bar strength-medium';
+      document.getElementById('bar-3').className = 'strength-bar strength-medium';
+    } else {
+      text.textContent = 'Ráº¤T Máº NH'; text.className = 'font-label-caps text-[10px] text-primary-fixed-dim';
+      ['bar-2','bar-3','bar-4'].forEach(id => document.getElementById(id).className = 'strength-bar strength-strong');
+    }
+  });
+
+  // â”€â”€ Register Handler â”€â”€
+  window.handleRegister = async function(e) {
+    if (e) e.preventDefault();
+    window.isCreating = true;
+    const username = document.getElementById('username').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const confirm  = document.getElementById('confirm-password').value;
+    const terms    = document.getElementById('terms').checked;
+    const btn      = document.getElementById('register-btn');
+    const btnText  = document.getElementById('register-btn-text');
+    const btnIcon  = document.getElementById('register-btn-icon');
+
+    if (!username || !email || !password) return showToast('Vui lòng điền đầy đủ thông tin.', 'error');
+    if (password !== confirm) return showToast('Mật khẩu xác nhận không khớp.', 'error');
+    if (password.length < 6) return showToast('Mật khẩu phải có ít nhất 6 ký tự.', 'error');
+    if (!terms) return showToast('Vui lòng đồng ý với điều khoản dịch vụ.', 'error');
+
+    btn.disabled = true;
+    btnText.textContent = 'Đang tạo tài khoản...';
+    btnIcon.textContent = 'hourglass_empty';
+
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: username });
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        uid: cred.user.uid,
+        username,
+        email,
+        phone: document.getElementById('phone').value.trim() || null,
+        referral: document.getElementById('referral').value.trim() || null,
+        role: 'user',
+        balance: 0,
+        createdAt: serverTimestamp(),
+        lastLogin: serverTimestamp()
+      });
+
+      await signOut(auth);
+      sessionStorage.setItem('toastMessage', 'Đăng ký thành công! Mời bạn đăng nhập.');
+      showToast('Tạo tài khoản thành công! Đang chuyển trang...', 'success');
+      btnText.textContent = 'Thành công!';
+      btnIcon.textContent = 'check';
+      setTimeout(() => window.location.href = 'signin.html', 1500);
+
+    } catch (err) {
+      window.isCreating = false;
+      btn.disabled = false;
+      btnText.textContent = 'TẠO TÀI KHOẢN';
+      btnIcon.textContent = 'arrow_forward';
+
+      let errMsg = 'Đăng ký thất bại. Vui lòng thử lại.';
+      if (err.code === 'auth/email-already-in-use') errMsg = 'Email này đã được đăng ký.';
+      else if (err.code === 'auth/invalid-email') errMsg = 'Địa chỉ email không hợp lệ.';
+      else if (err.code === 'auth/weak-password') errMsg = 'Mật khẩu quá yếu (tối thiểu 6 ký tự).';
+      else if (err.code === 'auth/network-request-failed') errMsg = 'Lỗi kết nối mạng. Vui lòng kiểm tra internet.';
+      showToast(errMsg, 'error');
+    }
+  };
+</script>
+</body></html>
+

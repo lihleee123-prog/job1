@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="dark" lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ShopAccFacebook - Thông Tin Tài Khoản</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-secondary-fixed":"#320047","inverse-surface":"#e5e2e1","primary-fixed-dim":"#00dbe7","on-error-container":"#ffdad6","tertiary-container":"#dbdbdb","outline":"#849495","surface-container-lowest":"#0e0e0e","on-secondary":"#520072","tertiary":"#f7f8f8","on-primary-fixed-variant":"#004f54","primary":"#e1fdff","on-primary-container":"#006a71","surface-variant":"#353534","surface-container-highest":"#353534","on-background":"#e5e2e1","surface-container":"#201f1f","on-surface":"#e5e2e1","on-primary":"#00363a","on-secondary-container":"#fff6fc","inverse-on-surface":"#313030","surface-tint":"#00dbe7","secondary":"#ebb2ff","primary-container":"#00f2ff","surface-container-low":"#1c1b1b","error-container":"#93000a","on-primary-fixed":"#002022","primary-fixed":"#74f5ff","surface-container-high":"#2a2a2a","secondary-fixed-dim":"#ebb2ff","background":"#131313","surface-dim":"#131313","outline-variant":"#3a494b","surface":"#131313","on-tertiary":"#2f3131","secondary-container":"#b600f8","on-error":"#690005","inverse-primary":"#00696f","surface-bright":"#3a3939","on-surface-variant":"#b9cacb","error":"#ffb4ab","secondary-fixed":"#f8d8ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-desktop":"64px","unit":"4px","container-max":"1280px","gutter":"24px","margin-mobile":"16px"},"fontFamily":{"label-caps":["JetBrains Mono"],"headline-lg":["Sora"],"headline-md":["Sora"],"headline-xl":["Sora"],"body-md":["Inter"],"body-lg":["Inter"],"price-display":["Sora"],"headline-lg-mobile":["Sora"]},"fontSize":{"label-caps":["12px",{"lineHeight":"1.0","letterSpacing":"0.1em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"1.2","letterSpacing":"-0.01em","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"1.3","fontWeight":"600"}],"headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"800"}],"body-md":["16px",{"lineHeight":"1.5","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"1.6","fontWeight":"400"}],"price-display":["24px",{"lineHeight":"1.0","fontWeight":"800"}],"headline-lg-mobile":["28px",{"lineHeight":"1.2","fontWeight":"700"}]}}}}
+</script>
+<style>
+body{background:#050505;color:#e5e2e1;font-family:'Inter',sans-serif;}
+.glass-panel{background:rgba(26,26,26,0.8);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;}
+.neon-btn{background:#00f2ff;color:#002022;font-weight:700;transition:all 0.2s;box-shadow:0 0 10px rgba(0,242,255,0.2);}
+.neon-btn:hover{box-shadow:0 0 20px rgba(0,242,255,0.5);transform:translateY(-1px);}
+.danger-btn{border:1px solid rgba(255,180,171,0.3);color:#ffb4ab;transition:all 0.2s;}
+.danger-btn:hover{background:rgba(255,180,171,0.1);}
+.table-input{background:#0a0a0a;border:1px solid #3a494b;color:#e5e2e1;transition:all 0.2s;}
+.table-input:focus{border-color:#00dbe7;outline:none;box-shadow:inset 0 0 6px rgba(0,219,231,0.15);}
+.active-tab{color:#00f2ff!important;border-bottom:2px solid #00f2ff;}
+.tab-content{display:none !important;}
+.tab-content.active{display:flex !important;}
+#auth-loading{position:fixed;inset:0;background:#050505;z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
+.spinner{width:48px;height:48px;border:3px solid rgba(0,242,255,0.1);border-top-color:#00f2ff;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#0a0a0a;}
+::-webkit-scrollbar-thumb{background:#3a494b;border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:#00f2ff;}
+.status-pending{background:rgba(234,179,8,0.15);color:#eab308;border:1px solid rgba(234,179,8,0.3);}
+.status-processing{background:rgba(0,242,255,0.15);color:#00f2ff;border:1px solid rgba(0,242,255,0.3);}
+.status-completed{background:rgba(34,197,94,0.15);color:#22c55e;border:1px solid rgba(34,197,94,0.3);}
+.status-cancelled{background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);}
+.chat-bubble-user{background:#00f2ff;color:#002022;border-bottom-right-radius:2px;}
+.chat-bubble-admin{background:#1a1a1a;border:1px solid #3a494b;color:#e5e2e1;border-bottom-left-radius:2px;}
+</style>
+</head>
+<body class="antialiased selection:bg-primary-fixed selection:text-on-primary-fixed h-screen overflow-hidden">
+
+<div id="auth-loading">
+  <div class="spinner"></div>
+  <p class="font-label-caps text-on-surface-variant text-sm">Đang tải thông tin...</p>
+</div>
+
+<div id="app-layout" class="h-screen flex invisible" style="visibility: hidden;">
+  <!-- Sidebar -->
+  <aside class="w-72 bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col flex-shrink-0">
+    <div class="p-6 border-b border-outline-variant/30 flex items-center justify-between">
+      <h1 class="font-headline-md text-xl text-primary tracking-tight">ShopAcc<span class="text-on-surface">Facebook</span></h1>
+    </div>
+    
+    <!-- User Card -->
+    <div class="p-6 border-b border-outline-variant/30 flex flex-col items-center justify-center text-center">
+      <div id="profile-avatar" class="w-20 h-20 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary font-headline-lg text-3xl mb-4 shadow-[0_0_15px_rgba(0,242,255,0.15)]">
+        ?
+      </div>
+      <h2 id="profile-name" class="font-headline-md text-lg text-on-surface mb-1 truncate w-full">...</h2>
+      <p id="profile-email" class="text-sm text-on-surface-variant truncate w-full mb-3">...</p>
+      
+      <div class="flex gap-2 justify-center w-full mb-4">
+        <span id="profile-role" class="px-2 py-0.5 rounded bg-surface-variant border border-outline-variant text-[10px] font-label-caps text-on-surface-variant uppercase">USER</span>
+        <span id="profile-joined" class="px-2 py-0.5 rounded bg-surface-variant border border-outline-variant text-[10px] font-label-caps text-on-surface-variant">Tham gia: ...</span>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
+      <a href="landingpage.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface transition-colors">
+        <span class="material-symbols-outlined text-[20px]">home</span>
+        <span class="font-label-caps text-xs tracking-wider">VỀ TRANG CHỦ</span>
+      </a>
+      <a href="admindashboard.html" id="nav-admin-link" class="hidden flex items-center gap-3 px-4 py-3 rounded-lg text-secondary hover:bg-surface hover:text-secondary-fixed transition-colors">
+        <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+        <span class="font-label-caps text-xs tracking-wider">ADMIN DASHBOARD</span>
+      </a>
+      <button id="tab-btn-orders" onclick="window.switchTab('orders')" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface transition-colors active-tab">
+        <span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+        <span class="font-label-caps text-xs tracking-wider">ĐƠN HÀNG CỦA TÔI</span>
+      </button>
+      <button id="tab-btn-chat" onclick="window.switchTab('chat')" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface transition-colors relative">
+        <span class="material-symbols-outlined text-[20px]">forum</span>
+        <span class="font-label-caps text-xs tracking-wider">TIN NHẮN HỖ TRỢ</span>
+        <span id="chat-badge" class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 bg-error text-on-error text-[10px] font-bold flex items-center justify-center rounded-full hidden">0</span>
+      </button>
+    </nav>
+
+    <div class="p-4 border-t border-outline-variant/30">
+      <button id="logout-btn" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg danger-btn font-label-caps text-xs">
+        <span class="material-symbols-outlined text-[18px]">logout</span>
+        ĐĂNG XUẤT
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 bg-surface flex flex-col overflow-hidden relative">
+    
+    <!-- Tab Orders -->
+    <div id="tab-orders" class="tab-content active h-full flex flex-col p-8 overflow-y-auto">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="font-headline-lg text-3xl text-primary tracking-tight mb-2">Đơn Hàng Của Tôi</h2>
+          <p class="text-on-surface-variant text-sm">Quản lý và xem chi tiết các tài khoản bạn đã mua.</p>
+        </div>
+      </div>
+
+      <div class="glass-panel p-6 overflow-x-auto flex-1">
+        <table class="w-full text-left border-collapse min-w-[800px]">
+          <thead>
+            <tr class="border-b border-outline-variant/30">
+              <th class="pb-3 text-xs font-label-caps text-on-surface-variant w-[25%]">SẢN PHẨM</th>
+              <th class="pb-3 text-xs font-label-caps text-on-surface-variant w-[15%]">MÃ ĐƠN</th>
+              <th class="pb-3 text-xs font-label-caps text-on-surface-variant w-[15%]">GIÁ / THANH TOÁN</th>
+              <th class="pb-3 text-xs font-label-caps text-on-surface-variant w-[15%]">THỜI GIAN</th>
+              <th class="pb-3 text-xs font-label-caps text-on-surface-variant w-[15%]">TRẠNG THÁI</th>
+              <th class="pb-3 text-xs font-label-caps text-on-surface-variant w-[15%] text-right">THAO TÁC</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody" class="text-sm">
+            <tr><td colspan="6" class="py-4 text-center text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Tab Chat -->
+    <div id="tab-chat" class="tab-content h-full flex flex-col p-0 overflow-hidden">
+      <div class="px-6 py-4 border-b border-outline-variant/30 flex items-center justify-between bg-surface-container-lowest shadow-sm z-10">
+        <div>
+          <h2 class="font-headline-md text-lg text-primary">Tin Nhắn Hỗ Trợ</h2>
+          <p class="text-[11px] text-on-surface-variant mt-0.5">Liên hệ trực tiếp với Admin nếu cần giúp đỡ</p>
+        </div>
+        <div class="flex items-center gap-2 text-xs">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          <span class="text-on-surface-variant">Admin Online</span>
+        </div>
+      </div>
+      
+      <div id="chat-messages" class="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+        <!-- Messages here -->
+        <div class="text-center text-xs text-on-surface-variant py-4">Xin chào! Chúng tôi có thể giúp gì cho bạn?</div>
+      </div>
+
+      <div class="p-4 bg-surface-container-lowest border-t border-outline-variant/30">
+        <!-- Attachment Preview -->
+        <div id="chat-attach-preview" class="hidden px-4 py-2 flex items-center gap-2 flex-wrap"></div>
+        <div class="flex items-end gap-2 w-full">
+          <label class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors cursor-pointer" title="Đính kèm file">
+            <span class="material-symbols-outlined text-[20px]">attach_file</span>
+            <input type="file" id="chat-file-input" class="hidden" accept="image/*,application/pdf,.txt,.zip" multiple onchange="chatHandleFiles(this)"/>
+          </label>
+          <label class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors cursor-pointer" title="Gửi ảnh">
+            <span class="material-symbols-outlined text-[20px]">image</span>
+            <input type="file" id="chat-image-input" class="hidden" accept="image/*" multiple onchange="chatHandleFiles(this)"/>
+          </label>
+          <textarea id="chat-input" class="table-input flex-1 rounded-lg px-4 py-3 text-sm focus:outline-none resize-none" rows="1" placeholder="Nhập tin nhắn..." onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();sendMessage();}"></textarea>
+          <button onclick="sendMessage()" id="chat-send-btn" class="w-12 h-12 rounded-lg neon-btn flex items-center justify-center flex-shrink-0">
+            <span class="material-symbols-outlined">send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal Account Info -->
+<div id="account-modal" class="fixed inset-0 bg-black/80 z-[100] hidden items-center justify-center p-4 backdrop-blur-sm">
+  <div class="bg-surface-container border border-outline-variant/30 w-full max-w-md rounded-2xl p-6 shadow-2xl transform scale-95 opacity-0 transition-all duration-200" id="account-modal-content">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="font-headline-md text-xl text-primary">Thông Tin Tài Khoản</h3>
+      <button onclick="closeAccountModal()" class="text-on-surface-variant hover:text-error transition-colors">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="bg-surface-lowest rounded-lg p-4 font-mono text-sm break-words whitespace-pre-wrap text-on-surface border border-outline-variant/30" id="account-info-text"></div>
+    <div class="mt-6 flex justify-end gap-3">
+      <button onclick="copyAccountInfo()" class="neon-btn px-4 py-2 rounded text-sm font-label-caps flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">content_copy</span> Copy
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { getFirestore, doc, getDoc, getDocs, collection, query, where, orderBy, setDoc, addDoc, updateDoc, onSnapshot, serverTimestamp, increment } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDk4ies5X6BSqd9igMv2M0xY3e7f2F8H48",
+    authDomain: "project1234-4f440.firebaseapp.com",
+    projectId: "project1234-4f440",
+    storageBucket: "project1234-4f440.firebasestorage.app",
+    messagingSenderId: "698848283898",
+    appId: "1:698848283898:web:84eca38cdc370c7f3f4d43",
+    measurementId: "G-P0KJH5C58Q"
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  
+  let currentUser = null;
+  let userData = null;
+  let userOrders = [];
+  let messagesUnsub = null;
+  let currentTab = 'orders';
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) { window.location.href = 'signin.html'; return; }
+    currentUser = user;
+    try {
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      userData = snap.exists() ? snap.data() : { username: user.displayName||'User', email: user.email, role: 'user', balance: 0 };
+      
+      document.getElementById('profile-name').textContent = userData.username;
+      document.getElementById('profile-email').textContent = userData.email;
+      document.getElementById('profile-avatar').textContent = (userData.username||user.email||'?')[0].toUpperCase();
+      document.getElementById('profile-role').textContent = (userData.role||'user').toUpperCase();
+      if (userData.role === 'admin') {
+        const adminLink = document.getElementById('nav-admin-link');
+        if (adminLink) adminLink.classList.remove('hidden');
+      }
+      if(userData.createdAt && typeof userData.createdAt.toDate === 'function') {
+        document.getElementById('profile-joined').textContent = 'Tham gia: ' + new Date(userData.createdAt.toDate()).toLocaleDateString('vi-VN');
+      }
+      loadOrders();
+      watchChatUnread();
+    } catch (err) { console.error('Error fetching profile:', err); }
+    finally {
+      document.getElementById('auth-loading').style.display = 'none';
+      document.getElementById('app-layout').style.visibility = 'visible';
+    }
+  });
+
+  window.switchTab = function(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('[id^="tab-btn-"]').forEach(el => el.classList.remove('active-tab'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('tab-btn-' + tab).classList.add('active-tab');
+    if (tab === 'chat') openChat();
+  };
+
+  async function loadOrders() {
+    if (!currentUser) return;
+    const tbody = document.getElementById('orders-tbody');
+    try {
+      const snap = await getDocs(query(collection(db, 'orders'), where('userId', '==', currentUser.uid)));
+      userOrders = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+      if (userOrders.length === 0) { tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">Ban chua mua don hang nao.</td></tr>'; return; }
+      tbody.innerHTML = userOrders.map(o => {
+        const time = (o.createdAt && typeof o.createdAt.toDate === 'function') ? new Date(o.createdAt.toDate()).toLocaleDateString('vi-VN') : '---';
+        const pm = o.paymentMethod ? ({'vietqr':'VietQR','momo':'MoMo','usdt':'USDT'}[o.paymentMethod]||o.paymentMethod) : '---';
+        const sc={pending:'status-pending',processing:'status-processing',completed:'status-completed',cancelled:'status-cancelled'};
+        const sl={pending:'Chờ xử lý',processing:'Đang xử lý',completed:'Hoàn thành',cancelled:'Đã hủy'};
+        let actionBtn = '';
+        if (o.status === 'completed' && o.deliveredAccountInfo) {
+          actionBtn = `<button onclick="viewAccountInfo('${o.id}')" class="px-3 py-1 bg-primary text-on-primary text-[10px] font-bold rounded neon-btn uppercase">Xem Tài Khoản</button>`;
+        }
+        return `<tr class="border-b border-outline-variant/10 hover:bg-surface-container-lowest/50 transition-colors">
+          <td class="py-3 pr-4 font-medium text-on-surface"><div>${o.productName||'N/A'}</div><div class="text-[10px] text-on-surface-variant uppercase mt-0.5">${o.platform||''}</div></td>
+          <td class="py-3 pr-4 font-mono text-on-surface-variant text-xs">#${o.id.slice(0,8).toUpperCase()}</td>
+          <td class="py-3 pr-4"><div class="text-primary font-bold">${(o.amount||0).toLocaleString()}d</div><div class="text-[10px] text-on-surface-variant uppercase mt-0.5">${pm}</div></td>
+          <td class="py-3 pr-4 text-xs text-on-surface-variant">${time}</td>
+          <td class="py-3 pr-4"><span class="px-2 py-1 rounded text-[10px] font-label-caps uppercase ${sc[o.status]||''}">${sl[o.status]||o.status}</span></td>
+          <td class="py-3 text-right">${actionBtn}</td>
+        </tr>`;
+      }).join('');
+    } catch (e) {
+      console.error(e);
+      tbody.innerHTML = '<tr><td colspan="6" class="text-error text-center py-4">Loi tai don hang</td></tr>';
+    }
+  }
+
+  window.viewAccountInfo = function(id) {
+    const o = userOrders.find(x => x.id === id);
+    if(!o || !o.deliveredAccountInfo) return;
+    document.getElementById('account-info-text').textContent = o.deliveredAccountInfo;
+    const m = document.getElementById('account-modal');
+    const c = document.getElementById('account-modal-content');
+    m.classList.remove('hidden'); m.classList.add('flex');
+    setTimeout(() => { c.classList.remove('scale-95','opacity-0'); }, 10);
+  };
+  window.closeAccountModal = function() {
+    const m = document.getElementById('account-modal');
+    const c = document.getElementById('account-modal-content');
+    c.classList.add('scale-95','opacity-0');
+    setTimeout(() => { m.classList.add('hidden'); m.classList.remove('flex'); }, 200);
+  };
+  window.copyAccountInfo = function() {
+    navigator.clipboard.writeText(document.getElementById('account-info-text').textContent).then(()=>{
+      alert('Đã copy vào bộ nhớ!');
+    });
+  };
+
+  function watchChatUnread() {
+    onSnapshot(doc(db, 'conversations', currentUser.uid), (snap) => {
+      if (snap.exists()) {
+        const unread = snap.data().unreadUser || 0;
+        const badge = document.getElementById('chat-badge');
+        if (unread > 0) {
+          badge.textContent = unread;
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    });
+  }
+
+  function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  async function compressImage(file) {
+    if (!file.type.startsWith('image/') || file.type === 'image/gif') return file;
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width; let height = img.height;
+          const MAX_SIZE = 1280;
+          if (width > height && width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+          else if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+          canvas.width = width; canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            if (!blob) { resolve(file); return; }
+            const newName = file.name.replace(/\.[^/.]+$/, "") + ".webp";
+            const compressed = new File([blob], newName, { type: 'image/webp', lastModified: Date.now() });
+            resolve(compressed.size < file.size ? compressed : file);
+          }, 'image/webp', 0.8);
+        };
+        img.onerror = () => resolve(file);
+      };
+      reader.onerror = () => resolve(file);
+    });
+  }
+
+  let chatPendingFiles = [];
+  window.chatHandleFiles = async function(input) {
+    const files = Array.from(input.files);
+    for (const f of files) {
+      if (f.size > 10 * 1024 * 1024) { alert(`File "${f.name}" quá 10MB.`); continue; }
+      chatPendingFiles.push(await compressImage(f));
+    }
+    input.value = '';
+    renderChatAttachPreview();
+  };
+
+  function renderChatAttachPreview() {
+    const preview = document.getElementById('chat-attach-preview');
+    if (!chatPendingFiles.length) { preview.classList.add('hidden'); preview.innerHTML = ''; return; }
+    preview.classList.remove('hidden');
+    preview.innerHTML = chatPendingFiles.map((f, i) => {
+      const isImg = f.type.startsWith('image/');
+      const icon  = isImg ? 'image' : 'description';
+      return `<div class="flex items-center gap-1.5 bg-surface-container px-2 py-1 rounded border border-outline-variant/30 text-xs text-on-surface-variant max-w-[160px]">
+        <span class="material-symbols-outlined text-[14px] flex-shrink-0">${icon}</span>
+        <span class="truncate">${escHtml(f.name)}</span>
+        <button onclick="chatRemoveFile(${i})" class="flex-shrink-0 text-error hover:text-error/70 ml-1">
+          <span class="material-symbols-outlined text-[14px]">close</span>
+        </button>
+      </div>`;
+    }).join('');
+  }
+
+  window.chatRemoveFile = function(idx) {
+    chatPendingFiles.splice(idx, 1);
+    renderChatAttachPreview();
+  };
+
+  function renderMsgContent(m) {
+    const text  = m.text ? `<p class="text-sm whitespace-pre-wrap break-words">${escHtml(m.text)}</p>` : '';
+    const files = (m.files || []).map(f => {
+      if (f.type && f.type.startsWith('image/')) {
+        return `<a href="${f.url}" target="_blank" class="block mt-1"><img src="${f.url}" class="max-w-[220px] max-h-[180px] rounded-lg border border-white/10 object-cover cursor-zoom-in hover:opacity-90 transition-opacity" alt="${escHtml(f.name)}"/></a>`;
+      }
+      return `<a href="${f.url}" target="_blank" class="flex items-center gap-1.5 mt-1 px-3 py-1.5 rounded border border-outline-variant/30 text-xs hover:border-primary-container/50 transition-colors" style="background:#1a1a1a;">
+        <span class="material-symbols-outlined text-[14px] text-primary-fixed-dim">description</span>
+        <span class="text-on-surface truncate max-w-[180px]">${escHtml(f.name)}</span>
+        <span class="material-symbols-outlined text-[14px] text-on-surface-variant ml-auto">download</span>
+      </a>`;
+    }).join('');
+    return text + files;
+  }
+
+  function openChat() {
+    if (!currentUser) return;
+    const uid = currentUser.uid;
+    const mc = document.getElementById('chat-messages');
+    
+    // reset badge
+    updateDoc(doc(db, 'conversations', uid), { unreadUser: 0 }).catch(()=>{});
+    
+    if (messagesUnsub) messagesUnsub();
+    messagesUnsub = onSnapshot(query(collection(db, `conversations/${uid}/messages`), orderBy('timestamp', 'asc')), (snap) => {
+      if (snap.empty) {
+        mc.innerHTML = '<div class="text-center text-xs text-on-surface-variant py-4">Xin chào! Chúng tôi có thể giúp gì cho bạn?</div>';
+        return;
+      }
+      mc.innerHTML = snap.docs.map(d => {
+        const m = d.data();
+        const time = (m.timestamp && typeof m.timestamp.toDate === 'function') ? new Date(m.timestamp.toDate()).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}) : '';
+        if (m.isAdmin) {
+          return `<div class="flex justify-start mb-2"><div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center mr-2 flex-shrink-0 mt-1"><span class="material-symbols-outlined text-[14px] text-primary">support_agent</span></div><div class="max-w-[75%]"><div class="px-4 py-2.5 rounded-2xl rounded-tl-sm chat-bubble-admin text-sm shadow-md">${renderMsgContent(m)}</div><div class="text-[10px] text-on-surface-variant mt-1 ml-1">${time}</div></div></div>`;
+        } else {
+          let extra = m.status === 'uploading' ? '<span class="material-symbols-outlined animate-spin text-[12px] ml-2 inline-block">sync</span>' : '';
+          return `<div class="flex justify-end mb-2"><div class="max-w-[75%]"><div class="px-4 py-2.5 rounded-2xl rounded-tr-sm chat-bubble-user text-sm shadow-md">${renderMsgContent(m)}${extra}</div><div class="text-[10px] text-on-surface-variant/70 mt-1 mr-1 text-right">${time}</div></div></div>`;
+        }
+      }).join('');
+      mc.scrollTop = mc.scrollHeight;
+    });
+  }
+
+  window.sendMessage = async function() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    const files = [...chatPendingFiles];
+    if (!text && !files.length) return;
+    
+    const btn = document.getElementById('chat-send-btn');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[16px]">sync</span>'; }
+
+    input.value = '';
+    chatPendingFiles = [];
+    renderChatAttachPreview();
+    const uid = currentUser.uid;
+    try {
+      const tempId = Date.now().toString();
+      await setDoc(doc(db, `conversations/${uid}/messages`, tempId), {
+        isAdmin: false, text, files: files.map(f=>({name:f.name, type:f.type})), timestamp: serverTimestamp(), read: false, status: 'uploading'
+      });
+
+      const uploadedFiles = [];
+      for (const f of files) {
+        // Base64 Bypass
+        const b64 = await new Promise((res, rej) => { const r = new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(f); });
+        uploadedFiles.push({ name: f.name, url: b64, type: f.type, size: f.size });
+      }
+
+      await updateDoc(doc(db, `conversations/${uid}/messages`, tempId), {
+        files: uploadedFiles, status: 'sent'
+      });
+      
+      await setDoc(doc(db, 'conversations', uid), {
+        userId: uid, userName: userData?.username||'User', userEmail: currentUser.email,
+        lastMessage: text || (uploadedFiles.length ? `[${uploadedFiles.length} file dinh kem]` : ''), 
+        lastAt: serverTimestamp(), unreadAdmin: increment(1)
+      }, {merge:true});
+
+    } catch(err) { console.error('Chat error:', err); }
+    finally { if (btn) { btn.disabled = false; btn.innerHTML = '<span class="material-symbols-outlined">send</span>'; } }
+  };
+
+  document.getElementById('logout-btn').addEventListener('click', async () => {
+    sessionStorage.clear();
+    if (messagesUnsub) messagesUnsub();
+    await signOut(auth);
+    window.location.href = 'signin.html';
+  });
+
+</script>
+</body>
+</html>
