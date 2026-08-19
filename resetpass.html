@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ShopAccFacebook — Đặt Lại Mật Khẩu</title>
+<title>ShopBanAcc — Đặt Lại Mật Khẩu</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
@@ -54,8 +54,27 @@ tailwind.config = {
   .toast-success { background: rgba(0,105,111,0.9); border: 1px solid #00f2ff; color: #e1fdff; backdrop-filter: blur(12px); }
   .toast-hide { opacity: 0; transform: translateX(100%); pointer-events: none; }
 </style>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </head>
 <body class="bg-background text-on-background min-h-screen flex items-center justify-center font-body-md overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- Language Selector -->
+<div class="fixed top-4 right-4 z-50 group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors text-sm font-medium focus:outline-none bg-surface/80 px-3 py-2 rounded-lg backdrop-blur border border-outline-variant/30 shadow">
+    <span class="material-symbols-outlined text-sm">language</span>
+    <span id="current-lang-text">Tiếng Việt</span>
+    <span class="material-symbols-outlined text-sm">expand_more</span>
+  </button>
+  <div class="absolute right-0 mt-2 w-32 bg-surface border border-outline-variant/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+    <button type="button" onclick="setLanguage('vi')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-t-lg transition-colors">Tiếng Việt</button>
+    <button type="button" onclick="setLanguage('en')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">English</button>
+    <button type="button" onclick="setLanguage('zh')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">中文</button>
+    <button type="button" onclick="setLanguage('ja')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">日本語</button>
+    <button type="button" onclick="setLanguage('ko')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-b-lg transition-colors">한국어</button>
+  </div>
+</div>
+
 
 <!-- Toast -->
 <div class="toast toast-hide" id="toast">
@@ -73,7 +92,7 @@ tailwind.config = {
     <div class="relative z-10 p-margin-desktop flex flex-col justify-center h-full max-w-lg">
       <a href="landingpage.html" class="group mb-8">
         <div class="font-label-caps text-label-caps text-primary-fixed-dim mb-2 opacity-80">← VỀ TRANG CHỦ</div>
-        <h1 class="font-headline-xl text-headline-xl text-primary group-hover:text-primary-fixed-dim transition-colors">ShopAccFacebook</h1>
+        <h1 class="font-headline-xl text-headline-xl text-primary group-hover:text-primary-fixed-dim transition-colors">ShopBanAcc</h1>
       </a>
       <h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">KHÔI PHỤC<br/>MẬT KHẨU</h2>
       <p class="font-body-lg text-body-lg text-on-surface-variant mb-12">Nhập email đã đăng ký để nhận link khôi phục mật khẩu.</p>
@@ -96,7 +115,7 @@ tailwind.config = {
       <div class="mb-8">
         <!-- Mobile brand -->
         <a href="landingpage.html" class="md:hidden block mb-4">
-          <div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary-fixed-dim">ShopAccFacebook</div>
+          <div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary-fixed-dim">ShopBanAcc</div>
         </a>
         <h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Quên Mật Khẩu</h2>
         <p class="font-body-md text-body-md text-on-surface-variant">Nhập email đã đăng ký để nhận link đặt lại mật khẩu.</p>

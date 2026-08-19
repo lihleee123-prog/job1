@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ShopAccFacebook &#8212; &#272;&#259;ng Nh&#7853;p</title>
+<title>ShopBanAcc &#8212; &#272;&#259;ng Nh&#7853;p</title>
 <!-- Material Symbols -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
@@ -117,8 +117,27 @@
   .toast-success { background: rgba(0,105,111,0.9); border: 1px solid #00f2ff; color: #e1fdff; backdrop-filter: blur(12px); }
   .toast-hide { opacity: 0; transform: translateX(100%); }
 </style>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </head>
 <body class="bg-background text-on-background min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container flex">
+
+<!-- Language Selector -->
+<div class="fixed top-4 right-4 z-50 group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors text-sm font-medium focus:outline-none bg-surface/80 px-3 py-2 rounded-lg backdrop-blur border border-outline-variant/30 shadow">
+    <span class="material-symbols-outlined text-sm">language</span>
+    <span id="current-lang-text">Tiếng Việt</span>
+    <span class="material-symbols-outlined text-sm">expand_more</span>
+  </button>
+  <div class="absolute right-0 mt-2 w-32 bg-surface border border-outline-variant/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+    <button type="button" onclick="setLanguage('vi')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-t-lg transition-colors">Tiếng Việt</button>
+    <button type="button" onclick="setLanguage('en')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">English</button>
+    <button type="button" onclick="setLanguage('zh')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">中文</button>
+    <button type="button" onclick="setLanguage('ja')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">日本語</button>
+    <button type="button" onclick="setLanguage('ko')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-b-lg transition-colors">한국어</button>
+  </div>
+</div>
+
 
 <!-- Toast Notification -->
 <div class="toast toast-hide" id="toast">
@@ -177,7 +196,7 @@
         <div class="w-10 h-10 rounded border border-primary-container flex items-center justify-center bg-surface-container-high shadow-[0_0_10px_rgba(0,242,255,0.2)]">
           <span class="material-symbols-outlined text-primary-container">swap_horiz</span>
         </div>
-        <span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface group-hover:text-primary transition-colors">ShopAccFacebook</span>
+        <span class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface group-hover:text-primary transition-colors">ShopBanAcc</span>
       </a>
     </div>
 

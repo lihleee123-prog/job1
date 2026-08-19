@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ShopAccFacebook — Admin Dashboard</title>
+<title>ShopBanAcc — Admin Dashboard</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
@@ -60,7 +60,7 @@ body{background:#050505;color:#e5e2e1;font-family:'Inter',sans-serif;}
   <nav class="w-64 flex-shrink-0 h-screen border-r border-outline-variant flex flex-col py-6 px-3 z-40 overflow-y-auto" style="background:#0e0e0e;">
     <div class="mb-8 px-3">
       <a href="landingpage.html" class="group">
-        <div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary group-hover:text-primary-fixed-dim transition-colors">ShopAccFacebook</div>
+        <div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary group-hover:text-primary-fixed-dim transition-colors">ShopBanAcc</div>
         <div class="font-label-caps text-label-caps text-on-surface-variant mt-1">Admin Console</div>
       </a>
     </div>
@@ -210,7 +210,7 @@ body{background:#050505;color:#e5e2e1;font-family:'Inter',sans-serif;}
             <input class="table-input px-3 py-2 rounded text-sm w-48" id="product-search" placeholder="Tim sản phẩm..." oninput="filterProducts(this.value)"/>
             <select class="table-input px-3 py-2 rounded text-sm" id="product-platform-filter" onchange="filterProductsByPlatform(this.value)">
               <option value="">Tất cả platform</option>
-              <option>Facebook Via</option><option>Bandai Namco</option>
+              <option>Acc MXH</option><option>Bandai Namco</option>
             </select>
             <button onclick="openAddProduct()" class="neon-btn px-4 py-2 rounded text-sm font-label-caps flex items-center gap-2">
               <span class="material-symbols-outlined text-[18px]">add</span>Thêm SP
@@ -352,7 +352,7 @@ body{background:#050505;color:#e5e2e1;font-family:'Inter',sans-serif;}
               <div id="messages-container" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
               <!-- Quick Replies -->
               <div class="px-4 py-2 flex gap-2 overflow-x-auto border-t border-outline-variant/10">
-                <button onclick="quickReply('Xin chao! Admin ShopAccFacebook day, mình có thể giúp gì cho bạn?')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Xin chào 👋</button>
+                <button onclick="quickReply('Xin chao! Admin ShopBanAcc day, mình có thể giúp gì cho bạn?')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Xin chào 👋</button>
                 <button onclick="quickReply('TÀI KHOẢN cua ban da duoc giao. Vui lòng kiểm tra email hoặc trang profile.')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Đã giao TK ✅</button>
                 <button onclick="quickReply('Đơn Hàng cua ban dang duoc xu ly. Vui lòng chờ trong ít phút.')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Đang xử lý ⏳</button>
                 <button onclick="quickReply('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ hỗ trợ bạn Trạng thái gian sớm nhất.')" class="flex-shrink-0 px-3 py-1 rounded-full border border-outline-variant/30 text-on-surface-variant text-xs hover:border-primary-container/40 hover:text-primary transition-colors">Cảm ơn 🙏</button>
@@ -569,7 +569,7 @@ body{background:#050505;color:#e5e2e1;font-family:'Inter',sans-serif;}
         <div>
           <label class="block font-label-caps text-label-caps text-on-surface-variant mb-2 text-[10px]">PLATFORM</label>
           <select class="table-input w-full rounded px-4 py-2.5 text-sm" id="p-platform">
-            <option>Facebook Via</option><option>Bandai Namco</option>
+            <option>Acc MXH</option><option>Bandai Namco</option>
           </select>
         </div>
         <div>
@@ -877,7 +877,7 @@ window.openAddProduct = () => {
   document.getElementById('modal-product-title').textContent = 'Thêm sản phẩm Mới';
   document.getElementById('edit-product-id').value = '';
   ['p-name','p-price','p-original-price','p-desc','p-account-info','p-image-url','p-tags'].forEach(id=>{document.getElementById(id).value='';});
-  document.getElementById('p-platform').value = 'Facebook Via';
+  document.getElementById('p-platform').value = 'Acc MXH';
   document.getElementById('p-currency').value = 'VND';
   updateCurrencyLabels();
   document.getElementById('product-modal').classList.add('open');
@@ -887,7 +887,7 @@ window.editProduct = (id) => {
   document.getElementById('modal-product-title').textContent = 'Sửa sản phẩm';
   document.getElementById('edit-product-id').value = id;
   document.getElementById('p-name').value = p.name||'';
-  document.getElementById('p-platform').value = p.platform||'Facebook Via';
+  document.getElementById('p-platform').value = p.platform||'Acc MXH';
   document.getElementById('p-currency').value = p.currency||'VND';
   updateCurrencyLabels();
   document.getElementById('p-price').value = p.price||'';

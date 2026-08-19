@@ -3,7 +3,7 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>ShopAccFacebook - Account Marketplace</title>
+<title>ShopBanAcc - Account Marketplace</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
@@ -223,12 +223,31 @@
             animation: scroll-up 5s infinite;
         }
     </style>
+<script src="translations.js"></script>
+<script src="i18n.js"></script>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative">
+
+<!-- Language Selector -->
+<div class="fixed top-4 right-4 z-50 group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary transition-colors text-sm font-medium focus:outline-none bg-surface/80 px-3 py-2 rounded-lg backdrop-blur border border-outline-variant/30 shadow">
+    <span class="material-symbols-outlined text-sm">language</span>
+    <span id="current-lang-text">Tiếng Việt</span>
+    <span class="material-symbols-outlined text-sm">expand_more</span>
+  </button>
+  <div class="absolute right-0 mt-2 w-32 bg-surface border border-outline-variant/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+    <button type="button" onclick="setLanguage('vi')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-t-lg transition-colors">Tiếng Việt</button>
+    <button type="button" onclick="setLanguage('en')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">English</button>
+    <button type="button" onclick="setLanguage('zh')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">中文</button>
+    <button type="button" onclick="setLanguage('ja')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">日本語</button>
+    <button type="button" onclick="setLanguage('ko')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-b-lg transition-colors">한국어</button>
+  </div>
+</div>
+
 <!-- TopNavBar -->
 <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-[0_0_15px_rgba(0,242,255,0.1)]">
 <div class="flex items-center gap-gutter">
-<a class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-primary neon-text-primary" href="landingpage.html">ShopAccFacebook</a>
+<a class="font-headline-lg text-headline-lg tracking-tighter text-primary dark:text-primary neon-text-primary" href="landingpage.html">ShopBanAcc</a>
 <div class="hidden md:flex items-center gap-8 ml-8">
 <a class="text-primary border-b-2 border-primary pb-1 font-label-caps text-label-caps hover:text-primary transition-colors duration-200" href="landingpage.html">Marketplace</a>
 
@@ -268,7 +287,7 @@
 <div class="relative z-10 p-12 w-full md:w-2/3" id="hero-content">
   <div class="inline-flex items-center gap-2 bg-secondary-container/20 border border-secondary text-secondary px-3 py-1 rounded-DEFAULT font-label-caps text-label-caps mb-4 backdrop-blur-sm">
     <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">storefront</span>
-    ShopAccFacebook
+    ShopBanAcc
   </div>
   <h1 class="font-headline-xl text-headline-xl text-primary neon-text-primary mb-4 uppercase" id="hero-title">MUA BÁN TÀI KHOẢN<br/>GAMING UY TÍN</h1>
   <p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-xl" id="hero-desc">Nền tảng giao dịch tài khoản số hàng đầu. Bảo mật đa lớp, giao dịch tức thì, hỗ trợ 24/7.</p>
@@ -321,7 +340,7 @@
 <div class="sticky top-20 z-40 bg-surface/90 backdrop-blur-md py-4 border-b border-outline-variant/10 flex justify-between items-center -mx-4 px-4">
 <div class="flex gap-2 overflow-x-auto no-scrollbar">
 <button id="filter-all" onclick="filterByPlatform('')" class="platform-btn bg-primary/10 text-primary border border-primary/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap">All Assets</button>
-<button id="filter-Facebook Via" onclick="filterByPlatform('Facebook Via')" class="platform-btn glass-panel text-on-surface-variant hover:text-on-surface hover:border-outline-variant/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap transition-colors">Facebook Via</button>
+<button id="filter-Acc MXH" onclick="filterByPlatform('Acc MXH')" class="platform-btn glass-panel text-on-surface-variant hover:text-on-surface hover:border-outline-variant/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap transition-colors">Acc MXH</button>
 <button id="filter-Bandai Namco" onclick="filterByPlatform('Bandai Namco')" class="platform-btn glass-panel text-on-surface-variant hover:text-on-surface hover:border-outline-variant/50 px-4 py-2 rounded-DEFAULT font-label-caps text-label-caps whitespace-nowrap transition-colors">Bandai Namco</button>
 </div>
 <div class="flex items-center gap-2 glass-panel px-3 py-2 rounded-DEFAULT cursor-pointer hover:bg-surface-container">
@@ -359,9 +378,9 @@
 <!-- Footer (JSON Injected & Customized) -->
 <footer class="w-full py-16 px-margin-desktop grid grid-cols-1 md:grid-cols-2 items-start gap-gutter bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant/10">
 <div class="flex flex-col gap-6">
-<div class="font-headline-md text-headline-md text-on-surface neon-text-primary tracking-tighter">ShopAccFacebook</div>
+<div class="font-headline-md text-headline-md text-on-surface neon-text-primary tracking-tighter">ShopBanAcc</div>
 <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">The premier secured digital asset protocol for high-tier gaming accounts and digital identities.</p>
-<div class="font-label-caps text-label-caps text-on-surface-variant mt-8">Â© 2024 ShopAccFacebook. SECURED DIGITAL ASSET PROTOCOL.</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant mt-8">Â© 2024 ShopBanAcc. SECURED DIGITAL ASSET PROTOCOL.</div>
 </div>
 <div class="grid grid-cols-2 gap-8">
 <!-- Payment Methods -->
@@ -505,7 +524,7 @@
     }
 
     const platformColors = {
-      'Steam': '#4c9be8', 'Riot': '#ff4655', 'Facebook Via': '#1877F2',
+      'Steam': '#4c9be8', 'Riot': '#ff4655', 'Acc MXH': '#1877F2',
       'Bandai Namco': '#ff7a00', 'Epic Games': '#9d4dff', 'Blizzard': '#00b4ff',
       'Ubisoft': '#2563eb', 'Other': '#849495'
     };
@@ -932,7 +951,7 @@ window.widgetHandleFiles = window._widgetHandleFiles = async function(input) {
       const pm    = document.querySelector('input[name="payment"]:checked')?.value || 'vietqr';
       const info  = PAYMENT_INFO[pm];
       const price = formatPrice(buyProductData.price, buyProductData.currency);
-      const note  = 'ShopAccFacebook ' + buyProductData.productName;
+      const note  = 'ShopBanAcc ' + buyProductData.productName;
       let html = '';
   
       const notConfigured = (pm === 'vietqr' && !info.qrUrl && !info.account) ||
@@ -1043,7 +1062,7 @@ window.widgetHandleFiles = window._widgetHandleFiles = async function(input) {
     <div class="flex items-center justify-between p-4 border-b border-outline-variant/20" style="background:linear-gradient(135deg,#00f2ff20,#b600f820);">
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[16px]">support_agent</span></div>
-        <div><div class="font-body-md font-medium text-on-surface text-sm">Ho Tro ShopAccFacebook</div><div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="text-[10px] text-on-surface-variant">Online</span></div></div>
+        <div><div class="font-body-md font-medium text-on-surface text-sm">Ho Tro ShopBanAcc</div><div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-400"></span><span class="text-[10px] text-on-surface-variant">Online</span></div></div>
       </div>
       <button onclick="toggleChatWidget()" class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">close</span></button>
     </div>
