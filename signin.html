@@ -218,7 +218,7 @@
           <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline group-focus-within:text-primary-container transition-colors">
             <span class="material-symbols-outlined text-[20px]">mail</span>
           </div>
-          <input class="w-full bg-surface-container-lowest border border-outline rounded-lg pl-12 pr-4 py-3 text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/30" id="identifier" name="identifier" placeholder="email@example.com" required type="email"/>
+          <input class="w-full bg-surface-container-lowest border border-outline rounded-lg pl-12 pr-4 py-3 text-on-surface font-body-md text-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all placeholder:text-on-surface-variant/30" id="identifier" name="identifier" data-i18n="auth_email" placeholder="Email" required type="email"/>
         </div>
       </div>
 
@@ -242,7 +242,7 @@
           <input class="w-4 h-4 rounded border-outline bg-surface-container-lowest text-primary-container focus:ring-primary-container focus:ring-offset-background transition-colors cursor-pointer" type="checkbox" id="remember-me"/>
           <span class="font-body-md text-body-md text-on-surface-variant group-hover:text-on-surface transition-colors text-sm">Ghi nh&#7899; &#273;&#259;ng nh&#7853;p</span>
         </label>
-        <a class="font-body-md text-body-md text-sm text-primary-container hover:text-primary-fixed-dim transition-colors hover:underline underline-offset-4" href="resetpass.html">Qu&#234;n m&#7853;t kh&#7849;u?</a>
+        <a class="font-body-md text-body-md text-sm text-primary-container hover:text-primary-fixed-dim transition-colors hover:underline underline-offset-4" href="resetpass.html"><span data-i18n="auth_forgot_pass">Qu&#234;n m&#7853;t kh&#7849;u?</span> m&#7853;t kh&#7849;u?</a>
       </div>
 
       <!-- Submit -->
@@ -250,7 +250,7 @@
         <div class="absolute inset-0 bg-gradient-to-r from-primary-container to-secondary-container opacity-90 group-hover:opacity-100 transition-opacity duration-300"></div>
         <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_25px_rgba(0,242,255,0.4)] mix-blend-screen pointer-events-none"></div>
         <div class="relative px-6 py-4 flex items-center justify-center gap-2">
-          <span class="font-body-lg text-body-lg font-bold text-on-primary-fixed tracking-wide" id="signin-btn-text">&#272;&#259;ng Nh&#7853;p</span>
+          <span class="font-body-lg text-body-lg font-bold text-on-primary-fixed tracking-wide" id="signin-btn-text" data-i18n="auth_submit_login">&#272;&#259;ng Nh&#7853;p</span>
           <span class="material-symbols-outlined text-on-primary-fixed text-[20px] group-hover:translate-x-1 transition-transform" id="signin-btn-icon">arrow_forward</span>
         </div>
       </button>
