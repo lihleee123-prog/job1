@@ -1,4 +1,4 @@
-﻿[build]
+[build]
   publish = "."
 
 # Redirect root to landingpage
