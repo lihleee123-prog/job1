@@ -67,8 +67,8 @@ tailwind.config = {
   .toast-success { background: rgba(0,105,111,0.9); border: 1px solid #00f2ff; color: #e1fdff; backdrop-filter: blur(12px); }
   .toast-hide { opacity: 0; transform: translateX(100%); pointer-events: none; }
 </style>
-<script src="translations.js"></script>
-<script src="i18n.js"></script>
+<script src="translations.js?v=1787157934118"></script>
+<script src="i18n.js?v=1787157934118"></script>
 </head>
 <body class="min-h-screen flex flex-col md:flex-row antialiased">
 
@@ -79,7 +79,11 @@ tailwind.config = {
     <span id="current-lang-text">Tiếng Việt</span>
     <span class="material-symbols-outlined text-sm">expand_more</span>
   </button>
-  <div class="absolute right-0 mt-2 w-32 bg-surface border border-outline-variant/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100]">
+  
+  <!-- The invisible bridge to maintain hover -->
+  <div class="absolute right-0 top-full w-full h-2"></div>
+  <div class="absolute right-0 top-full mt-1 w-32 bg-surface border border-outline-variant/30 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100] overflow-hidden">
+
     <button type="button" onclick="setLanguage('vi')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary rounded-t-lg transition-colors">Tiếng Việt</button>
     <button type="button" onclick="setLanguage('en')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">English</button>
     <button type="button" onclick="setLanguage('zh')" class="block w-full text-left px-4 py-2 text-sm text-on-surface hover:bg-surface-variant hover:text-primary transition-colors">中文</button>
