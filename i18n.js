@@ -4,9 +4,13 @@ function applyTranslationsTo(container, lang) {
     const key = el.getAttribute('data-i18n');
     if (translations[lang][key]) {
       if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
-        el.setAttribute('placeholder', translations[lang][key]);
+        if (el.getAttribute('placeholder') !== translations[lang][key]) {
+          el.setAttribute('placeholder', translations[lang][key]);
+        }
       } else {
-        el.innerHTML = translations[lang][key];
+        if (el.innerHTML !== translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
       }
     }
   });
@@ -22,7 +26,7 @@ function setLanguage(lang) {
   applyTranslationsTo(document, lang);
   
   const langSelectorText = document.getElementById('current-lang-text');
-  if (langSelectorText) {
+  if (langSelectorText && langSelectorText.innerText !== translations[lang]['lang_' + lang]) {
     langSelectorText.innerText = translations[lang]['lang_' + lang];
   }
 }
@@ -46,10 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (shouldTranslate) {
+      // Disconnect observer to prevent infinite loops during translation updates
+      observer.disconnect();
       try {
         const currentLang = localStorage.getItem('selected_lang') || 'vi';
         applyTranslationsTo(document, currentLang);
       } catch (e) {}
+      // Reconnect observer
+      observer.observe(document.body, { childList: true, subtree: true });
     }
   });
   
